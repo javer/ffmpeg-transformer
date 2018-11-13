@@ -97,4 +97,15 @@ interface AudioFilterChainInterface extends FilterChainInterface
      * @return AudioFilterChainInterface
      */
     public function fade(string $type, float $start, float $end): AudioFilterChainInterface;
+
+    /**
+     * Dynamic Audio Normalizer filter.
+     *
+     * Example: dynaudnorm=g=3
+     *
+     * @param array $arguments
+     *
+     * @return AudioFilterChainInterface
+     */
+    public function dynaudnorm(array $arguments = []): AudioFilterChainInterface;
 }

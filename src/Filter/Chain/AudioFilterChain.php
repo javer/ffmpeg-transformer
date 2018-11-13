@@ -138,4 +138,16 @@ class AudioFilterChain extends FilterChain implements AudioFilterChainInterface
 
         return $this->filter('afade', $arguments, ['a'], ['a']);
     }
+
+    /**
+     * Dynamic Audio Normalizer filter.
+     *
+     * @param array $arguments
+     *
+     * @return AudioFilterChainInterface
+     */
+    public function dynaudnorm(array $arguments = []): AudioFilterChainInterface
+    {
+        return $this->filter('dynaudnorm', $arguments, ['a'], ['a']);
+    }
 }
