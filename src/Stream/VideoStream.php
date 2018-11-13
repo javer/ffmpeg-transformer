@@ -247,6 +247,54 @@ class VideoStream extends Stream implements VideoStreamInterface
     }
 
     /**
+     * Set max bitrate.
+     *
+     * @param string $maxBitrate
+     *
+     * @return VideoStreamInterface
+     */
+    public function maxBitrate(string $maxBitrate): VideoStreamInterface
+    {
+        return $this->addStreamOption('-maxrate', $maxBitrate);
+    }
+
+    /**
+     * Set min bitrate.
+     *
+     * @param string $minBitrate
+     *
+     * @return VideoStreamInterface
+     */
+    public function minBitrate(string $minBitrate): VideoStreamInterface
+    {
+        return $this->addStreamOption('-minrate', $minBitrate);
+    }
+
+    /**
+     * Set buffer size.
+     *
+     * @param string $bufferSize
+     *
+     * @return VideoStreamInterface
+     */
+    public function bufferSize(string $bufferSize): VideoStreamInterface
+    {
+        return $this->addStreamOption('-bufsize', $bufferSize);
+    }
+
+    /**
+     * Set crf.
+     *
+     * @param integer $crf
+     *
+     * @return VideoStreamInterface
+     */
+    public function crf(int $crf): VideoStreamInterface
+    {
+        return $this->addStreamOption('-crf', $crf);
+    }
+
+    /**
      * Set pixel format.
      *
      * @param string $format

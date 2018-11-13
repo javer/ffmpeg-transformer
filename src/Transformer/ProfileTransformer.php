@@ -90,30 +90,43 @@ class ProfileTransformer
             }
         }
 
+        $sourceCodec = $source->getCodec();
+        $sourcePixelFormat = $source->getPixelFormat();
+        $sourceRotate = $source->getRotate();
+        $sourceBitrate = $source->getBitrate();
+        $sourceFrameRate = $source->getFrameRate();
+
         $targetWidth = $this->alignNumber($targetWidth, $sizeAlign);
         $targetHeight = $this->alignNumber($targetHeight, $sizeAlign);
 
-        $targetCodec = $target->getCodec() ?? $source->getCodec();
+        $targetCodec = $target->getCodec() ?? $sourceCodec;
 
-        $targetPixelFormat = $target->getPixelFormat() ?? $source->getPixelFormat();
+        $targetPixelFormat = $target->getPixelFormat() ?? $sourcePixelFormat;
 
-        $targetBitrate = $this->getLeastValue($source->getBitrate(), $target->getBitrate());
+        $targetBitrate = $this->getLeastValue($sourceBitrate, $target->getBitrate());
 
-        $targetFramerate = $this->getLeastValue($source->getFrameRate(), $target->getFrameRate());
+        $targetMaxrate = $this->getLeastValue($sourceBitrate, $target->getMaxBitrate());
+
+        $targetFramerate = $this->getLeastValue($sourceFrameRate, $target->getFrameRate());
 
         if ($force
-            || $source->getCodec() !== $targetCodec
-            || $source->getPixelFormat() !== $targetPixelFormat
-            || $source->getRotate() != 0
-            || $source->getWidth() > $targetWidth
-            || $source->getHeight() > $targetHeight
-            || $source->getBitrate() > $targetBitrate
-            || $source->getFrameRate() > $targetFramerate) {
+            || $sourceCodec !== $targetCodec
+            || $sourcePixelFormat !== $targetPixelFormat
+            || $sourceRotate != 0
+            || $sourceWidth > $targetWidth
+            || $sourceHeight > $targetHeight
+            || $sourceBitrate > $targetBitrate
+            || $sourceBitrate > $targetMaxrate
+            || $sourceFrameRate > $targetFramerate) {
             $transform->setCodec($targetCodec);
             $transform->setProfile($target->getProfile());
             $transform->setPreset($this->getVideoCodecPreset($targetCodec, $target->getPreset(), $targetFramerate));
             $transform->setPixelFormat($target->getPixelFormat());
-            $transform->setBitrate($targetBitrate);
+            $transform->setBitrate($target->getBitrate() ? $targetBitrate : null);
+            $transform->setMaxBitrate($target->getMaxBitrate());
+            $transform->setMinBitrate($target->getMinBitrate());
+            $transform->setBufferSize($target->getBufferSize());
+            $transform->setCrf($target->getCrf());
             $transform->setFrameRate($targetFramerate);
             $transform->setKeyframeInterval($target->getKeyframeInterval());
 

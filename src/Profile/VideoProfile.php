@@ -18,6 +18,10 @@ class VideoProfile
     const PRESET = 'preset';
     const PIXEL_FORMAT = 'pixel_format';
     const BITRATE = 'bitrate';
+    const MAX_BITRATE = 'max_bitrate';
+    const MIN_BITRATE = 'min_bitrate';
+    const BUFFER_SIZE = 'buffer_size';
+    const CRF = 'crf';
     const FRAME_RATE = 'frame_rate';
     const KEYFRAME_INTERVAL = 'keyframe_interval';
     const ROTATE = 'rotate';
@@ -56,6 +60,26 @@ class VideoProfile
      * @var integer|null
      */
     private $bitrate;
+
+    /**
+     * @var integer|null
+     */
+    private $maxBitrate;
+
+    /**
+     * @var integer|null
+     */
+    private $minBitrate;
+
+    /**
+     * @var integer|null
+     */
+    private $bufferSize;
+
+    /**
+     * @var integer|null
+     */
+    private $crf;
 
     /**
      * @var float|null
@@ -113,6 +137,22 @@ class VideoProfile
                     $profile->setBitrate($value);
                     break;
 
+                case static::MAX_BITRATE:
+                    $profile->setMaxBitrate($value);
+                    break;
+
+                case static::MIN_BITRATE:
+                    $profile->setMinBitrate($value);
+                    break;
+
+                case static::BUFFER_SIZE:
+                    $profile->setBufferSize($value);
+                    break;
+
+                case static::CRF:
+                    $profile->setCrf($value);
+                    break;
+
                 case static::FRAME_RATE:
                     $profile->setFrameRate($value);
                     break;
@@ -145,6 +185,10 @@ class VideoProfile
             static::PRESET => $this->getPreset(),
             static::PIXEL_FORMAT => $this->getPixelFormat(),
             static::BITRATE => $this->getBitrate(),
+            static::MAX_BITRATE => $this->getMaxBitrate(),
+            static::MIN_BITRATE => $this->getMinBitrate(),
+            static::BUFFER_SIZE => $this->getBufferSize(),
+            static::CRF => $this->getCrf(),
             static::FRAME_RATE => $this->getFrameRate(),
             static::KEYFRAME_INTERVAL => $this->getKeyframeInterval(),
             static::ROTATE => $this->getRotate(),
@@ -425,6 +469,102 @@ class VideoProfile
     public function setBitrate($bitrate = null): VideoProfile
     {
         $this->bitrate = MediaProfile::convertMetricValue($bitrate);
+
+        return $this;
+    }
+
+    /**
+     * Returns max bitrate.
+     *
+     * @return integer|null
+     */
+    public function getMaxBitrate(): ?int
+    {
+        return $this->maxBitrate;
+    }
+
+    /**
+     * Set max bitrate.
+     *
+     * @param integer|string|null $maxBitrate
+     *
+     * @return VideoProfile
+     */
+    public function setMaxBitrate($maxBitrate = null): VideoProfile
+    {
+        $this->maxBitrate = MediaProfile::convertMetricValue($maxBitrate);
+
+        return $this;
+    }
+
+    /**
+     * Returns min bitrate.
+     *
+     * @return integer|null
+     */
+    public function getMinBitrate(): ?int
+    {
+        return $this->minBitrate;
+    }
+
+    /**
+     * Set min bitrate.
+     *
+     * @param integer|string|null $minBitrate
+     *
+     * @return VideoProfile
+     */
+    public function setMinBitrate($minBitrate = null): VideoProfile
+    {
+        $this->minBitrate = MediaProfile::convertMetricValue($minBitrate);
+
+        return $this;
+    }
+
+    /**
+     * Returns buffer size.
+     *
+     * @return integer|null
+     */
+    public function getBufferSize(): ?int
+    {
+        return $this->bufferSize;
+    }
+
+    /**
+     * Set buffer size.
+     *
+     * @param integer|string|null $bufferSize
+     *
+     * @return VideoProfile
+     */
+    public function setBufferSize($bufferSize = null): VideoProfile
+    {
+        $this->bufferSize = MediaProfile::convertMetricValue($bufferSize);
+
+        return $this;
+    }
+
+    /**
+     * Returns crf.
+     *
+     * @return integer|null
+     */
+    public function getCrf(): ?int
+    {
+        return $this->crf;
+    }
+
+    /**
+     * Set crf.
+     *
+     * @param integer|null $crf
+     *
+     * @return VideoProfile
+     */
+    public function setCrf(int $crf = null): VideoProfile
+    {
+        $this->crf = $crf;
 
         return $this;
     }

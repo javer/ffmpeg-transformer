@@ -191,6 +191,50 @@ interface VideoStreamInterface extends StreamInterface
     public function bitrate(string $bitrate): VideoStreamInterface;
 
     /**
+     * Set maxBitrate.
+     *
+     * Option: -maxrate:v maxBitrate
+     *
+     * @param string $maxBitrate
+     *
+     * @return VideoStreamInterface
+     */
+    public function maxBitrate(string $maxBitrate): VideoStreamInterface;
+
+    /**
+     * Set minBitrate.
+     *
+     * Option: -minrate:v minBitrate
+     *
+     * @param string $minBitrate
+     *
+     * @return VideoStreamInterface
+     */
+    public function minBitrate(string $minBitrate): VideoStreamInterface;
+
+    /**
+     * Set buffer size.
+     *
+     * Option: -bufsize:v bufferSize
+     *
+     * @param string $bufferSize
+     *
+     * @return VideoStreamInterface
+     */
+    public function bufferSize(string $bufferSize): VideoStreamInterface;
+
+    /**
+     * Set crf.
+     *
+     * Option: -crf:v bitrate
+     *
+     * @param integer $crf
+     *
+     * @return VideoStreamInterface
+     */
+    public function crf(int $crf): VideoStreamInterface;
+
+    /**
      * Set pixel format.
      *
      * Option: -pix_fmt format

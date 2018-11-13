@@ -23,6 +23,7 @@ class CommandTransformer
      */
     protected const CODEC_MAP = [
         'h264' => 'libx264',
+        'h265' => 'libx265',
     ];
 
     /**
@@ -139,6 +140,22 @@ class CommandTransformer
 
         if (!is_null($bitrate = $videoProfile->getBitrate())) {
             $videoStream->bitrate($bitrate);
+        }
+
+        if (!is_null($maxBitrate = $videoProfile->getMaxBitrate())) {
+            $videoStream->maxBitrate($maxBitrate);
+        }
+
+        if (!is_null($minBitrate = $videoProfile->getMinBitrate())) {
+            $videoStream->minBitrate($minBitrate);
+        }
+
+        if (!is_null($bufferSize = $videoProfile->getBufferSize())) {
+            $videoStream->bufferSize($bufferSize);
+        }
+
+        if (!is_null($crf = $videoProfile->getCrf())) {
+            $videoStream->crf($crf);
         }
 
         if (!is_null($frameRate = $videoProfile->getFrameRate())) {
