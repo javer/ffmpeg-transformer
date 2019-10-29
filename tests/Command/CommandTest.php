@@ -156,7 +156,7 @@ class CommandTest extends TestCase
         $this->assertEquals([
             '-y',
             '-i', 'input.mov',
-            '-f', 'rawvideo',  '-s:1:v:0', '16x16',  '-pix_fmt:1:v:0', 'rgb24',  '-r:1:v:0', '1',  '-i', '/dev/zero',
+            '-f', 'rawvideo',  '-s:v:0', '16x16',  '-pix_fmt:v:0', 'rgb24',  '-r:v:0', '1',  '-i', '/dev/zero',
             '-shortest',
             '-movflags', 'faststart',
             '-map', '1:v:0', '-pix_fmt:v:0', 'yuv420p', '-g', '1', '-c:v:0', 'libx264', '-preset', 'ultrafast',
@@ -210,8 +210,8 @@ class CommandTest extends TestCase
             '-movflags', 'faststart',
             '-filter_complex', '[0:v:0] trim=10:20, trim=20:30, trim=50:60, setpts=PTS-STARTPTS [v_0];'
             . ' [0:a:0] atrim=10:20, atrim=20:30, atrim=50:60, asetpts=PTS-STARTPTS [a_1]',
-            '-map', '[v_0]', '-c:v_0', 'libx264', '-preset', 'veryfast', '-pix_fmt:v_0', 'yuv420p',
-            '-map', '[a_1]', '-c:a_1', 'aac',
+            '-map', '[v_0]', '-c:v:0', 'libx264', '-preset', 'veryfast', '-pix_fmt:v:0', 'yuv420p',
+            '-map', '[a_1]', '-c:a:0', 'aac',
             'output.mp4',
         ], $command->build());
     }
@@ -260,16 +260,16 @@ class CommandTest extends TestCase
         $this->assertEquals([
             '-y',
             '-i', 'input.mp4',
-            '-f', 'rawvideo', '-t', '10', '-s:1:v:0','640x480', '-pix_fmt:1:v:0', 'rgb24', '-i', '/dev/zero',
+            '-f', 'rawvideo', '-t', '10', '-s:v:0','640x480', '-pix_fmt:v:0', 'rgb24', '-i', '/dev/zero',
             '-f', 'lavfi', '-t', '10', '-i', 'aevalsrc=0',
-            '-f', 'rawvideo', '-t', '20', '-s:3:v:0', '640x480', '-pix_fmt:3:v:0', 'rgb24', '-i', '/dev/zero',
+            '-f', 'rawvideo', '-t', '20', '-s:v:0', '640x480', '-pix_fmt:v:0', 'rgb24', '-i', '/dev/zero',
             '-f', 'lavfi', '-t', '20', '-i', 'aevalsrc=0',
             '-movflags',  'faststart',
             '-filter_complex',
             '[1:v:0] [2:a:0] [0:v:0] [0:a:0] concat=n=2:v=1:a=1 [v_0] [a_1];'
             . ' [v_0] [a_1] [3:v:0] [4:a:0] concat=n=2:v=1:a=1 [v_2] [a_3]',
-            '-map', '[v_2]', '-c:v_2', 'libx264', '-preset', 'veryfast', '-pix_fmt:v_2', 'yuv420p',
-            '-map', '[a_3]', '-c:a_3', 'aac',
+            '-map', '[v_2]', '-c:v:0', 'libx264', '-preset', 'veryfast', '-pix_fmt:v:0', 'yuv420p',
+            '-map', '[a_3]', '-c:a:0', 'aac',
             'output.mp4',
         ], $command->build());
     }
@@ -342,17 +342,17 @@ class CommandTest extends TestCase
         $this->assertEquals([
             '-y',
             '-i', 'input.mp4',
-            '-f', 'rawvideo', '-t', '5', '-s:1:v:0', '640x480', '-pix_fmt:1:v:0', 'rgb24', '-i', '/dev/zero',
+            '-f', 'rawvideo', '-t', '5', '-s:v:0', '640x480', '-pix_fmt:v:0', 'rgb24', '-i', '/dev/zero',
             '-f', 'lavfi', '-t', '5', '-i', 'aevalsrc=0',
-            '-f', 'rawvideo', '-t', '5', '-s:3:v:0', '640x480', '-pix_fmt:3:v:0', 'rgb24', '-i', '/dev/zero',
+            '-f', 'rawvideo', '-t', '5', '-s:v:0', '640x480', '-pix_fmt:v:0', 'rgb24', '-i', '/dev/zero',
             '-f', 'lavfi', '-t', '5', '-i', 'aevalsrc=0',
-            '-f', 'rawvideo', '-t', '5', '-s:5:v:0', '640x480', '-pix_fmt:5:v:0', 'rgb24', '-i', '/dev/zero',
+            '-f', 'rawvideo', '-t', '5', '-s:v:0', '640x480', '-pix_fmt:v:0', 'rgb24', '-i', '/dev/zero',
             '-f', 'lavfi', '-t', '5', '-i', 'aevalsrc=0',
-            '-f', 'rawvideo', '-t', '5', '-s:7:v:0', '640x480', '-pix_fmt:7:v:0', 'rgb24', '-i', '/dev/zero',
+            '-f', 'rawvideo', '-t', '5', '-s:v:0', '640x480', '-pix_fmt:v:0', 'rgb24', '-i', '/dev/zero',
             '-f', 'lavfi', '-t', '5', '-i', 'aevalsrc=0',
-            '-f', 'rawvideo', '-t', '3', '-s:9:v:0', '640x480', '-pix_fmt:9:v:0', 'rgb24', '-i', '/dev/zero',
+            '-f', 'rawvideo', '-t', '3', '-s:v:0', '640x480', '-pix_fmt:v:0', 'rgb24', '-i', '/dev/zero',
             '-f', 'lavfi', '-t', '3', '-i', 'aevalsrc=0',
-            '-f', 'rawvideo', '-t', '3', '-s:11:v:0', '640x480', '-pix_fmt:11:v:0', 'rgb24', '-i', '/dev/zero',
+            '-f', 'rawvideo', '-t', '3', '-s:v:0', '640x480', '-pix_fmt:v:0', 'rgb24', '-i', '/dev/zero',
             '-f', 'lavfi', '-t', '3', '-i', 'aevalsrc=0',
             '-movflags', 'faststart',
             '-filter_complex',
@@ -365,8 +365,8 @@ class CommandTest extends TestCase
                 '[1:v:0] [2:a:0] [v_0] [a_1] [v_2] [a_3] [3:v:0] [4:a:0] [5:v:0] [6:a:0] [v_4] [a_5] [7:v:0] [8:a:0]'
                 . ' [v_6] [a_7] [9:v:0] [10:a:0] [v_8] [a_9] [11:v:0] [12:a:0] concat=n=11:v=1:a=1 [v_10] [a_11]',
             ]),
-            '-map', '[v_10]', '-c:v_10', 'libx264', '-preset', 'veryfast', '-pix_fmt:v_10', 'yuv420p',
-            '-map', '[a_11]', '-c:a_11', 'aac',
+            '-map', '[v_10]', '-c:v:0', 'libx264', '-preset', 'veryfast', '-pix_fmt:v:0', 'yuv420p',
+            '-map', '[a_11]', '-c:a:0', 'aac',
             'output.mp4',
         ], $command->build());
     }
@@ -452,13 +452,13 @@ class CommandTest extends TestCase
                 '[a_0] [a_2] [a_4] [a_6] [a_8] amix=inputs=5, volume=5.000000dB [a_10]',
             ]),
             '-map', '0:v:0', '-c:v:0', 'copy',
-            '-map', '[a_10]', '-c:a_10', 'aac',
-            '-map', '[a_1]', '-c:a_1', 'aac',
-            '-map', '[a_3]', '-c:a_3', 'aac',
-            '-map', '[a_5]', '-c:a_5', 'aac',
+            '-map', '[a_10]', '-c:a:0', 'aac',
+            '-map', '[a_1]', '-c:a:1', 'aac',
+            '-map', '[a_3]', '-c:a:2', 'aac',
+            '-map', '[a_5]', '-c:a:3', 'aac',
             '-map', '0:a:3', '-c:a:4', 'copy',
-            '-map', '[a_7]', '-c:a_7', 'aac',
-            '-map', '[a_9]', '-c:a_9', 'aac',
+            '-map', '[a_7]', '-c:a:5', 'aac',
+            '-map', '[a_9]', '-c:a:6', 'aac',
             'output.mp4',
         ], $command->build());
     }
@@ -543,13 +543,13 @@ class CommandTest extends TestCase
                 '[a_0] [a_2] [a_4] [a_6] [a_8] amix=inputs=5, volume=5.000000dB [a_10]',
             ]),
             '-map', '0:v:0', '-c:v:0', 'copy',
-            '-map', '[a_10]', '-c:a_10', 'aac',
-            '-map', '[a_1]', '-c:a_1', 'aac',
-            '-map', '[a_3]', '-c:a_3', 'aac',
-            '-map', '[a_5]', '-c:a_5', 'aac',
+            '-map', '[a_10]', '-c:a:0', 'aac',
+            '-map', '[a_1]', '-c:a:1', 'aac',
+            '-map', '[a_3]', '-c:a:2', 'aac',
+            '-map', '[a_5]', '-c:a:3', 'aac',
             '-map', '0:a:3', '-c:a:4', 'copy',
-            '-map', '[a_7]', '-c:a_7', 'aac',
-            '-map', '[a_9]', '-c:a_9', 'aac',
+            '-map', '[a_7]', '-c:a:5', 'aac',
+            '-map', '[a_9]', '-c:a:6', 'aac',
             'output.mp4',
         ], $command->build());
     }

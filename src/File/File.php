@@ -534,11 +534,8 @@ class File implements FileInterface
         }
 
         $streamName = sprintf('v%s_%d', $this->getName(), $this->streamsCounter++);
-        $videoStream = new VideoStream($this, $streamName, '', false, false);
 
-        $this->videoStreams[] = $videoStream;
-
-        return $videoStream;
+        return new VideoStream($this, $streamName, '', false, false);
     }
 
     /**
@@ -555,11 +552,8 @@ class File implements FileInterface
         }
 
         $streamName = sprintf('a%s_%d', $this->getName(), $this->streamsCounter++);
-        $audioStream = new AudioStream($this, $streamName, '', false, false);
 
-        $this->audioStreams[] = $audioStream;
-
-        return $audioStream;
+        return new AudioStream($this, $streamName, '', false, false);
     }
 
     /**

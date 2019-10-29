@@ -35,11 +35,7 @@ class VideoStream extends Stream implements VideoStreamInterface
      */
     public function addOption(string $name, string $argument = ''): VideoStreamInterface
     {
-        $this->options[] = $name;
-
-        if ($argument) {
-            $this->options[] = $argument;
-        }
+        $this->options[] = [$name, $argument, false];
 
         return $this;
     }
@@ -54,7 +50,9 @@ class VideoStream extends Stream implements VideoStreamInterface
      */
     public function addStreamOption(string $name, string $argument = ''): VideoStreamInterface
     {
-        return $this->addOption(sprintf('%s:%s', $name, $this->getName()), $argument);
+        $this->options[] = [$name, $argument, true];
+
+        return $this;
     }
 
     /**

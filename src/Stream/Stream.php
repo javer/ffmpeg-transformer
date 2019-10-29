@@ -77,10 +77,20 @@ abstract class Stream implements StreamInterface
             throw new \LogicException(sprintf('Stream "%s" is not connected to any output', $this->getName()));
         }
 
-        $options = $this->options;
+        $options = [];
+
+        $streamSpecifier = sprintf('%s:%s', $this->getType(), $this->file->getStreamNumber($this));
+
+        foreach ($this->options as [$name, $argument, $withSpecifier]) {
+            $options[] = $withSpecifier ? sprintf('%s:%s', $name, $streamSpecifier) : $name;
+
+            if (strlen($argument) > 0) {
+                $options[] = $argument;
+            }
+        }
 
         if (!$this->isInput && !$this->isCustomCodec) {
-            $options[] = sprintf('-c:%s', $this->getName());
+            $options[] = sprintf('-c:%s', $streamSpecifier);
             $options[] = 'copy';
         }
 

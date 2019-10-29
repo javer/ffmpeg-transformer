@@ -35,11 +35,7 @@ class AudioStream extends Stream implements AudioStreamInterface
      */
     public function addOption(string $name, string $argument = ''): AudioStreamInterface
     {
-        $this->options[] = $name;
-
-        if ($argument) {
-            $this->options[] = $argument;
-        }
+        $this->options[] = [$name, $argument, false];
 
         return $this;
     }
@@ -54,7 +50,9 @@ class AudioStream extends Stream implements AudioStreamInterface
      */
     public function addStreamOption(string $name, string $argument = ''): AudioStreamInterface
     {
-        return $this->addOption(sprintf('%s:%s', $name, $this->getName()), $argument);
+        $this->options[] = [$name, $argument, true];
+
+        return $this;
     }
 
     /**
