@@ -65,7 +65,7 @@ class CommandTransformer
         MediaProfile $transformation,
         FileInterface $inputFile,
         FileInterface $outputFile
-    )
+    ): void
     {
         foreach ($transformation->getVideoProfiles() as $trackNum => $videoProfile) {
             $inputVideoStream = $inputFile->getVideoStream($trackNum);
@@ -95,7 +95,7 @@ class CommandTransformer
         MediaProfile $transformation,
         ComplexFilterChainInterface $complexFilterChain,
         FileInterface $outputFile
-    )
+    ): void
     {
         foreach ($complexFilterChain->getOutputVideoStreams() as $videoStream) {
             $outputVideoStream = $outputFile->addVideoStream($videoStream);
@@ -116,7 +116,7 @@ class CommandTransformer
      * @param VideoStreamInterface $videoStream
      * @param VideoProfile         $videoProfile
      */
-    public function applyVideoTransformation(VideoStreamInterface $videoStream, VideoProfile $videoProfile)
+    public function applyVideoTransformation(VideoStreamInterface $videoStream, VideoProfile $videoProfile): void
     {
         if ($videoProfile->getWidth() > 0 || $videoProfile->getHeight() > 0) {
             $videoStream->frameSize(sprintf('%dx%d', $videoProfile->getWidth(), $videoProfile->getHeight()));
@@ -173,7 +173,7 @@ class CommandTransformer
      * @param AudioStreamInterface $outputAudioStream
      * @param AudioProfile         $audioProfile
      */
-    public function applyAudioTransformation(AudioStreamInterface $outputAudioStream, AudioProfile $audioProfile)
+    public function applyAudioTransformation(AudioStreamInterface $outputAudioStream, AudioProfile $audioProfile): void
     {
         if (!is_null($codec = $audioProfile->getCodec())) {
             $outputAudioStream->codec($this->getMappedCodec($codec));

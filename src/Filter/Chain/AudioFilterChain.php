@@ -2,6 +2,8 @@
 
 namespace Javer\FfmpegTransformer\Filter\Chain;
 
+use InvalidArgumentException;
+
 /**
  * Class AudioFilterChain
  *
@@ -16,12 +18,12 @@ class AudioFilterChain extends FilterChain implements AudioFilterChainInterface
      *
      * @return AudioFilterChainInterface
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function channelsplit(array $arguments = []): AudioFilterChainInterface
     {
         if (!isset($arguments['channel_layout'])) {
-            throw new \InvalidArgumentException('You must specify channel_layout for the channelsplit filter');
+            throw new InvalidArgumentException('You must specify channel_layout for the channelsplit filter');
         }
 
         switch ($arguments['channel_layout']) {

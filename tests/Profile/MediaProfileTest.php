@@ -15,7 +15,7 @@ class MediaProfileTest extends TestCase
     /**
      * Test fromArray and toArray.
      */
-    public function testFromAndToArray()
+    public function testFromAndToArray(): void
     {
         $referenceMediaProfile = [
             'name' => 'reference',

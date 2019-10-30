@@ -3,6 +3,7 @@
 namespace Javer\FfmpegTransformer\Stream;
 
 use Javer\FfmpegTransformer\File\FileInterface;
+use LogicException;
 
 /**
  * Class Stream
@@ -55,10 +56,16 @@ abstract class Stream implements StreamInterface
      * @param boolean       $isInput
      * @param boolean       $isMapped
      */
-    public function __construct(FileInterface $file, $name = null, $type = '', $isInput = false, $isMapped = true)
+    public function __construct(
+        FileInterface $file,
+        $name = null,
+        string $type = '',
+        bool $isInput = false,
+        bool $isMapped = true
+    )
     {
         $this->file = $file;
-        $this->name = is_integer($name) ? trim(implode(':', [$this->file->getName(), $type, $name]), ':') : $name;
+        $this->name = is_int($name) ? trim(implode(':', [$this->file->getName(), $type, $name]), ':') : $name;
         $this->type = $type;
         $this->isInput = $isInput;
         $this->isMapped = $isMapped;
@@ -69,12 +76,12 @@ abstract class Stream implements StreamInterface
      *
      * @return array
      *
-     * @throws \LogicException
+     * @throws LogicException
      */
     public function build(): array
     {
         if (!$this->isInput && !$this->isMapped) {
-            throw new \LogicException(sprintf('Stream "%s" is not connected to any output', $this->getName()));
+            throw new LogicException(sprintf('Stream "%s" is not connected to any output', $this->getName()));
         }
 
         $options = [];
@@ -158,9 +165,9 @@ abstract class Stream implements StreamInterface
      *
      * @return StreamInterface
      *
-     * @throws \LogicException
+     * @throws LogicException
      */
-    public function moveTo(int $position)
+    public function moveTo(int $position): StreamInterface
     {
         $this->file->moveStreamToPosition($this, $position);
 

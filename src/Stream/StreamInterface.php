@@ -12,8 +12,8 @@ use Javer\FfmpegTransformer\File\FileInterface;
  */
 interface StreamInterface extends BuilderInterface
 {
-    const TYPE_VIDEO = 'v';
-    const TYPE_AUDIO = 'a';
+    public const TYPE_VIDEO = 'v';
+    public const TYPE_AUDIO = 'a';
 
     /**
      * Returns stream name.
@@ -43,7 +43,7 @@ interface StreamInterface extends BuilderInterface
      *
      * @return StreamInterface
      */
-    public function moveTo(int $position);
+    public function moveTo(int $position): StreamInterface;
 
     /**
      * Return to file.

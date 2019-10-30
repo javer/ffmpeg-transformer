@@ -4,3 +4,5 @@
 /composer.phar
 /phpunit.xml
 /vendor/
+/.phpcs-cache
+/phpcs.xml

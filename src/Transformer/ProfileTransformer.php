@@ -13,10 +13,10 @@ use Javer\FfmpegTransformer\Profile\VideoProfile;
  */
 class ProfileTransformer
 {
-    const CODEC_COPY = 'copy';
-    const CODEC_H264 = 'h264';
+    public const CODEC_COPY = 'copy';
+    public const CODEC_H264 = 'h264';
 
-    const PRESET_ULTRAFAST = 'ultrafast';
+    public const PRESET_ULTRAFAST = 'ultrafast';
 
     /**
      * Transform media.
@@ -226,11 +226,13 @@ class ProfileTransformer
     {
         if ($value > 0 && $threshold > 0) {
             return min($value, $threshold);
-        } elseif ($value > 0) {
-            return $value;
-        } else {
-            return $threshold;
         }
+
+        if ($value > 0) {
+            return $value;
+        }
+
+        return $threshold;
     }
 
     /**

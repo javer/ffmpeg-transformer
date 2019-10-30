@@ -11,20 +11,20 @@ use FFMpeg\FFProbe\DataMapping\AbstractData;
  */
 class VideoProfile
 {
-    const WIDTH = 'width';
-    const HEIGHT = 'height';
-    const CODEC = 'codec';
-    const PROFILE = 'profile';
-    const PRESET = 'preset';
-    const PIXEL_FORMAT = 'pixel_format';
-    const BITRATE = 'bitrate';
-    const MAX_BITRATE = 'max_bitrate';
-    const MIN_BITRATE = 'min_bitrate';
-    const BUFFER_SIZE = 'buffer_size';
-    const CRF = 'crf';
-    const FRAME_RATE = 'frame_rate';
-    const KEYFRAME_INTERVAL = 'keyframe_interval';
-    const ROTATE = 'rotate';
+    public const WIDTH = 'width';
+    public const HEIGHT = 'height';
+    public const CODEC = 'codec';
+    public const PROFILE = 'profile';
+    public const PRESET = 'preset';
+    public const PIXEL_FORMAT = 'pixel_format';
+    public const BITRATE = 'bitrate';
+    public const MAX_BITRATE = 'max_bitrate';
+    public const MIN_BITRATE = 'min_bitrate';
+    public const BUFFER_SIZE = 'buffer_size';
+    public const CRF = 'crf';
+    public const FRAME_RATE = 'frame_rate';
+    public const KEYFRAME_INTERVAL = 'keyframe_interval';
+    public const ROTATE = 'rotate';
 
     /**
      * @var integer|null
@@ -194,8 +194,8 @@ class VideoProfile
             static::ROTATE => $this->getRotate(),
         ];
 
-        $values = array_filter($values, function ($value): bool {
-            return !is_null($value);
+        $values = array_filter($values, static function ($value): bool {
+            return $value !== null;
         });
 
         return $values;
@@ -237,13 +237,17 @@ class VideoProfile
 
         if ($value === 'unknown') {
             return null;
-        } elseif (is_int($value)) {
-            return (int) $value;
-        } elseif (is_float($value)) {
-            return (float) $value;
-        } else {
-            return $value;
         }
+
+        if (is_int($value)) {
+            return (int) $value;
+        }
+
+        if (is_float($value)) {
+            return (float) $value;
+        }
+
+        return $value;
     }
 
     /**

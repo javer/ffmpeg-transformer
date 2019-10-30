@@ -10,6 +10,7 @@ use Javer\FfmpegTransformer\Stream\AudioStreamInterface;
 use Javer\FfmpegTransformer\Stream\StreamInterface;
 use Javer\FfmpegTransformer\Stream\VideoStream;
 use Javer\FfmpegTransformer\Stream\VideoStreamInterface;
+use LogicException;
 
 /**
  * Class File
@@ -56,7 +57,7 @@ class File implements FileInterface
     /**
      * @var FilterGraphInterface
      */
-    protected $filterGraph = null;
+    protected $filterGraph;
 
     /**
      * @var integer
@@ -395,12 +396,12 @@ class File implements FileInterface
      *
      * @return FileInterface
      *
-     * @throws \LogicException
+     * @throws LogicException
      */
     public function attach(string $fiename): FileInterface
     {
         if ($this->isInput) {
-            throw new \LogicException('Attach option can be used only for output files');
+            throw new LogicException('Attach option can be used only for output files');
         }
 
         return $this->addOption('-attach', $fiename);
@@ -411,12 +412,12 @@ class File implements FileInterface
      *
      * @return FileInterface
      *
-     * @throws \LogicException
+     * @throws LogicException
      */
     public function moveHeaderToStart(): FileInterface
     {
         if ($this->isInput) {
-            throw new \LogicException('Movflags option can be used only for output files');
+            throw new LogicException('Movflags option can be used only for output files');
         }
 
         return $this->addOption('-movflags', 'faststart');
@@ -443,12 +444,12 @@ class File implements FileInterface
      *
      * @return VideoStreamInterface
      *
-     * @throws \LogicException
+     * @throws LogicException
      */
     public function addVideoStream(VideoStreamInterface $mapVideoStream = null): VideoStreamInterface
     {
         if ($this->isInput) {
-            throw new \LogicException('AddVideoStream can be used only for output files, use getVideoStream for input');
+            throw new LogicException('AddVideoStream can be used only for output files, use getVideoStream for input');
         }
 
         $videoStream = new VideoStream($this);
@@ -469,12 +470,12 @@ class File implements FileInterface
      *
      * @return AudioStreamInterface
      *
-     * @throws \LogicException
+     * @throws LogicException
      */
     public function addAudioStream(AudioStreamInterface $mapAudioStream = null): AudioStreamInterface
     {
         if ($this->isInput) {
-            throw new \LogicException('AddAudioStream can be used only for output files, use getAudioStream for input');
+            throw new LogicException('AddAudioStream can be used only for output files, use getAudioStream for input');
         }
 
         $audioStream = new AudioStream($this);
@@ -525,12 +526,12 @@ class File implements FileInterface
      *
      * @return VideoStreamInterface
      *
-     * @throws \LogicException
+     * @throws LogicException
      */
     public function createVideoStream(): VideoStreamInterface
     {
         if ($this->isInput) {
-            throw new \LogicException('CreateVideoStream can only be used for output files');
+            throw new LogicException('CreateVideoStream can only be used for output files');
         }
 
         $streamName = sprintf('v%s_%d', $this->getName(), $this->streamsCounter++);
@@ -543,12 +544,12 @@ class File implements FileInterface
      *
      * @return AudioStreamInterface
      *
-     * @throws \LogicException
+     * @throws LogicException
      */
     public function createAudioStream(): AudioStreamInterface
     {
         if ($this->isInput) {
-            throw new \LogicException('CreateAudioStream can only be used for output files');
+            throw new LogicException('CreateAudioStream can only be used for output files');
         }
 
         $streamName = sprintf('a%s_%d', $this->getName(), $this->streamsCounter++);
@@ -563,7 +564,7 @@ class File implements FileInterface
      *
      * @return StreamInterface
      *
-     * @throws \LogicException
+     * @throws LogicException
      */
     public function createStream(string $type): StreamInterface
     {
@@ -575,7 +576,7 @@ class File implements FileInterface
                 return $this->createAudioStream();
 
             default:
-                throw new \LogicException(sprintf('Unknown stream type: %s', $type));
+                throw new LogicException(sprintf('Unknown stream type: %s', $type));
         }
     }
 
@@ -586,7 +587,7 @@ class File implements FileInterface
      *
      * @return integer|null
      *
-     * @throws \LogicException
+     * @throws LogicException
      */
     public function getStreamNumber(StreamInterface $stream): ?int
     {
@@ -602,7 +603,7 @@ class File implements FileInterface
                 break;
 
             default:
-                throw new \LogicException(sprintf('Unknown stream type: %s', $stream->getType()));
+                throw new LogicException(sprintf('Unknown stream type: %s', $stream->getType()));
         }
 
         return $streamNumber === false ? null : $streamNumber;
@@ -616,18 +617,18 @@ class File implements FileInterface
      *
      * @return FileInterface
      *
-     * @throws \LogicException
+     * @throws LogicException
      */
     public function moveStreamToPosition(StreamInterface $stream, int $position): FileInterface
     {
         if ($stream->getInput()) {
-            throw new \LogicException('You cannot reorder streams in the input file');
+            throw new LogicException('You cannot reorder streams in the input file');
         }
 
         $streamNumber = $this->getStreamNumber($stream);
 
-        if (is_null($streamNumber)) {
-            throw new \LogicException(sprintf('Stream %s not found', $stream->getName()));
+        if ($streamNumber === null) {
+            throw new LogicException(sprintf('Stream %s not found', $stream->getName()));
         }
 
         switch ($stream->getType()) {
@@ -642,7 +643,7 @@ class File implements FileInterface
                 break;
 
             default:
-                throw new \LogicException(sprintf('Unknown stream type: %s', $stream->getType()));
+                throw new LogicException(sprintf('Unknown stream type: %s', $stream->getType()));
         }
 
         return $this;
@@ -679,7 +680,7 @@ class File implements FileInterface
      */
     public function filter(): FilterGraphInterface
     {
-        if (is_null($this->filterGraph)) {
+        if ($this->filterGraph === null) {
             $this->filterGraph = new FilterGraph($this);
         }
 

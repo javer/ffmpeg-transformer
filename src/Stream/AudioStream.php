@@ -20,7 +20,13 @@ class AudioStream extends Stream implements AudioStreamInterface
      * @param boolean       $isInput
      * @param boolean       $isMapped
      */
-    public function __construct(FileInterface $file, $name = null, $type = '', $isInput = false, $isMapped = true)
+    public function __construct(
+        FileInterface $file,
+        $name = null,
+        string $type = '',
+        bool $isInput = false,
+        bool $isMapped = true
+    )
     {
         parent::__construct($file, $name, StreamInterface::TYPE_AUDIO, $isInput, $isMapped);
     }

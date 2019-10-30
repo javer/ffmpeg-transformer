@@ -11,12 +11,12 @@ use FFMpeg\FFProbe\DataMapping\AbstractData;
  */
 class AudioProfile
 {
-    const CODEC = 'codec';
-    const PROFILE = 'profile';
-    const BITRATE = 'bitrate';
-    const SAMPLE_RATE = 'sample_rate';
-    const CHANNELS = 'channels';
-    const DURATION = 'duration';
+    public const CODEC = 'codec';
+    public const PROFILE = 'profile';
+    public const BITRATE = 'bitrate';
+    public const SAMPLE_RATE = 'sample_rate';
+    public const CHANNELS = 'channels';
+    public const DURATION = 'duration';
 
     /**
      * @var string|null
@@ -106,8 +106,8 @@ class AudioProfile
             static::DURATION => $this->getDuration(),
         ];
 
-        $values = array_filter($values, function ($value): bool {
-            return !is_null($value);
+        $values = array_filter($values, static function ($value): bool {
+            return $value !== null;
         });
 
         return $values;
@@ -147,13 +147,17 @@ class AudioProfile
 
         if ($value === 'unknown') {
             return null;
-        } elseif (is_int($value)) {
-            return (int) $value;
-        } elseif (is_float($value)) {
-            return (float) $value;
-        } else {
-            return $value;
         }
+
+        if (is_int($value)) {
+            return (int) $value;
+        }
+
+        if (is_float($value)) {
+            return (float) $value;
+        }
+
+        return $value;
     }
 
     /**

@@ -4,6 +4,7 @@ namespace Javer\FfmpegTransformer\Command;
 
 use Javer\FfmpegTransformer\File\File;
 use Javer\FfmpegTransformer\File\FileInterface;
+use LogicException;
 
 /**
  * Class Command
@@ -51,18 +52,18 @@ class Command implements CommandInterface
      *
      * @return array
      *
-     * @throws \LogicException
+     * @throws LogicException
      */
     public function build(): array
     {
         $options = $this->options;
 
-        if (count($this->inputFiles) == 0) {
-            throw new \LogicException('You should specify at least one input file');
+        if (count($this->inputFiles) === 0) {
+            throw new LogicException('You should specify at least one input file');
         }
 
-        if (count($this->outputFiles) == 0) {
-            throw new \LogicException('You should specify at least one output file');
+        if (count($this->outputFiles) === 0) {
+            throw new LogicException('You should specify at least one output file');
         }
 
         foreach ($this->inputFiles as $inputFile) {

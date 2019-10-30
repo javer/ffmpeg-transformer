@@ -2,7 +2,7 @@
 
 <phpunit bootstrap="./vendor/autoload.php" colors="true">
     <testsuites>
-        <testsuite name="FFMpeg Command Test Suite">
+        <testsuite name="FFMpeg transformer Test Suite">
             <directory suffix="Test.php">./tests</directory>
         </testsuite>
     </testsuites>

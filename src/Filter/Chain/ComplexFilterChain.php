@@ -5,6 +5,7 @@ namespace Javer\FfmpegTransformer\Filter\Chain;
 use Javer\FfmpegTransformer\Stream\AudioStreamInterface;
 use Javer\FfmpegTransformer\Stream\StreamInterface;
 use Javer\FfmpegTransformer\Stream\VideoStreamInterface;
+use LogicException;
 
 /**
  * Class ComplexFilterChain
@@ -18,7 +19,7 @@ class ComplexFilterChain extends FilterChain implements ComplexFilterChainInterf
      *
      * @return ComplexFilterChainInterface
      *
-     * @throws \LogicException
+     * @throws LogicException
      */
     public function concat(): ComplexFilterChainInterface
     {
@@ -30,8 +31,8 @@ class ComplexFilterChain extends FilterChain implements ComplexFilterChainInterf
             $partsCount = min($videoCount, $audioCount);
         }
 
-        if ($videoCount % $partsCount != 0 || $audioCount % $partsCount != 0) {
-            throw new \LogicException('All segments must have the same number of streams of each type');
+        if ($videoCount % $partsCount !== 0 || $audioCount % $partsCount !== 0) {
+            throw new LogicException('All segments must have the same number of streams of each type');
         }
 
         $videoCount /= $partsCount;

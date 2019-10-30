@@ -11,14 +11,14 @@ use FFMpeg\Media\AbstractStreamableMedia;
  */
 class MediaProfile
 {
-    const NAME = 'name';
-    const LABEL = 'label';
-    const FORMAT = 'format';
-    const DURATION = 'duration';
-    const SIZE = 'size';
-    const BITRATE = 'bitrate';
-    const VIDEO = 'video';
-    const AUDIO = 'audio';
+    public const NAME = 'name';
+    public const LABEL = 'label';
+    public const FORMAT = 'format';
+    public const DURATION = 'duration';
+    public const SIZE = 'size';
+    public const BITRATE = 'bitrate';
+    public const VIDEO = 'video';
+    public const AUDIO = 'audio';
 
     // Default supposed bitrate for audio track when it cannot be recognized from the input media file
     protected const DEFAULT_AUDIO_BITRATE = 64000;
@@ -137,8 +137,8 @@ class MediaProfile
             $values[static::AUDIO][] = $audioProfile->toArray();
         }
 
-        $values = array_filter($values, function ($value): bool {
-            return !is_null($value);
+        $values = array_filter($values, static function ($value): bool {
+            return $value !== null;
         });
 
         return $values;
@@ -187,7 +187,7 @@ class MediaProfile
      *
      * @return MediaProfile
      */
-    public function repairProfileForMedia(AbstractStreamableMedia $media)
+    public function repairProfileForMedia(AbstractStreamableMedia $media): MediaProfile
     {
         if (!$this->getSize() && file_exists($media->getPathfile())) {
             $this->setSize(filesize($media->getPathfile()));
@@ -451,7 +451,7 @@ class MediaProfile
         $exp = array_search($degree, ['K', 'M', 'G', 'T', 'P']);
 
         if ($exp !== false) {
-            $value = ((int) substr($value, 0, -1)) * pow(1000, $exp + 1);
+            $value = ((int) substr($value, 0, -1)) * (1000 ** ($exp + 1));
         }
 
         return $value;

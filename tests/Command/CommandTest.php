@@ -15,7 +15,7 @@ class CommandTest extends TestCase
     /**
      * Test copying single video and audio stream to the output file in another format.
      */
-    public function testFormatChange()
+    public function testFormatChange(): void
     {
         $command = (new Command())
             ->overwriteOutputFiles();
@@ -40,7 +40,7 @@ class CommandTest extends TestCase
     /**
      * Test transcoding of the single video aud audio streams.
      */
-    public function testTranscodingSingleVideoAndAudio()
+    public function testTranscodingSingleVideoAndAudio(): void
     {
         $command = (new Command())
             ->overwriteOutputFiles();
@@ -71,7 +71,7 @@ class CommandTest extends TestCase
     /**
      * Test audio splitting of the single audio track to several audio tracks.
      */
-    public function testAudioSplitting()
+    public function testAudioSplitting(): void
     {
         $command = (new Command())
             ->overwriteOutputFiles();
@@ -100,7 +100,7 @@ class CommandTest extends TestCase
     /**
      * Test VideoTrimConsumer::trimVideo() fast path.
      */
-    public function testVideoTrim()
+    public function testVideoTrim(): void
     {
         $command = (new Command())
             ->overwriteOutputFiles();
@@ -128,7 +128,7 @@ class CommandTest extends TestCase
     /**
      * Test extract audio tracks.
      */
-    public function testExtractAudioTracks()
+    public function testExtractAudioTracks(): void
     {
         $command = (new Command())
             ->overwriteOutputFiles();
@@ -168,7 +168,7 @@ class CommandTest extends TestCase
     /**
      * Test filter graph video and audio filters.
      */
-    public function testFilterGraphVideoAudio()
+    public function testFilterGraphVideoAudio(): void
     {
         $command = (new Command())
             ->overwriteOutputFiles();
@@ -219,7 +219,7 @@ class CommandTest extends TestCase
     /**
      * Test filter graph pad left and right.
      */
-    public function testFilterGraphPadLeftRight()
+    public function testFilterGraphPadLeftRight(): void
     {
         $command = (new Command())
             ->overwriteOutputFiles();
@@ -277,7 +277,7 @@ class CommandTest extends TestCase
     /**
      * Test filter graph sync ranges.
      */
-    public function testFilterGraphSyncRanges()
+    public function testFilterGraphSyncRanges(): void
     {
         $actions = [
             ['P', 5],
@@ -309,12 +309,12 @@ class CommandTest extends TestCase
         foreach ($actions as $actionData) {
             $action = $actionData[0];
 
-            if ($action == 'P') {
+            if ($action === 'P') {
                 $duration = $actionData[1];
                 $blackVideoStream = $command->generateBlackVideo(640, 480, $duration)->getVideoStream();
                 $emptyAudioStream = $command->generateEmptyAudio($duration)->getAudioStream();
                 $streams = array_merge($streams, [$blackVideoStream, $emptyAudioStream]);
-            } elseif ($action == 'T') {
+            } elseif ($action === 'T') {
                 $trimVideoStream = $filterGraph->video($inputVideoStream)
                     ->trim($actionData[1], $actionData[2])
                     ->resetTimestamp()
@@ -374,7 +374,7 @@ class CommandTest extends TestCase
     /**
      * Test mix and normalize audio tracks.
      */
-    public function testMixAndNormalizeAudioTracks()
+    public function testMixAndNormalizeAudioTracks(): void
     {
         $inputFilename = 'input.mp4';
         $outputFilename = 'output.mp4';
@@ -466,7 +466,7 @@ class CommandTest extends TestCase
     /**
      * Test mix and normalize audio tracks with reordering output streams.
      */
-    public function testMoveStreamToPosition()
+    public function testMoveStreamToPosition(): void
     {
         $inputFilename = 'input.mp4';
         $outputFilename = 'output.mp4';
