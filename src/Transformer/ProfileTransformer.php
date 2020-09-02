@@ -109,7 +109,8 @@ class ProfileTransformer
 
         $targetFramerate = $this->getLeastValue($sourceFrameRate, $target->getFrameRate());
 
-        if ($force
+        if (
+            $force
             || $sourceCodec !== $targetCodec
             || $sourcePixelFormat !== $targetPixelFormat
             || $sourceRotate != 0
@@ -117,7 +118,8 @@ class ProfileTransformer
             || $sourceHeight > $targetHeight
             || $sourceBitrate > $targetBitrate
             || $sourceBitrate > $targetMaxrate
-            || $sourceFrameRate > $targetFramerate) {
+            || $sourceFrameRate > $targetFramerate
+        ) {
             $transform->setCodec($targetCodec);
             $transform->setProfile($target->getProfile());
             $transform->setPreset($this->getVideoCodecPreset($targetCodec, $target->getPreset(), $targetFramerate));
@@ -166,11 +168,13 @@ class ProfileTransformer
 
         $targetChannels = $this->getLeastValue($source->getChannels(), $target->getChannels());
 
-        if ($force
+        if (
+            $force
             || $source->getCodec() !== $targetCodec
             || $source->getBitrate() > $targetBitrate
             || $source->getSampleRate() > $targetSampleRate
-            || $source->getChannels() > $targetChannels) {
+            || $source->getChannels() > $targetChannels
+        ) {
             $transform->setCodec($targetCodec);
             $transform->setProfile($target->getProfile());
             $transform->setBitrate($targetBitrate);

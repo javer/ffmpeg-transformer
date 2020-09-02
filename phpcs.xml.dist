@@ -12,8 +12,5 @@
     <file>src/</file>
     <file>tests/</file>
 
-    <rule ref="vendor/swivl/php-coding-standard/Swivl/ruleset.xml">
-        <exclude name="PSR12.ControlStructures.ControlStructureSpacing.FirstExpressionLine"/>
-        <exclude name="PSR12.ControlStructures.ControlStructureSpacing.CloseParenthesisLine"/>
-    </rule>
+    <rule ref="vendor/swivl/php-coding-standard/Swivl/ruleset.xml" />
 </ruleset>

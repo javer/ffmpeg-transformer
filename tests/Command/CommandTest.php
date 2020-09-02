@@ -1,6 +1,6 @@
 <?php
 
-namespace Javer\FfmpegTransformer\Tests\Ffmpeg\Command;
+namespace Javer\FfmpegTransformer\Tests\Command;
 
 use Javer\FfmpegTransformer\Command\Command;
 use PHPUnit\Framework\TestCase;
@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Class CommandTest
  *
- * @package Javer\FfmpegTransformer\Tests\Ffmpeg\Command
+ * @package Javer\FfmpegTransformer\Tests\Command
  */
 class CommandTest extends TestCase
 {
@@ -27,7 +27,7 @@ class CommandTest extends TestCase
             ->addVideoStream($inputFile->getVideoStream())->end()
             ->addAudioStream($inputFile->getAudioStream())->end();
 
-        $this->assertEquals([
+        self::assertEquals([
             '-y',
             '-i', 'input.mov',
             '-movflags', 'faststart',
@@ -58,7 +58,7 @@ class CommandTest extends TestCase
                 ->codec('aac')
             ->end();
 
-        $this->assertEquals([
+        self::assertEquals([
             '-y',
             '-i', 'input.mov',
             '-movflags', 'faststart',
@@ -87,7 +87,7 @@ class CommandTest extends TestCase
                 ->bitrate('64k')
             ->end();
 
-        $this->assertEquals([
+        self::assertEquals([
             '-y',
             '-i', 'input.mov',
             '-movflags', 'faststart',
@@ -114,7 +114,7 @@ class CommandTest extends TestCase
             ->addVideoStream($inputFile->getVideoStream())->end()
             ->addAudioStream($inputFile->getAudioStream())->end();
 
-        $this->assertEquals([
+        self::assertEquals([
             '-y',
             '-i', 'input.mov',
             '-movflags', 'faststart',
@@ -153,7 +153,7 @@ class CommandTest extends TestCase
                 ->codec('libx264')
                 ->preset('ultrafast');
 
-        $this->assertEquals([
+        self::assertEquals([
             '-y',
             '-i', 'input.mov',
             '-f', 'rawvideo',  '-s:v:0', '16x16',  '-pix_fmt:v:0', 'rgb24',  '-r:v:0', '1',  '-i', '/dev/zero',
@@ -204,7 +204,7 @@ class CommandTest extends TestCase
         $outputFile->addAudioStream($outputAudioStream)
             ->codec('aac');
 
-        $this->assertEquals([
+        self::assertEquals([
             '-y',
             '-i', 'input.mp4',
             '-movflags', 'faststart',
@@ -257,7 +257,7 @@ class CommandTest extends TestCase
         $outputFile->addAudioStream($outputAudioStream)
             ->codec('aac');
 
-        $this->assertEquals([
+        self::assertEquals([
             '-y',
             '-i', 'input.mp4',
             '-f', 'rawvideo', '-t', '10', '-s:v:0','640x480', '-pix_fmt:v:0', 'rgb24', '-i', '/dev/zero',
@@ -339,7 +339,7 @@ class CommandTest extends TestCase
         $outputFile->addAudioStream($outputAudioStream)
             ->codec('aac');
 
-        $this->assertEquals([
+        self::assertEquals([
             '-y',
             '-i', 'input.mp4',
             '-f', 'rawvideo', '-t', '5', '-s:v:0', '640x480', '-pix_fmt:v:0', 'rgb24', '-i', '/dev/zero',
@@ -438,7 +438,7 @@ class CommandTest extends TestCase
         $outputMixedAudioStream->map($mixedAudioStream);
         $outputMixedAudioStream->codec($codec);
 
-        $this->assertEquals([
+        self::assertEquals([
             '-y',
             '-i', 'input.mp4',
             '-movflags', 'faststart',
@@ -529,7 +529,7 @@ class CommandTest extends TestCase
         $outputMixedAudioStream->moveTo(0);
         $outputMixedAudioStream->codec($codec);
 
-        $this->assertEquals([
+        self::assertEquals([
             '-y',
             '-i', 'input.mp4',
             '-movflags', 'faststart',

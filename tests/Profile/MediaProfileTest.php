@@ -65,6 +65,6 @@ class MediaProfileTest extends TestCase
             ],
         ];
 
-        $this->assertEquals($serializedProfile, $mediaProfile->toArray());
+        self::assertEquals($serializedProfile, $mediaProfile->toArray());
     }
 }

@@ -3,6 +3,7 @@
 /composer.lock
 /composer.phar
 /phpunit.xml
+/.phpunit.result.cache
 /vendor/
 /.phpcs-cache
 /phpcs.xml
