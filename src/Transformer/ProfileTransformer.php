@@ -75,8 +75,17 @@ class ProfileTransformer
     {
         $transform = new VideoProfile();
 
-        $sourceWidth = $source->getWidth();
-        $sourceHeight = $source->getHeight();
+        $sourceRotate = $source->getRotate();
+
+        // FFmpeg 4.0+ automatically rotates the source video
+        if (in_array(abs($sourceRotate), [90, 270], true)) {
+            $sourceWidth = $source->getHeight();
+            $sourceHeight = $source->getWidth();
+        } else {
+            $sourceWidth = $source->getWidth();
+            $sourceHeight = $source->getHeight();
+        }
+
         $targetWidth = $this->getLeastValue($sourceWidth, $target->getWidth());
         $targetHeight = $this->getLeastValue($sourceHeight, $target->getHeight());
         $sizeAlign = 4;
@@ -92,7 +101,6 @@ class ProfileTransformer
 
         $sourceCodec = $source->getCodec();
         $sourcePixelFormat = $source->getPixelFormat();
-        $sourceRotate = $source->getRotate();
         $sourceBitrate = $source->getBitrate();
         $sourceFrameRate = $source->getFrameRate();
 
