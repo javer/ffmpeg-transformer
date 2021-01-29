@@ -1,0 +1,49 @@
+name: Test
+
+on:
+    push:
+    pull_request:
+
+jobs:
+    test:
+        name: PHP ${{ matrix.php-version }}
+
+        runs-on: ubuntu-latest
+
+        continue-on-error: ${{ matrix.allowed-to-fail }}
+
+        strategy:
+            matrix:
+                php-version:
+                    - '7.1'
+                    - '7.2'
+                    - '7.3'
+                    - '7.4'
+                    - '8.0'
+                allowed-to-fail: [false]
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  coverage: xdebug
+                  ini-values: "memory_limit=-1"
+                  php-version: ${{ matrix.php-version }}
+
+            - name: Validate composer.json
+              run: composer validate --no-check-lock
+
+            - name: Install dependencies
+              run: composer install --prefer-dist --no-progress --ansi
+
+            - name: Lint PHP files
+              run: find src tests -name "*.php" -print0 | xargs -0 -n1 -P8 php -l
+
+            - name: Validate code style
+              run: vendor/bin/phpcs
+
+            - name: Run PHPUnit tests
+              run: vendor/bin/phpunit --coverage-text
