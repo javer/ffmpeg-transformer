@@ -6,11 +6,6 @@ use Javer\FfmpegTransformer\File\File;
 use Javer\FfmpegTransformer\File\FileInterface;
 use LogicException;
 
-/**
- * Class Command
- *
- * @package Javer\FfmpegTransformer\Command
- */
 class Command implements CommandInterface
 {
     /**
@@ -112,7 +107,7 @@ class Command implements CommandInterface
     /**
      * Overwrite output files.
      *
-     * @param boolean $flag
+     * @param bool $flag
      *
      * @return static
      */
@@ -160,7 +155,7 @@ class Command implements CommandInterface
     /**
      * Bits per raw sample.
      *
-     * @param integer $number
+     * @param int $number
      *
      * @return static
      */
@@ -172,7 +167,7 @@ class Command implements CommandInterface
     /**
      * Volume.
      *
-     * @param integer $volume
+     * @param int $volume
      *
      * @return static
      */
@@ -216,9 +211,9 @@ class Command implements CommandInterface
     /**
      * Generate black video frames.
      *
-     * @param integer $width
-     * @param integer $height
-     * @param float   $duration
+     * @param int   $width
+     * @param int   $height
+     * @param float $duration
      *
      * @return FileInterface
      */

@@ -4,11 +4,6 @@ namespace Javer\FfmpegTransformer\Stream;
 
 use Javer\FfmpegTransformer\File\FileInterface;
 
-/**
- * Class AudioStream
- *
- * @package Javer\FfmpegTransformer\Stream
- */
 class AudioStream extends Stream implements AudioStreamInterface
 {
     /**
@@ -16,8 +11,8 @@ class AudioStream extends Stream implements AudioStreamInterface
      *
      * @param FileInterface   $file
      * @param string|int|null $name
-     * @param boolean         $isInput
-     * @param boolean         $isMapped
+     * @param bool            $isInput
+     * @param bool            $isMapped
      */
     public function __construct(
         FileInterface $file,
@@ -104,7 +99,7 @@ class AudioStream extends Stream implements AudioStreamInterface
     /**
      * Set frames number.
      *
-     * @param integer $number
+     * @param int $number
      *
      * @return static
      */
@@ -116,7 +111,7 @@ class AudioStream extends Stream implements AudioStreamInterface
     /**
      * Set quality.
      *
-     * @param integer $quality
+     * @param int $quality
      *
      * @return static
      */
@@ -128,7 +123,7 @@ class AudioStream extends Stream implements AudioStreamInterface
     /**
      * Set rate.
      *
-     * @param integer $rate
+     * @param int $rate
      *
      * @return static
      */
@@ -140,7 +135,7 @@ class AudioStream extends Stream implements AudioStreamInterface
     /**
      * Set channels count.
      *
-     * @param integer $channels
+     * @param int $channels
      *
      * @return static
      */
@@ -191,7 +186,7 @@ class AudioStream extends Stream implements AudioStreamInterface
     /**
      * Set volume.
      *
-     * @param integer $volume
+     * @param int $volume
      *
      * @return static
      */

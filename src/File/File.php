@@ -12,11 +12,6 @@ use Javer\FfmpegTransformer\Stream\VideoStream;
 use Javer\FfmpegTransformer\Stream\VideoStreamInterface;
 use LogicException;
 
-/**
- * Class File
- *
- * @package Javer\FfmpegTransformer\File
- */
 class File implements FileInterface
 {
     protected CommandInterface $command;
@@ -52,7 +47,7 @@ class File implements FileInterface
      * @param CommandInterface $command
      * @param string           $filename
      * @param string           $name
-     * @param boolean          $isInput
+     * @param bool             $isInput
      */
     public function __construct(CommandInterface $command, string $filename, string $name = '', bool $isInput = false)
     {
@@ -195,7 +190,7 @@ class File implements FileInterface
     /**
      * Set file size.
      *
-     * @param integer $size
+     * @param int $size
      *
      * @return static
      */
@@ -288,7 +283,7 @@ class File implements FileInterface
     /**
      * Set frames number.
      *
-     * @param integer $number
+     * @param int $number
      *
      * @return static
      */
@@ -410,7 +405,7 @@ class File implements FileInterface
      *
      * Option: -loop 1
      *
-     * @param boolean $flag
+     * @param bool $flag
      *
      * @return static
      */
@@ -474,7 +469,7 @@ class File implements FileInterface
     /**
      * Get video stream by number.
      *
-     * @param integer $number
+     * @param int $number
      *
      * @return VideoStreamInterface
      */
@@ -490,7 +485,7 @@ class File implements FileInterface
     /**
      * Get audio stream by number.
      *
-     * @param integer $number
+     * @param int $number
      *
      * @return AudioStreamInterface
      */
@@ -562,7 +557,7 @@ class File implements FileInterface
      *
      * @param StreamInterface $stream
      *
-     * @return integer|null
+     * @return int|null
      *
      * @throws LogicException
      */
@@ -590,7 +585,7 @@ class File implements FileInterface
      * Move stream to the given position (stream index) in the output file.
      *
      * @param StreamInterface $stream
-     * @param integer         $position
+     * @param int             $position
      *
      * @return static
      *

@@ -5,11 +5,6 @@ namespace Javer\FfmpegTransformer\Filter\Chain;
 use Javer\FfmpegTransformer\Stream\AudioStreamInterface;
 use Javer\FfmpegTransformer\Stream\VideoStreamInterface;
 
-/**
- * Interface ComplexFilterChainInterface
- *
- * @package Javer\FfmpegTransformer\Filter\Chain
- */
 interface ComplexFilterChainInterface extends FilterChainInterface
 {
     /**
@@ -24,7 +19,7 @@ interface ComplexFilterChainInterface extends FilterChainInterface
     /**
      * Get output video stream by number.
      *
-     * @param integer $number
+     * @param int $number
      *
      * @return VideoStreamInterface
      */
@@ -40,7 +35,7 @@ interface ComplexFilterChainInterface extends FilterChainInterface
     /**
      * Get output audio stream by number.
      *
-     * @param integer $number
+     * @param int $number
      *
      * @return AudioStreamInterface
      */

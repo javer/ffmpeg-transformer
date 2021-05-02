@@ -7,11 +7,6 @@ use Javer\FfmpegTransformer\Stream\AudioStreamInterface;
 use Javer\FfmpegTransformer\Stream\VideoStreamInterface;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class CommandTest
- *
- * @package Javer\FfmpegTransformer\Tests\Command
- */
 class CommandTest extends TestCase
 {
     /**
@@ -158,7 +153,7 @@ class CommandTest extends TestCase
         self::assertEquals([
             '-y',
             '-i', 'input.mov',
-            '-f', 'rawvideo',  '-s:v:0', '16x16',  '-pix_fmt:v:0', 'rgb24',  '-r:v:0', '1',  '-i', '/dev/zero',
+            '-f', 'rawvideo', '-s:v:0', '16x16', '-pix_fmt:v:0', 'rgb24', '-r:v:0', '1', '-i', '/dev/zero',
             '-shortest',
             '-movflags', 'faststart',
             '-map', '1:v:0', '-pix_fmt:v:0', 'yuv420p', '-g', '1', '-c:v:0', 'libx264', '-preset', 'ultrafast',
@@ -269,7 +264,7 @@ class CommandTest extends TestCase
             '-f', 'lavfi', '-t', '10', '-i', 'aevalsrc=0',
             '-f', 'rawvideo', '-t', '20', '-s:v:0', '640x480', '-pix_fmt:v:0', 'rgb24', '-i', '/dev/zero',
             '-f', 'lavfi', '-t', '20', '-i', 'aevalsrc=0',
-            '-movflags',  'faststart',
+            '-movflags', 'faststart',
             '-filter_complex',
             '[1:v:0] [2:a:0] [0:v:0] [0:a:0] concat=n=2:v=1:a=1 [v_0] [a_1];'
             . ' [v_0] [a_1] [3:v:0] [4:a:0] concat=n=2:v=1:a=1 [v_2] [a_3]',
@@ -311,6 +306,7 @@ class CommandTest extends TestCase
         $filterGraph = $outputFile->filter();
 
         $streams = [];
+
         foreach ($actions as $actionData) {
             $action = $actionData[0];
 
@@ -396,7 +392,7 @@ class CommandTest extends TestCase
             '-2.6',
             '-90.3',
             '-8.0',
-            '-8.1'
+            '-8.1',
         ];
 
         $channels = [
@@ -491,7 +487,7 @@ class CommandTest extends TestCase
             '-2.6',
             '-90.3',
             '-8.0',
-            '-8.1'
+            '-8.1',
         ];
 
         $channels = [

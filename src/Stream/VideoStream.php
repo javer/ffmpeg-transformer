@@ -4,11 +4,6 @@ namespace Javer\FfmpegTransformer\Stream;
 
 use Javer\FfmpegTransformer\File\FileInterface;
 
-/**
- * Class VideoStream
- *
- * @package Javer\FfmpegTransformer\Stream
- */
 class VideoStream extends Stream implements VideoStreamInterface
 {
     /**
@@ -16,8 +11,8 @@ class VideoStream extends Stream implements VideoStreamInterface
      *
      * @param FileInterface   $file
      * @param string|int|null $name
-     * @param boolean         $isInput
-     * @param boolean         $isMapped
+     * @param bool            $isInput
+     * @param bool            $isMapped
      */
     public function __construct(
         FileInterface $file,
@@ -104,7 +99,7 @@ class VideoStream extends Stream implements VideoStreamInterface
     /**
      * Set frames number.
      *
-     * @param integer $number
+     * @param int $number
      *
      * @return static
      */
@@ -152,7 +147,7 @@ class VideoStream extends Stream implements VideoStreamInterface
     /**
      * Set bits per raw sample.
      *
-     * @param integer $number
+     * @param int $number
      *
      * @return static
      */
@@ -215,7 +210,7 @@ class VideoStream extends Stream implements VideoStreamInterface
     /**
      * Set pass.
      *
-     * @param integer $number
+     * @param int $number
      *
      * @return static
      */
@@ -287,7 +282,7 @@ class VideoStream extends Stream implements VideoStreamInterface
     /**
      * Set crf.
      *
-     * @param integer $crf
+     * @param int $crf
      *
      * @return static
      */
@@ -311,7 +306,7 @@ class VideoStream extends Stream implements VideoStreamInterface
     /**
      * Set keyframe interval.
      *
-     * @param integer $interval
+     * @param int $interval
      *
      * @return static
      */

@@ -5,11 +5,6 @@ namespace Javer\FfmpegTransformer\Stream;
 use Javer\FfmpegTransformer\BuilderInterface;
 use Javer\FfmpegTransformer\File\FileInterface;
 
-/**
- * Interface StreamInterface
- *
- * @package Javer\FfmpegTransformer\Stream
- */
 interface StreamInterface extends BuilderInterface
 {
     public const TYPE_VIDEO = 'v';
@@ -32,14 +27,14 @@ interface StreamInterface extends BuilderInterface
     /**
      * Returns whether stream is input.
      *
-     * @return boolean
+     * @return bool
      */
     public function getInput(): bool;
 
     /**
      * Move stream to the given position (stream index) in the output file.
      *
-     * @param integer $position
+     * @param int $position
      *
      * @return static
      */

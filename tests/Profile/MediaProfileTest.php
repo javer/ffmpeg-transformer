@@ -5,11 +5,6 @@ namespace Javer\FfmpegTransformer\Tests\Profile;
 use Javer\FfmpegTransformer\Profile\MediaProfile;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class MediaProfileTest
- *
- * @package Javer\FfmpegTransformer\Tests\Profile
- */
 class MediaProfileTest extends TestCase
 {
     /**
@@ -54,14 +49,14 @@ class MediaProfileTest extends TestCase
                     'bitrate' => '6000000',
                     'frame_rate' => 29.97,
                     'keyframe_interval' => 250,
-                ]
+                ],
             ],
             'audio' => [
                 [
                     'codec' => 'aac',
                     'bitrate' => '128000',
                     'sample_rate' => '48000',
-                ]
+                ],
             ],
         ];
 

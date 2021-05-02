@@ -5,11 +5,6 @@ namespace Javer\FfmpegTransformer\Command;
 use Javer\FfmpegTransformer\BuilderInterface;
 use Javer\FfmpegTransformer\File\FileInterface;
 
-/**
- * Interface CommandInterface
- *
- * @package Javer\FfmpegTransformer\Command
- */
 interface CommandInterface extends BuilderInterface
 {
     /**
@@ -28,7 +23,7 @@ interface CommandInterface extends BuilderInterface
      *
      * Option: -y || -n
      *
-     * @param boolean $flag
+     * @param bool $flag
      *
      * @return static
      */
@@ -68,7 +63,7 @@ interface CommandInterface extends BuilderInterface
      *
      * Option: -bits_per_raw_sample number
      *
-     * @param integer $number
+     * @param int $number
      *
      * @return static
      */
@@ -79,7 +74,7 @@ interface CommandInterface extends BuilderInterface
      *
      * Option: -vol volume
      *
-     * @param integer $volume
+     * @param int $volume
      *
      * @return static
      */
@@ -106,9 +101,9 @@ interface CommandInterface extends BuilderInterface
     /**
      * Generate black video frames.
      *
-     * @param integer $width
-     * @param integer $height
-     * @param float   $duration
+     * @param int   $width
+     * @param int   $height
+     * @param float $duration
      *
      * @return FileInterface
      */

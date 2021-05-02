@@ -2,11 +2,6 @@
 
 namespace Javer\FfmpegTransformer;
 
-/**
- * Interface BuilderInterface
- *
- * @package Javer\FfmpegTransformer
- */
 interface BuilderInterface
 {
     /**

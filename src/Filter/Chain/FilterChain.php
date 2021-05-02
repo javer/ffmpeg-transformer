@@ -6,11 +6,6 @@ use Javer\FfmpegTransformer\Filter\Graph\FilterGraphInterface;
 use Javer\FfmpegTransformer\Stream\StreamInterface;
 use LogicException;
 
-/**
- * Class FilterChain
- *
- * @package Javer\FfmpegTransformer\Filter\Chain
- */
 class FilterChain implements FilterChainInterface
 {
     protected FilterGraphInterface $filterGraph;
@@ -62,11 +57,13 @@ class FilterChain implements FilterChainInterface
     public function build(): string
     {
         $inputs = [];
+
         foreach ($this->inputStreams as $inputStream) {
             $inputs[] = sprintf('[%s]', $inputStream->getName());
         }
 
         $outputs = [];
+
         foreach ($this->getOutputStreams() as $outputStream) {
             $outputs[] = sprintf('[%s]', $outputStream->getName());
         }
@@ -129,9 +126,11 @@ class FilterChain implements FilterChainInterface
 
         if ($arguments) {
             $args = [];
+
             foreach ($arguments as $k => $v) {
                 $args[] = is_int($k) ? $v : sprintf('%s=%s', $k, $v);
             }
+
             $filter .= '=' . implode(':', $args);
         }
 
@@ -168,7 +167,7 @@ class FilterChain implements FilterChainInterface
     /**
      * Get output stream.
      *
-     * @param integer $number
+     * @param int $number
      *
      * @return StreamInterface
      */

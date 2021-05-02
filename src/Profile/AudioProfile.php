@@ -4,11 +4,6 @@ namespace Javer\FfmpegTransformer\Profile;
 
 use FFMpeg\FFProbe\DataMapping\AbstractData;
 
-/**
- * Class AudioProfile
- *
- * @package Javer\FfmpegTransformer\Profile
- */
 class AudioProfile
 {
     public const CODEC = 'codec';
@@ -189,7 +184,7 @@ class AudioProfile
     /**
      * Returns bitrate.
      *
-     * @return integer|null
+     * @return int|null
      */
     public function getBitrate(): ?int
     {
@@ -199,7 +194,7 @@ class AudioProfile
     /**
      * Set bitrate.
      *
-     * @param integer|string|null $bitrate
+     * @param int|string|null $bitrate
      *
      * @return AudioProfile
      */
@@ -213,7 +208,7 @@ class AudioProfile
     /**
      * Returns sample rate.
      *
-     * @return integer|null
+     * @return int|null
      */
     public function getSampleRate(): ?int
     {
@@ -223,7 +218,7 @@ class AudioProfile
     /**
      * Set sample rate.
      *
-     * @param integer|string|null $sampleRate
+     * @param int|string|null $sampleRate
      *
      * @return AudioProfile
      */
@@ -237,7 +232,7 @@ class AudioProfile
     /**
      * Returns channels count.
      *
-     * @return integer|null
+     * @return int|null
      */
     public function getChannels(): ?int
     {
@@ -247,7 +242,7 @@ class AudioProfile
     /**
      * Set channels count.
      *
-     * @param integer|null $channels
+     * @param int|null $channels
      *
      * @return AudioProfile
      */

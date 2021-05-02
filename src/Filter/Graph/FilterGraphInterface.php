@@ -11,11 +11,6 @@ use Javer\FfmpegTransformer\Stream\AudioStreamInterface;
 use Javer\FfmpegTransformer\Stream\StreamInterface;
 use Javer\FfmpegTransformer\Stream\VideoStreamInterface;
 
-/**
- * Interface FilterGraphInterface
- *
- * @package Javer\FfmpegTransformer\Filter\Graph
- */
 interface FilterGraphInterface extends BuilderInterface
 {
     /**

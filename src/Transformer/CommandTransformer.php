@@ -11,11 +11,6 @@ use Javer\FfmpegTransformer\Profile\VideoProfile;
 use Javer\FfmpegTransformer\Stream\AudioStreamInterface;
 use Javer\FfmpegTransformer\Stream\VideoStreamInterface;
 
-/**
- * Class CommandTransformer
- *
- * @package Javer\FfmpegTransformer\Transformer
- */
 class CommandTransformer
 {
     /**

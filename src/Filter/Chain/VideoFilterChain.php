@@ -2,11 +2,6 @@
 
 namespace Javer\FfmpegTransformer\Filter\Chain;
 
-/**
- * Class VideoFilterChain
- *
- * @package Javer\FfmpegTransformer\Filter\Chain
- */
 class VideoFilterChain extends FilterChain implements VideoFilterChainInterface
 {
     /**
@@ -47,8 +42,8 @@ class VideoFilterChain extends FilterChain implements VideoFilterChainInterface
     /**
      * Scale filter.
      *
-     * @param integer                  $width
-     * @param integer                  $height
+     * @param int                      $width
+     * @param int                      $height
      * @param array<string|int, mixed> $arguments
      *
      * @return static
@@ -66,8 +61,8 @@ class VideoFilterChain extends FilterChain implements VideoFilterChainInterface
     /**
      * Setsar filter.
      *
-     * @param integer $num
-     * @param integer $den
+     * @param int $num
+     * @param int $den
      *
      * @return static
      */

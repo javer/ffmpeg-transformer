@@ -5,10 +5,6 @@ namespace Javer\FfmpegTransformer\Filter\Chain;
 use Javer\FfmpegTransformer\Stream\VideoStreamInterface;
 
 /**
- * Interface VideoFilterChainInterface
- *
- * @package Javer\FfmpegTransformer\Filter\Chain
- *
  * @method VideoStreamInterface getOutputStream(int $number = 0)
  */
 interface VideoFilterChainInterface extends FilterChainInterface
@@ -48,8 +44,8 @@ interface VideoFilterChainInterface extends FilterChainInterface
     /**
      * Scale filter.
      *
-     * @param integer                  $width
-     * @param integer                  $height
+     * @param int                      $width
+     * @param int                      $height
      * @param array<string|int, mixed> $arguments
      *
      * @return static
@@ -59,8 +55,8 @@ interface VideoFilterChainInterface extends FilterChainInterface
     /**
      * Setsar filter.
      *
-     * @param integer $num
-     * @param integer $den
+     * @param int $num
+     * @param int $den
      *
      * @return static
      */

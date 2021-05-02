@@ -9,11 +9,6 @@ use Javer\FfmpegTransformer\Stream\AudioStreamInterface;
 use Javer\FfmpegTransformer\Stream\StreamInterface;
 use Javer\FfmpegTransformer\Stream\VideoStreamInterface;
 
-/**
- * Interface FileInterface
- *
- * @package Javer\FfmpegTransformer\File
- */
 interface FileInterface extends BuilderInterface
 {
     /**
@@ -76,7 +71,7 @@ interface FileInterface extends BuilderInterface
      *
      * Option: -fs limit_size
      *
-     * @param integer $size
+     * @param int $size
      *
      * @return static
      */
@@ -161,7 +156,7 @@ interface FileInterface extends BuilderInterface
      *
      * Option: -frames number
      *
-     * @param integer $number
+     * @param int $number
      *
      * @return static
      */
@@ -259,7 +254,7 @@ interface FileInterface extends BuilderInterface
      *
      * Option: -loop 1
      *
-     * @param boolean $flag
+     * @param bool $flag
      *
      * @return static
      */
@@ -286,7 +281,7 @@ interface FileInterface extends BuilderInterface
     /**
      * Get video stream by number.
      *
-     * @param integer $number
+     * @param int $number
      *
      * @return VideoStreamInterface
      */
@@ -295,7 +290,7 @@ interface FileInterface extends BuilderInterface
     /**
      * Get audio stream by number.
      *
-     * @param integer $number
+     * @param int $number
      *
      * @return AudioStreamInterface
      */
@@ -329,7 +324,7 @@ interface FileInterface extends BuilderInterface
      *
      * @param StreamInterface $stream
      *
-     * @return integer|null
+     * @return int|null
      */
     public function getStreamNumber(StreamInterface $stream): ?int;
 
@@ -337,7 +332,7 @@ interface FileInterface extends BuilderInterface
      * Move stream to the given position (stream index) in the output file.
      *
      * @param StreamInterface $stream
-     * @param integer         $position
+     * @param int             $position
      *
      * @return static
      */

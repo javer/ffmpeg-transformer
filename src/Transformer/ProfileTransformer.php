@@ -6,11 +6,6 @@ use Javer\FfmpegTransformer\Profile\AudioProfile;
 use Javer\FfmpegTransformer\Profile\MediaProfile;
 use Javer\FfmpegTransformer\Profile\VideoProfile;
 
-/**
- * Class ProfileTransformer
- *
- * @package Javer\FfmpegTransformer\Transformer
- */
 class ProfileTransformer
 {
     public const CODEC_COPY = 'copy';
@@ -23,8 +18,8 @@ class ProfileTransformer
      *
      * @param MediaProfile $source
      * @param MediaProfile $target
-     * @param boolean      $forceVideo
-     * @param boolean      $forceAudio
+     * @param bool         $forceVideo
+     * @param bool         $forceAudio
      *
      * @return MediaProfile
      */
@@ -73,7 +68,7 @@ class ProfileTransformer
      *
      * @param VideoProfile $source
      * @param VideoProfile $target
-     * @param boolean      $force
+     * @param bool         $force
      *
      * @return VideoProfile
      */
@@ -162,7 +157,7 @@ class ProfileTransformer
      *
      * @param AudioProfile $source
      * @param AudioProfile $target
-     * @param boolean      $force
+     * @param bool         $force
      *
      * @return AudioProfile
      */
@@ -212,10 +207,10 @@ class ProfileTransformer
     /**
      * Returns scale rate.
      *
-     * @param integer $videoWidth
-     * @param integer $widthThreshold
-     * @param integer $videoHeight
-     * @param integer $heightThreshold
+     * @param int $videoWidth
+     * @param int $widthThreshold
+     * @param int $videoHeight
+     * @param int $heightThreshold
      *
      * @return float
      */
@@ -227,10 +222,10 @@ class ProfileTransformer
     /**
      * Returns aligned number.
      *
-     * @param integer $number
-     * @param integer $align
+     * @param int $number
+     * @param int $align
      *
-     * @return integer
+     * @return int
      */
     protected function alignNumber(int $number, int $align): int
     {
@@ -240,10 +235,10 @@ class ProfileTransformer
     /**
      * Returns least non-zero value.
      *
-     * @param integer|float $value
-     * @param integer|float $threshold
+     * @param int|float $value
+     * @param int|float $threshold
      *
-     * @return integer|float
+     * @return int|float
      */
     protected function getLeastValue(mixed $value, mixed $threshold): mixed
     {

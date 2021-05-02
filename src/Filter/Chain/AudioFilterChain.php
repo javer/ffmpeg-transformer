@@ -4,11 +4,6 @@ namespace Javer\FfmpegTransformer\Filter\Chain;
 
 use InvalidArgumentException;
 
-/**
- * Class AudioFilterChain
- *
- * @package Javer\FfmpegTransformer\Filter\Chain
- */
 class AudioFilterChain extends FilterChain implements AudioFilterChainInterface
 {
     /**
@@ -52,7 +47,7 @@ class AudioFilterChain extends FilterChain implements AudioFilterChainInterface
     /**
      * Split filter.
      *
-     * @param integer $count
+     * @param int $count
      *
      * @return static
      */

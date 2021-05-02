@@ -2,11 +2,6 @@
 
 namespace Javer\FfmpegTransformer\Stream;
 
-/**
- * Interface VideoStreamInterface
- *
- * @package Javer\FfmpegTransformer\Stream
- */
 interface VideoStreamInterface extends StreamInterface
 {
     /**
@@ -63,7 +58,7 @@ interface VideoStreamInterface extends StreamInterface
      *
      * Option: -vframes number
      *
-     * @param integer $number
+     * @param int $number
      *
      * @return static
      */
@@ -107,7 +102,7 @@ interface VideoStreamInterface extends StreamInterface
      *
      * Option: -bits_per_raw_sample
      *
-     * @param integer $number
+     * @param int $number
      *
      * @return static
      */
@@ -162,7 +157,7 @@ interface VideoStreamInterface extends StreamInterface
      *
      * Option: -pass n
      *
-     * @param integer $number
+     * @param int $number
      *
      * @return static
      */
@@ -228,7 +223,7 @@ interface VideoStreamInterface extends StreamInterface
      *
      * Option: -crf:v bitrate
      *
-     * @param integer $crf
+     * @param int $crf
      *
      * @return static
      */
@@ -250,7 +245,7 @@ interface VideoStreamInterface extends StreamInterface
      *
      * Option: -g interval
      *
-     * @param integer $interval
+     * @param int $interval
      *
      * @return static
      */

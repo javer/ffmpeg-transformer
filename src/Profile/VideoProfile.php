@@ -4,11 +4,6 @@ namespace Javer\FfmpegTransformer\Profile;
 
 use FFMpeg\FFProbe\DataMapping\AbstractData;
 
-/**
- * Class VideoProfile
- *
- * @package Javer\FfmpegTransformer\Profile
- */
 class VideoProfile
 {
     public const WIDTH = 'width';
@@ -187,7 +182,7 @@ class VideoProfile
      * @param string       $propertyName
      * @param mixed        $defaultValue
      *
-     * @return string|integer|float|null
+     * @return string|int|float|null
      */
     protected static function getMetadataValue(
         AbstractData $data,
@@ -219,6 +214,7 @@ class VideoProfile
         // See for details: https://ffmpeg.org/pipermail/libav-user/2013-May/004715.html
         // https://github.com/FFmpeg/FFmpeg/blob/b23d4e52fd24b4c6f240a22d8d92a70bbb16464d/libavformat/dump.c#L475
         $avgFrameRate = static::getMetadataValue($data, 'avg_frame_rate');
+
         if ((int) $avgFrameRate > 0) {
             $rFrameRate = $avgFrameRate;
         }
@@ -237,7 +233,7 @@ class VideoProfile
      *
      * @param AbstractData $data
      *
-     * @return integer
+     * @return int
      */
     protected static function getMetadataRotate(AbstractData $data): int
     {
@@ -245,6 +241,7 @@ class VideoProfile
 
         if ($data->has('tags')) {
             $tags = $data->get('tags');
+
             if (isset($tags['rotate'])) {
                 $rotateDegree = $tags['rotate'];
             }
@@ -266,7 +263,7 @@ class VideoProfile
     /**
      * Returns width.
      *
-     * @return integer|null
+     * @return int|null
      */
     public function getWidth(): ?int
     {
@@ -276,7 +273,7 @@ class VideoProfile
     /**
      * Set width.
      *
-     * @param integer|null $width
+     * @param int|null $width
      *
      * @return VideoProfile
      */
@@ -290,7 +287,7 @@ class VideoProfile
     /**
      * Returns height.
      *
-     * @return integer|null
+     * @return int|null
      */
     public function getHeight(): ?int
     {
@@ -300,7 +297,7 @@ class VideoProfile
     /**
      * Set height.
      *
-     * @param integer|null $height
+     * @param int|null $height
      *
      * @return VideoProfile
      */
@@ -410,7 +407,7 @@ class VideoProfile
     /**
      * Returns bitrate.
      *
-     * @return integer|null
+     * @return int|null
      */
     public function getBitrate(): ?int
     {
@@ -420,7 +417,7 @@ class VideoProfile
     /**
      * Set bitrate.
      *
-     * @param integer|string|null $bitrate
+     * @param int|string|null $bitrate
      *
      * @return VideoProfile
      */
@@ -434,7 +431,7 @@ class VideoProfile
     /**
      * Returns max bitrate.
      *
-     * @return integer|null
+     * @return int|null
      */
     public function getMaxBitrate(): ?int
     {
@@ -444,7 +441,7 @@ class VideoProfile
     /**
      * Set max bitrate.
      *
-     * @param integer|string|null $maxBitrate
+     * @param int|string|null $maxBitrate
      *
      * @return VideoProfile
      */
@@ -458,7 +455,7 @@ class VideoProfile
     /**
      * Returns min bitrate.
      *
-     * @return integer|null
+     * @return int|null
      */
     public function getMinBitrate(): ?int
     {
@@ -468,7 +465,7 @@ class VideoProfile
     /**
      * Set min bitrate.
      *
-     * @param integer|string|null $minBitrate
+     * @param int|string|null $minBitrate
      *
      * @return VideoProfile
      */
@@ -482,7 +479,7 @@ class VideoProfile
     /**
      * Returns buffer size.
      *
-     * @return integer|null
+     * @return int|null
      */
     public function getBufferSize(): ?int
     {
@@ -492,7 +489,7 @@ class VideoProfile
     /**
      * Set buffer size.
      *
-     * @param integer|string|null $bufferSize
+     * @param int|string|null $bufferSize
      *
      * @return VideoProfile
      */
@@ -506,7 +503,7 @@ class VideoProfile
     /**
      * Returns crf.
      *
-     * @return integer|null
+     * @return int|null
      */
     public function getCrf(): ?int
     {
@@ -516,7 +513,7 @@ class VideoProfile
     /**
      * Set crf.
      *
-     * @param integer|null $crf
+     * @param int|null $crf
      *
      * @return VideoProfile
      */
@@ -554,7 +551,7 @@ class VideoProfile
     /**
      * Returns keyframe interval.
      *
-     * @return integer|null
+     * @return int|null
      */
     public function getKeyframeInterval(): ?int
     {
@@ -564,7 +561,7 @@ class VideoProfile
     /**
      * Set keyframe interval.
      *
-     * @param integer|null $keyframeInterval
+     * @param int|null $keyframeInterval
      *
      * @return VideoProfile
      */
@@ -578,7 +575,7 @@ class VideoProfile
     /**
      * Returns rotate angle.
      *
-     * @return integer|null
+     * @return int|null
      */
     public function getRotate(): ?int
     {
@@ -588,7 +585,7 @@ class VideoProfile
     /**
      * Set rotate.
      *
-     * @param integer|null $rotate
+     * @param int|null $rotate
      *
      * @return VideoProfile
      */

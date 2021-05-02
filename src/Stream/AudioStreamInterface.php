@@ -2,11 +2,6 @@
 
 namespace Javer\FfmpegTransformer\Stream;
 
-/**
- * Interface AudioStreamInterface
- *
- * @package Javer\FfmpegTransformer\Stream
- */
 interface AudioStreamInterface extends StreamInterface
 {
     /**
@@ -63,7 +58,7 @@ interface AudioStreamInterface extends StreamInterface
      *
      * Option: -aframes number
      *
-     * @param integer $number
+     * @param int $number
      *
      * @return static
      */
@@ -74,7 +69,7 @@ interface AudioStreamInterface extends StreamInterface
      *
      * Option: -aq quality
      *
-     * @param integer $quality
+     * @param int $quality
      *
      * @return static
      */
@@ -85,7 +80,7 @@ interface AudioStreamInterface extends StreamInterface
      *
      * Option: -ar rate
      *
-     * @param integer $rate
+     * @param int $rate
      *
      * @return static
      */
@@ -96,7 +91,7 @@ interface AudioStreamInterface extends StreamInterface
      *
      * Option: -ac channels
      *
-     * @param integer $channels
+     * @param int $channels
      *
      * @return static
      */
@@ -140,7 +135,7 @@ interface AudioStreamInterface extends StreamInterface
      *
      * Option: -vol volume
      *
-     * @param integer $volume
+     * @param int $volume
      *
      * @return static
      */

@@ -5,10 +5,6 @@ namespace Javer\FfmpegTransformer\Filter\Chain;
 use Javer\FfmpegTransformer\Stream\AudioStreamInterface;
 
 /**
- * Interface AudioFilterChainInterface
- *
- * @package Javer\FfmpegTransformer\Filter\Chain
- *
  * @method AudioStreamInterface getOutputStream(int $number = 0)
  */
 interface AudioFilterChainInterface extends FilterChainInterface
@@ -40,7 +36,7 @@ interface AudioFilterChainInterface extends FilterChainInterface
      *
      * Example: asplit
      *
-     * @param integer $count
+     * @param int $count
      *
      * @return static
      */

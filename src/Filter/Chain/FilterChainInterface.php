@@ -5,11 +5,6 @@ namespace Javer\FfmpegTransformer\Filter\Chain;
 use Javer\FfmpegTransformer\Filter\Graph\FilterGraphInterface;
 use Javer\FfmpegTransformer\Stream\StreamInterface;
 
-/**
- * Interface FilterChainInterface
- *
- * @package Javer\FfmpegTransformer\Filter\Chain
- */
 interface FilterChainInterface
 {
     /**
@@ -36,7 +31,7 @@ interface FilterChainInterface
     /**
      * Get output stream.
      *
-     * @param integer $number
+     * @param int $number
      *
      * @return StreamInterface
      */

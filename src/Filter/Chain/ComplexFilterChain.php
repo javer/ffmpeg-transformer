@@ -7,11 +7,6 @@ use Javer\FfmpegTransformer\Stream\StreamInterface;
 use Javer\FfmpegTransformer\Stream\VideoStreamInterface;
 use LogicException;
 
-/**
- * Class ComplexFilterChain
- *
- * @package Javer\FfmpegTransformer\Filter\Chain
- */
 class ComplexFilterChain extends FilterChain implements ComplexFilterChainInterface
 {
     /**
@@ -27,6 +22,7 @@ class ComplexFilterChain extends FilterChain implements ComplexFilterChainInterf
         $audioCount = count($this->getOutputs(StreamInterface::TYPE_AUDIO));
 
         $partsCount = max($videoCount, $audioCount);
+
         if ($videoCount > 0 && $audioCount > 0 && $videoCount !== $audioCount) {
             $partsCount = min($videoCount, $audioCount);
         }
@@ -57,7 +53,7 @@ class ComplexFilterChain extends FilterChain implements ComplexFilterChainInterf
     /**
      * Get output video stream by number.
      *
-     * @param integer $number
+     * @param int $number
      *
      * @return VideoStreamInterface
      */
@@ -82,7 +78,7 @@ class ComplexFilterChain extends FilterChain implements ComplexFilterChainInterf
     /**
      * Get output audio stream by number.
      *
-     * @param integer $number
+     * @param int $number
      *
      * @return AudioStreamInterface
      */

@@ -5,11 +5,6 @@ namespace Javer\FfmpegTransformer\Stream;
 use Javer\FfmpegTransformer\File\FileInterface;
 use LogicException;
 
-/**
- * Class Stream
- *
- * @package Javer\FfmpegTransformer\Stream
- */
 abstract class Stream implements StreamInterface
 {
     protected FileInterface $file;
@@ -35,8 +30,8 @@ abstract class Stream implements StreamInterface
      * @param FileInterface   $file
      * @param string|int|null $name
      * @param string          $type
-     * @param boolean         $isInput
-     * @param boolean         $isMapped
+     * @param bool            $isInput
+     * @param bool            $isMapped
      */
     public function __construct(
         FileInterface $file,
@@ -133,7 +128,7 @@ abstract class Stream implements StreamInterface
     /**
      * Returns whether stream is input.
      *
-     * @return boolean
+     * @return bool
      */
     public function getInput(): bool
     {
@@ -143,7 +138,7 @@ abstract class Stream implements StreamInterface
     /**
      * Move stream to the given position (stream index) in the output file.
      *
-     * @param integer $position
+     * @param int $position
      *
      * @return static
      *

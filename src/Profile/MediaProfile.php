@@ -4,11 +4,6 @@ namespace Javer\FfmpegTransformer\Profile;
 
 use FFMpeg\Media\AbstractStreamableMedia;
 
-/**
- * Class MediaProfile
- *
- * @package Javer\FfmpegTransformer\Profile
- */
 class MediaProfile
 {
     public const NAME = 'name';
@@ -301,7 +296,7 @@ class MediaProfile
     /**
      * Returns size.
      *
-     * @return integer|null
+     * @return int|null
      */
     public function getSize(): ?int
     {
@@ -311,7 +306,7 @@ class MediaProfile
     /**
      * Set size.
      *
-     * @param integer|null $size
+     * @param int|null $size
      *
      * @return MediaProfile
      */
@@ -325,7 +320,7 @@ class MediaProfile
     /**
      * Returns bitrate.
      *
-     * @return integer|null
+     * @return int|null
      */
     public function getBitrate(): ?int
     {
@@ -335,7 +330,7 @@ class MediaProfile
     /**
      * Set bitrate.
      *
-     * @param integer|string|null $bitrate
+     * @param int|string|null $bitrate
      *
      * @return MediaProfile
      */
@@ -417,9 +412,9 @@ class MediaProfile
     /**
      * Converts a metric value to the absolute value.
      *
-     * @param string|integer|float|null $value
+     * @param string|int|float|null $value
      *
-     * @return integer|null
+     * @return int|null
      */
     public static function convertMetricValue(mixed $value): ?int
     {

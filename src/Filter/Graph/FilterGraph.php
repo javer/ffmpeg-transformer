@@ -14,11 +14,6 @@ use Javer\FfmpegTransformer\Stream\AudioStreamInterface;
 use Javer\FfmpegTransformer\Stream\StreamInterface;
 use Javer\FfmpegTransformer\Stream\VideoStreamInterface;
 
-/**
- * Class FilterGraph
- *
- * @package Javer\FfmpegTransformer\Filter\Graph
- */
 class FilterGraph implements FilterGraphInterface
 {
     protected FileInterface $file;
