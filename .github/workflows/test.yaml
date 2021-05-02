@@ -1,0 +1,53 @@
+name: Test
+
+on:
+    push:
+    pull_request:
+        types: [opened, synchronize, edited, reopened]
+
+jobs:
+    test:
+        name: PHP ${{ matrix.php-version }}
+
+        runs-on: ubuntu-20.04
+
+        continue-on-error: ${{ matrix.experimental }}
+
+        strategy:
+            matrix:
+                php-version:
+                    - '8.0'
+                experimental: [false]
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  coverage: xdebug
+                  ini-values: "memory_limit=-1"
+                  php-version: ${{ matrix.php-version }}
+                  tools: composer:v2, cs2pr
+
+            - name: Validate composer.json
+              run: composer validate --no-check-lock
+
+            - name: Install dependencies
+              run: composer install --prefer-dist --no-progress --ansi
+
+            - name: Setup problem matchers for PHP
+              run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+
+            - name: Lint PHP files
+              run: find src tests -name "*.php" -print0 | xargs -0 -n1 -P8 php -l
+
+            - name: Validate code style
+              run: vendor/bin/phpcs -q --report=checkstyle | cs2pr
+
+            - name: PHPStan
+              run: vendor/bin/phpstan analyse
+
+            - name: Run PHPUnit tests
+              run: vendor/bin/phpunit --coverage-text
