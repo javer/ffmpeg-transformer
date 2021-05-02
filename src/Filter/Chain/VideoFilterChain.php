@@ -15,9 +15,9 @@ class VideoFilterChain extends FilterChain implements VideoFilterChainInterface
      * @param float $start
      * @param float $end
      *
-     * @return VideoFilterChainInterface
+     * @return static
      */
-    public function trim(float $start, float $end): VideoFilterChainInterface
+    public function trim(float $start, float $end): static
     {
         return $this->filter('trim', [$start, $end], ['v'], ['v']);
     }
@@ -27,9 +27,9 @@ class VideoFilterChain extends FilterChain implements VideoFilterChainInterface
      *
      * @param string $expr
      *
-     * @return VideoFilterChainInterface
+     * @return static
      */
-    public function setpts(string $expr): VideoFilterChainInterface
+    public function setpts(string $expr): static
     {
         return $this->filter('setpts', [$expr], ['v'], ['v']);
     }
@@ -37,9 +37,9 @@ class VideoFilterChain extends FilterChain implements VideoFilterChainInterface
     /**
      * Reset stream timestamps.
      *
-     * @return VideoFilterChainInterface
+     * @return static
      */
-    public function resetTimestamp(): VideoFilterChainInterface
+    public function resetTimestamp(): static
     {
         return $this->setpts('PTS-STARTPTS');
     }
@@ -47,13 +47,13 @@ class VideoFilterChain extends FilterChain implements VideoFilterChainInterface
     /**
      * Scale filter.
      *
-     * @param integer $width
-     * @param integer $height
-     * @param array   $arguments
+     * @param integer                  $width
+     * @param integer                  $height
+     * @param array<string|int, mixed> $arguments
      *
-     * @return VideoFilterChainInterface
+     * @return static
      */
-    public function scale(int $width, int $height, array $arguments = []): VideoFilterChainInterface
+    public function scale(int $width, int $height, array $arguments = []): static
     {
         $arguments = array_merge([
             'w' => $width,
@@ -69,9 +69,9 @@ class VideoFilterChain extends FilterChain implements VideoFilterChainInterface
      * @param integer $num
      * @param integer $den
      *
-     * @return VideoFilterChainInterface
+     * @return static
      */
-    public function setsar(int $num, int $den): VideoFilterChainInterface
+    public function setsar(int $num, int $den): static
     {
         return $this->filter('setsar', [sprintf('%d/%d', $num, $den)], ['v'], ['v']);
     }

@@ -19,9 +19,9 @@ interface CommandInterface extends BuilderInterface
      *
      * @param string $logLevel
      *
-     * @return CommandInterface
+     * @return static
      */
-    public function logLevel(string $logLevel): CommandInterface;
+    public function logLevel(string $logLevel): static;
 
     /**
      * Overwrite output files.
@@ -30,27 +30,27 @@ interface CommandInterface extends BuilderInterface
      *
      * @param boolean $flag
      *
-     * @return CommandInterface
+     * @return static
      */
-    public function overwriteOutputFiles(bool $flag = true): CommandInterface;
+    public function overwriteOutputFiles(bool $flag = true): static;
 
     /**
      * Ignore unknown stream types.
      *
      * Option: -ignore_unknown
      *
-     * @return CommandInterface
+     * @return static
      */
-    public function ignoreUnknownStreamTypes(): CommandInterface;
+    public function ignoreUnknownStreamTypes(): static;
 
     /**
      * Print progress report.
      *
      * Option: -stats
      *
-     * @return CommandInterface
+     * @return static
      */
-    public function printProgressReport(): CommandInterface;
+    public function printProgressReport(): static;
 
     /**
      * Max error rate.
@@ -59,9 +59,9 @@ interface CommandInterface extends BuilderInterface
      *
      * @param float $ratio
      *
-     * @return CommandInterface
+     * @return static
      */
-    public function maxErrorRate(float $ratio): CommandInterface;
+    public function maxErrorRate(float $ratio): static;
 
     /**
      * Bits per raw sample.
@@ -70,9 +70,9 @@ interface CommandInterface extends BuilderInterface
      *
      * @param integer $number
      *
-     * @return CommandInterface
+     * @return static
      */
-    public function bitsPerRawSample(int $number): CommandInterface;
+    public function bitsPerRawSample(int $number): static;
 
     /**
      * Volume.
@@ -81,9 +81,9 @@ interface CommandInterface extends BuilderInterface
      *
      * @param integer $volume
      *
-     * @return CommandInterface
+     * @return static
      */
-    public function volume(int $volume): CommandInterface;
+    public function volume(int $volume): static;
 
     /**
      * Add input file.
@@ -139,7 +139,7 @@ interface CommandInterface extends BuilderInterface
      * @param string $name
      * @param string $argument
      *
-     * @return CommandInterface
+     * @return static
      */
-    public function addOption(string $name, string $argument = ''): CommandInterface;
+    public function addOption(string $name, string $argument = ''): static;
 }

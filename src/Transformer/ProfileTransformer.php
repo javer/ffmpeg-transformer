@@ -49,14 +49,20 @@ class ProfileTransformer
             $transform->setBitrate($bitrate);
         }
 
-        $targetVideoProfile = $target->getVideoProfile();
-        foreach ($source->getVideoProfiles() as $sourceVideoProfile) {
-            $transform->addVideoProfile($this->transformVideo($sourceVideoProfile, $targetVideoProfile, $forceVideo));
+        if ($targetVideoProfile = $target->getVideoProfile()) {
+            foreach ($source->getVideoProfiles() as $sourceVideoProfile) {
+                $transform->addVideoProfile(
+                    $this->transformVideo($sourceVideoProfile, $targetVideoProfile, $forceVideo)
+                );
+            }
         }
 
-        $targetAudioProfile = $target->getAudioProfile();
-        foreach ($source->getAudioProfiles() as $sourceAudioProfile) {
-            $transform->addAudioProfile($this->transformAudio($sourceAudioProfile, $targetAudioProfile, $forceAudio));
+        if ($targetAudioProfile = $target->getAudioProfile()) {
+            foreach ($source->getAudioProfiles() as $sourceAudioProfile) {
+                $transform->addAudioProfile(
+                    $this->transformAudio($sourceAudioProfile, $targetAudioProfile, $forceAudio)
+                );
+            }
         }
 
         return $transform;
@@ -75,34 +81,34 @@ class ProfileTransformer
     {
         $transform = new VideoProfile();
 
-        $sourceRotate = $source->getRotate();
+        $sourceRotate = (int) $source->getRotate();
 
         // FFmpeg 4.0+ automatically rotates the source video
         if (in_array(abs($sourceRotate), [90, 270], true)) {
-            $sourceWidth = $source->getHeight();
-            $sourceHeight = $source->getWidth();
+            $sourceWidth = (int) $source->getHeight();
+            $sourceHeight = (int) $source->getWidth();
         } else {
-            $sourceWidth = $source->getWidth();
-            $sourceHeight = $source->getHeight();
+            $sourceWidth = (int) $source->getWidth();
+            $sourceHeight = (int) $source->getHeight();
         }
 
-        $targetWidth = $this->getLeastValue($sourceWidth, $target->getWidth());
-        $targetHeight = $this->getLeastValue($sourceHeight, $target->getHeight());
+        $targetWidth = (int) $this->getLeastValue($sourceWidth, (int) $target->getWidth());
+        $targetHeight = (int) $this->getLeastValue($sourceHeight, (int) $target->getHeight());
         $sizeAlign = 4;
 
         if ($targetWidth > 0 && $targetHeight > 0 && ($sourceWidth > $targetWidth || $sourceHeight > $targetHeight)) {
             $scale = $this->getScaleRate($sourceWidth, $targetWidth, $sourceHeight, $targetHeight);
 
             if ($scale > 1) {
-                $targetWidth = $sourceWidth / $scale;
-                $targetHeight = $sourceHeight / $scale;
+                $targetWidth = (int) ($sourceWidth / $scale);
+                $targetHeight = (int) ($sourceHeight / $scale);
             }
         }
 
-        $sourceCodec = $source->getCodec();
-        $sourcePixelFormat = $source->getPixelFormat();
-        $sourceBitrate = $source->getBitrate();
-        $sourceFrameRate = $source->getFrameRate();
+        $sourceCodec = (string) $source->getCodec();
+        $sourcePixelFormat = (string) $source->getPixelFormat();
+        $sourceBitrate = (int) $source->getBitrate();
+        $sourceFrameRate = (float) $source->getFrameRate();
 
         $targetWidth = $this->alignNumber($targetWidth, $sizeAlign);
         $targetHeight = $this->alignNumber($targetHeight, $sizeAlign);
@@ -111,17 +117,17 @@ class ProfileTransformer
 
         $targetPixelFormat = $target->getPixelFormat() ?? $sourcePixelFormat;
 
-        $targetBitrate = $this->getLeastValue($sourceBitrate, $target->getBitrate());
+        $targetBitrate = (int) $this->getLeastValue($sourceBitrate, (int) $target->getBitrate());
 
-        $targetMaxrate = $this->getLeastValue($sourceBitrate, $target->getMaxBitrate());
+        $targetMaxrate = (int) $this->getLeastValue($sourceBitrate, (int) $target->getMaxBitrate());
 
-        $targetFramerate = $this->getLeastValue($sourceFrameRate, $target->getFrameRate());
+        $targetFramerate = (float) $this->getLeastValue($sourceFrameRate, (float) $target->getFrameRate());
 
         if (
             $force
             || $sourceCodec !== $targetCodec
             || $sourcePixelFormat !== $targetPixelFormat
-            || $sourceRotate != 0
+            || $sourceRotate !== 0
             || $sourceWidth > $targetWidth
             || $sourceHeight > $targetHeight
             || $sourceBitrate > $targetBitrate
@@ -164,31 +170,36 @@ class ProfileTransformer
     {
         $transform = new AudioProfile();
 
-        $targetCodec = $target->getCodec() ?? $source->getCodec();
+        $sourceCodec = (string) $source->getCodec();
+        $sourceBitrate = (int) $source->getBitrate();
+        $sourceSampleRate = (int) $source->getSampleRate();
+        $sourceChannels = (int) $source->getChannels();
 
-        if ($source->getCodec() !== $targetCodec) {
-            $targetBitrate = $target->getBitrate();
+        $targetCodec = $target->getCodec() ?? $sourceCodec;
+
+        if ($sourceCodec !== $targetCodec) {
+            $targetBitrate = (int) $target->getBitrate();
         } else {
-            $targetBitrate = $this->getLeastValue($source->getBitrate(), $target->getBitrate());
+            $targetBitrate = (int) $this->getLeastValue($sourceBitrate, (int) $target->getBitrate());
         }
 
-        $targetSampleRate = $this->getLeastValue($source->getSampleRate(), $target->getSampleRate());
+        $targetSampleRate = (int) $this->getLeastValue($sourceSampleRate, (int) $target->getSampleRate());
 
-        $targetChannels = $this->getLeastValue($source->getChannels(), $target->getChannels());
+        $targetChannels = (int) $this->getLeastValue($sourceChannels, (int) $target->getChannels());
 
         if (
             $force
-            || $source->getCodec() !== $targetCodec
-            || $source->getBitrate() > $targetBitrate
-            || $source->getSampleRate() > $targetSampleRate
-            || $source->getChannels() > $targetChannels
+            || $sourceCodec !== $targetCodec
+            || $sourceBitrate > $targetBitrate
+            || $sourceSampleRate > $targetSampleRate
+            || $sourceChannels > $targetChannels
         ) {
             $transform->setCodec($targetCodec);
             $transform->setProfile($target->getProfile());
             $transform->setBitrate($targetBitrate);
             $transform->setSampleRate($targetSampleRate);
 
-            if ($source->getChannels() !== $targetChannels) {
+            if ($sourceChannels !== $targetChannels) {
                 $transform->setChannels($targetChannels);
             }
         } else {
@@ -208,7 +219,7 @@ class ProfileTransformer
      *
      * @return float
      */
-    protected function getScaleRate(int $videoWidth, int $widthThreshold, int $videoHeight, int $heightThreshold)
+    protected function getScaleRate(int $videoWidth, int $widthThreshold, int $videoHeight, int $heightThreshold): float
     {
         return max(1, max($videoWidth / $widthThreshold, $videoHeight / $heightThreshold));
     }
@@ -234,7 +245,7 @@ class ProfileTransformer
      *
      * @return integer|float
      */
-    protected function getLeastValue($value, $threshold)
+    protected function getLeastValue(mixed $value, mixed $threshold): mixed
     {
         if ($value > 0 && $threshold > 0) {
             return min($value, $threshold);
@@ -250,13 +261,13 @@ class ProfileTransformer
     /**
      * Returns video codec preset.
      *
-     * @param string        $codec
-     * @param string|null   $preset
-     * @param integer|float $frameRate
+     * @param string         $codec
+     * @param string|null    $preset
+     * @param int|float|null $frameRate
      *
      * @return string|null
      */
-    protected function getVideoCodecPreset(string $codec, ?string $preset, $frameRate): ?string
+    protected function getVideoCodecPreset(string $codec, ?string $preset, int|float|null $frameRate): ?string
     {
         $codecPreset = $preset;
 

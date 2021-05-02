@@ -12,53 +12,35 @@ use LogicException;
  */
 abstract class Stream implements StreamInterface
 {
-    /**
-     * @var FileInterface
-     */
-    protected $file;
+    protected FileInterface $file;
+
+    protected ?string $name;
+
+    protected string $type;
+
+    protected bool $isInput;
 
     /**
-     * @var string|integer|null
+     * @var array<array{string, string, bool}>
      */
-    protected $name;
+    protected array $options = [];
 
-    /**
-     * @var string
-     */
-    protected $type;
+    protected bool $isCustomCodec = false;
 
-    /**
-     * @var boolean
-     */
-    protected $isInput;
-
-    /**
-     * @var string[]
-     */
-    protected $options = [];
-
-    /**
-     * @var boolean
-     */
-    protected $isCustomCodec = false;
-
-    /**
-     * @var boolean
-     */
-    protected $isMapped = false;
+    protected bool $isMapped = false;
 
     /**
      * Stream constructor.
      *
-     * @param FileInterface $file
-     * @param string|null   $name
-     * @param string        $type
-     * @param boolean       $isInput
-     * @param boolean       $isMapped
+     * @param FileInterface   $file
+     * @param string|int|null $name
+     * @param string          $type
+     * @param boolean         $isInput
+     * @param boolean         $isMapped
      */
     public function __construct(
         FileInterface $file,
-        $name = null,
+        string|int|null $name = null,
         string $type = '',
         bool $isInput = false,
         bool $isMapped = true
@@ -74,7 +56,7 @@ abstract class Stream implements StreamInterface
     /**
      * Build command.
      *
-     * @return array
+     * @return array<int, string>
      *
      * @throws LogicException
      */
@@ -129,7 +111,7 @@ abstract class Stream implements StreamInterface
      */
     public function getName(): string
     {
-        if (is_null($this->name)) {
+        if ($this->name === null) {
             $streamNumber = $this->file->getStreamNumber($this);
 
             $this->name = trim(implode(':', [$this->file->getName(), $this->getType(), $streamNumber]), ':');
@@ -163,11 +145,11 @@ abstract class Stream implements StreamInterface
      *
      * @param integer $position
      *
-     * @return StreamInterface
+     * @return static
      *
      * @throws LogicException
      */
-    public function moveTo(int $position): StreamInterface
+    public function moveTo(int $position): static
     {
         $this->file->moveStreamToPosition($this, $position);
 

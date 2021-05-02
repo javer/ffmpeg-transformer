@@ -17,9 +17,9 @@ interface ComplexFilterChainInterface extends FilterChainInterface
      *
      * Example: concat=n=%d:v=1:a=%d
      *
-     * @return ComplexFilterChainInterface
+     * @return static
      */
-    public function concat(): ComplexFilterChainInterface;
+    public function concat(): static;
 
     /**
      * Get output video stream by number.

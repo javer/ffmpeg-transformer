@@ -15,9 +15,9 @@ interface AudioStreamInterface extends StreamInterface
      * @param string $name
      * @param string $argument
      *
-     * @return AudioStreamInterface
+     * @return static
      */
-    public function addOption(string $name, string $argument = ''): AudioStreamInterface;
+    public function addOption(string $name, string $argument = ''): static;
 
     /**
      * Add per-stream option.
@@ -25,27 +25,27 @@ interface AudioStreamInterface extends StreamInterface
      * @param string $name
      * @param string $argument
      *
-     * @return AudioStreamInterface
+     * @return static
      */
-    public function addStreamOption(string $name, string $argument = ''): AudioStreamInterface;
+    public function addStreamOption(string $name, string $argument = ''): static;
 
     /**
      * Copy stream "as is".
      *
      * Option: -acodec copy
      *
-     * @return AudioStreamInterface
+     * @return static
      */
-    public function copy(): AudioStreamInterface;
+    public function copy(): static;
 
     /**
      * Disable audio stream.
      *
      * Option: -an
      *
-     * @return AudioStreamInterface
+     * @return static
      */
-    public function disable(): AudioStreamInterface;
+    public function disable(): static;
 
     /**
      * Map audio stream.
@@ -54,9 +54,9 @@ interface AudioStreamInterface extends StreamInterface
      *
      * @param AudioStreamInterface $stream
      *
-     * @return AudioStreamInterface
+     * @return static
      */
-    public function map(AudioStreamInterface $stream): AudioStreamInterface;
+    public function map(AudioStreamInterface $stream): static;
 
     /**
      * Set frames number.
@@ -65,9 +65,9 @@ interface AudioStreamInterface extends StreamInterface
      *
      * @param integer $number
      *
-     * @return AudioStreamInterface
+     * @return static
      */
-    public function frames(int $number): AudioStreamInterface;
+    public function frames(int $number): static;
 
     /**
      * Set quality.
@@ -76,9 +76,9 @@ interface AudioStreamInterface extends StreamInterface
      *
      * @param integer $quality
      *
-     * @return AudioStreamInterface
+     * @return static
      */
-    public function quality(int $quality): AudioStreamInterface;
+    public function quality(int $quality): static;
 
     /**
      * Set rate.
@@ -87,9 +87,9 @@ interface AudioStreamInterface extends StreamInterface
      *
      * @param integer $rate
      *
-     * @return AudioStreamInterface
+     * @return static
      */
-    public function rate(int $rate): AudioStreamInterface;
+    public function rate(int $rate): static;
 
     /**
      * Set channels count.
@@ -98,9 +98,9 @@ interface AudioStreamInterface extends StreamInterface
      *
      * @param integer $channels
      *
-     * @return AudioStreamInterface
+     * @return static
      */
-    public function channels(int $channels): AudioStreamInterface;
+    public function channels(int $channels): static;
 
     /**
      * Set codec.
@@ -109,9 +109,9 @@ interface AudioStreamInterface extends StreamInterface
      *
      * @param string $codec
      *
-     * @return AudioStreamInterface
+     * @return static
      */
-    public function codec(string $codec): AudioStreamInterface;
+    public function codec(string $codec): static;
 
     /**
      * Set profile.
@@ -120,9 +120,9 @@ interface AudioStreamInterface extends StreamInterface
      *
      * @param string $profile
      *
-     * @return AudioStreamInterface
+     * @return static
      */
-    public function profile(string $profile): AudioStreamInterface;
+    public function profile(string $profile): static;
 
     /**
      * Set bitrate.
@@ -131,9 +131,9 @@ interface AudioStreamInterface extends StreamInterface
      *
      * @param string $bitrate
      *
-     * @return AudioStreamInterface
+     * @return static
      */
-    public function bitrate(string $bitrate): AudioStreamInterface;
+    public function bitrate(string $bitrate): static;
 
     /**
      * Set volume.
@@ -142,9 +142,9 @@ interface AudioStreamInterface extends StreamInterface
      *
      * @param integer $volume
      *
-     * @return AudioStreamInterface
+     * @return static
      */
-    public function volume(int $volume): AudioStreamInterface;
+    public function volume(int $volume): static;
 
     /**
      * Set filter graph as a string.
@@ -153,9 +153,9 @@ interface AudioStreamInterface extends StreamInterface
      *
      * @param string $filterGraph
      *
-     * @return AudioStreamInterface
+     * @return static
      */
-    public function filter(string $filterGraph): AudioStreamInterface;
+    public function filter(string $filterGraph): static;
 
     /**
      * Set sample format.
@@ -164,9 +164,9 @@ interface AudioStreamInterface extends StreamInterface
      *
      * @param string $format
      *
-     * @return AudioStreamInterface
+     * @return static
      */
-    public function sampleFormat(string $format): AudioStreamInterface;
+    public function sampleFormat(string $format): static;
 
     /**
      * Set channel layout.
@@ -175,7 +175,7 @@ interface AudioStreamInterface extends StreamInterface
      *
      * @param string $layout
      *
-     * @return AudioStreamInterface
+     * @return static
      */
-    public function channelLayout(string $layout): AudioStreamInterface;
+    public function channelLayout(string $layout): static;
 }

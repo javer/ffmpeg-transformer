@@ -14,34 +14,25 @@ class AudioFilterChain extends FilterChain implements AudioFilterChainInterface
     /**
      * Channel split filter.
      *
-     * @param array $arguments
+     * @param array<string|int, mixed> $arguments
      *
-     * @return AudioFilterChainInterface
+     * @return static
      *
      * @throws InvalidArgumentException
      */
-    public function channelsplit(array $arguments = []): AudioFilterChainInterface
+    public function channelsplit(array $arguments = []): static
     {
         if (!isset($arguments['channel_layout'])) {
             throw new InvalidArgumentException('You must specify channel_layout for the channelsplit filter');
         }
 
-        switch ($arguments['channel_layout']) {
-            case 'mono':
-                $channels = 1;
-                break;
-            case 'stereo':
-                $channels = 2;
-                break;
-            case '2.1':
-                $channels = 3;
-                break;
-            case '5.1':
-                $channels = 6;
-                break;
-            default:
-                $channels = (int) $arguments['channel_layout'];
-        }
+        $channels = match ($arguments['channel_layout']) {
+            'mono' => 1,
+            'stereo' => 2,
+            '2.1' => 3,
+            '5.1' => 6,
+            default => (int) $arguments['channel_layout'],
+        };
 
         return $this->filter('channelsplit', $arguments, ['a'], array_fill(0, $channels, 'a'));
     }
@@ -51,9 +42,9 @@ class AudioFilterChain extends FilterChain implements AudioFilterChainInterface
      *
      * @param float $volume
      *
-     * @return AudioFilterChainInterface
+     * @return static
      */
-    public function volume(float $volume): AudioFilterChainInterface
+    public function volume(float $volume): static
     {
         return $this->filter('volume', [sprintf('%fdB', $volume)], ['a'], ['a']);
     }
@@ -63,9 +54,9 @@ class AudioFilterChain extends FilterChain implements AudioFilterChainInterface
      *
      * @param integer $count
      *
-     * @return AudioFilterChainInterface
+     * @return static
      */
-    public function split(int $count): AudioFilterChainInterface
+    public function split(int $count): static
     {
         return $this->filter('asplit', [$count], ['a'], array_fill(0, $count, 'a'));
     }
@@ -73,15 +64,13 @@ class AudioFilterChain extends FilterChain implements AudioFilterChainInterface
     /**
      * Mix filter.
      *
-     * @param array $arguments
+     * @param array<string|int, mixed> $arguments
      *
-     * @return AudioFilterChainInterface
+     * @return static
      */
-    public function mix(array $arguments = []): AudioFilterChainInterface
+    public function mix(array $arguments = []): static
     {
-        if (!isset($arguments['inputs'])) {
-            $arguments['inputs'] = count($this->outputs);
-        }
+        $arguments['inputs'] ??= count($this->outputs);
 
         return $this->filter('amix', $arguments, array_fill(0, $arguments['inputs'], 'a'), ['a']);
     }
@@ -92,9 +81,9 @@ class AudioFilterChain extends FilterChain implements AudioFilterChainInterface
      * @param float $start
      * @param float $end
      *
-     * @return AudioFilterChainInterface
+     * @return static
      */
-    public function trim(float $start, float $end): AudioFilterChainInterface
+    public function trim(float $start, float $end): static
     {
         return $this->filter('atrim', [$start, $end], ['a'], ['a']);
     }
@@ -104,9 +93,9 @@ class AudioFilterChain extends FilterChain implements AudioFilterChainInterface
      *
      * @param string $expr
      *
-     * @return AudioFilterChainInterface
+     * @return static
      */
-    public function setpts(string $expr): AudioFilterChainInterface
+    public function setpts(string $expr): static
     {
         return $this->filter('asetpts', [$expr], ['a'], ['a']);
     }
@@ -114,9 +103,9 @@ class AudioFilterChain extends FilterChain implements AudioFilterChainInterface
     /**
      * Reset stream timestamps.
      *
-     * @return AudioFilterChainInterface
+     * @return static
      */
-    public function resetTimestamp(): AudioFilterChainInterface
+    public function resetTimestamp(): static
     {
         return $this->setpts('PTS-STARTPTS');
     }
@@ -128,9 +117,9 @@ class AudioFilterChain extends FilterChain implements AudioFilterChainInterface
      * @param float  $start
      * @param float  $end
      *
-     * @return AudioFilterChainInterface
+     * @return static
      */
-    public function fade(string $type, float $start, float $end): AudioFilterChainInterface
+    public function fade(string $type, float $start, float $end): static
     {
         $arguments = [
             'enable' => sprintf("'between(t,%f,%f)'", $start, $end),
@@ -144,11 +133,11 @@ class AudioFilterChain extends FilterChain implements AudioFilterChainInterface
     /**
      * Dynamic Audio Normalizer filter.
      *
-     * @param array $arguments
+     * @param array<string|int, mixed> $arguments
      *
-     * @return AudioFilterChainInterface
+     * @return static
      */
-    public function dynaudnorm(array $arguments = []): AudioFilterChainInterface
+    public function dynaudnorm(array $arguments = []): static
     {
         return $this->filter('dynaudnorm', $arguments, ['a'], ['a']);
     }

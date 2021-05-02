@@ -12,7 +12,7 @@ Features:
 Requirements
 ------------
 
-- PHP 7.1+
+- PHP 8.0+
 - [php-ffmpeg/php-ffmpeg](https://packagist.org/packages/php-ffmpeg/php-ffmpeg) for extracting media profile directly from the media file.
 
 Installation

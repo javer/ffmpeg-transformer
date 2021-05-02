@@ -23,9 +23,9 @@ interface FileInterface extends BuilderInterface
      *
      * @param string $format
      *
-     * @return FileInterface
+     * @return static
      */
-    public function format(string $format): FileInterface;
+    public function format(string $format): static;
 
     /**
      * Set codec.
@@ -34,9 +34,9 @@ interface FileInterface extends BuilderInterface
      *
      * @param string $codec
      *
-     * @return FileInterface
+     * @return static
      */
-    public function codec(string $codec): FileInterface;
+    public function codec(string $codec): static;
 
     /**
      * Set preset.
@@ -45,9 +45,9 @@ interface FileInterface extends BuilderInterface
      *
      * @param string $preset
      *
-     * @return FileInterface
+     * @return static
      */
-    public function preset(string $preset): FileInterface;
+    public function preset(string $preset): static;
 
     /**
      * Set duration.
@@ -56,9 +56,9 @@ interface FileInterface extends BuilderInterface
      *
      * @param float $time
      *
-     * @return FileInterface
+     * @return static
      */
-    public function duration(float $time): FileInterface;
+    public function duration(float $time): static;
 
     /**
      * Set to_time
@@ -67,9 +67,9 @@ interface FileInterface extends BuilderInterface
      *
      * @param float $timeStop
      *
-     * @return FileInterface
+     * @return static
      */
-    public function toTime(float $timeStop): FileInterface;
+    public function toTime(float $timeStop): static;
 
     /**
      * Set file size.
@@ -78,9 +78,9 @@ interface FileInterface extends BuilderInterface
      *
      * @param integer $size
      *
-     * @return FileInterface
+     * @return static
      */
-    public function filesize(int $size): FileInterface;
+    public function filesize(int $size): static;
 
     /**
      * Set start time.
@@ -89,9 +89,9 @@ interface FileInterface extends BuilderInterface
      *
      * @param float $time
      *
-     * @return FileInterface
+     * @return static
      */
-    public function startTime(float $time): FileInterface;
+    public function startTime(float $time): static;
 
     /**
      * Set start time from the end.
@@ -100,18 +100,18 @@ interface FileInterface extends BuilderInterface
      *
      * @param float $time
      *
-     * @return FileInterface
+     * @return static
      */
-    public function startTimeFromEnd(float $time): FileInterface;
+    public function startTimeFromEnd(float $time): static;
 
     /**
      * Seek timestamp.
      *
      * Option: -seek_timestamp
      *
-     * @return FileInterface
+     * @return static
      */
-    public function seekTimestamp(): FileInterface;
+    public function seekTimestamp(): static;
 
     /**
      * Set timestamp.
@@ -120,9 +120,9 @@ interface FileInterface extends BuilderInterface
      *
      * @param string $time
      *
-     * @return FileInterface
+     * @return static
      */
-    public function timestamp(string $time): FileInterface;
+    public function timestamp(string $time): static;
 
     /**
      * Set metadata value.
@@ -132,9 +132,9 @@ interface FileInterface extends BuilderInterface
      * @param string $name
      * @param string $value
      *
-     * @return FileInterface
+     * @return static
      */
-    public function metadata(string $name, string $value): FileInterface;
+    public function metadata(string $name, string $value): static;
 
     /**
      * Set target type.
@@ -143,18 +143,18 @@ interface FileInterface extends BuilderInterface
      *
      * @param string $type
      *
-     * @return FileInterface
+     * @return static
      */
-    public function target(string $type): FileInterface;
+    public function target(string $type): static;
 
     /**
      * Apad.
      *
      * Option: -apad
      *
-     * @return FileInterface
+     * @return static
      */
-    public function apad(): FileInterface;
+    public function apad(): static;
 
     /**
      * Set frames number.
@@ -163,9 +163,9 @@ interface FileInterface extends BuilderInterface
      *
      * @param integer $number
      *
-     * @return FileInterface
+     * @return static
      */
-    public function frames(int $number): FileInterface;
+    public function frames(int $number): static;
 
     /**
      * Set filter script filename.
@@ -174,54 +174,54 @@ interface FileInterface extends BuilderInterface
      *
      * @param string $filename
      *
-     * @return FileInterface
+     * @return static
      */
-    public function filterScript(string $filename): FileInterface;
+    public function filterScript(string $filename): static;
 
     /**
      * Reinitialize filter.
      *
      * Option: -reinit_filter
      *
-     * @return FileInterface
+     * @return static
      */
-    public function reinitFilter(): FileInterface;
+    public function reinitFilter(): static;
 
     /**
      * Discard.
      *
      * Option: -discard
      *
-     * @return FileInterface
+     * @return static
      */
-    public function discard(): FileInterface;
+    public function discard(): static;
 
     /**
      * Disposition.
      *
      * Option: -disposition
      *
-     * @return FileInterface
+     * @return static
      */
-    public function disposition(): FileInterface;
+    public function disposition(): static;
 
     /**
      * Accurate seek.
      *
      * Option: -accurate_seek
      *
-     * @return FileInterface
+     * @return static
      */
-    public function accurateSeek(): FileInterface;
+    public function accurateSeek(): static;
 
     /**
      * Shortest output.
      *
      * Option: -shortest
      *
-     * @return FileInterface
+     * @return static
      */
-    public function shortest(): FileInterface;
+    public function shortest(): static;
 
     /**
      * Set profile.
@@ -230,29 +230,29 @@ interface FileInterface extends BuilderInterface
      *
      * @param string $profile
      *
-     * @return FileInterface
+     * @return static
      */
-    public function profile(string $profile): FileInterface;
+    public function profile(string $profile): static;
 
     /**
      * Attach file as a stream.
      *
      * Option: -attach filename
      *
-     * @param string $fiename
+     * @param string $filename
      *
-     * @return FileInterface
+     * @return static
      */
-    public function attach(string $fiename): FileInterface;
+    public function attach(string $filename): static;
 
     /**
      * Move header to the start of the file.
      *
      * Option: -movflags faststart
      *
-     * @return FileInterface
+     * @return static
      */
-    public function moveHeaderToStart(): FileInterface;
+    public function moveHeaderToStart(): static;
 
     /**
      * Force loop over input file sequence.
@@ -261,27 +261,27 @@ interface FileInterface extends BuilderInterface
      *
      * @param boolean $flag
      *
-     * @return FileInterface
+     * @return static
      */
-    public function loop(bool $flag = true): FileInterface;
+    public function loop(bool $flag = true): static;
 
     /**
      * Add video stream.
      *
-     * @param VideoStreamInterface $mapVideoStream
+     * @param VideoStreamInterface|null $mapVideoStream
      *
      * @return VideoStreamInterface
      */
-    public function addVideoStream(VideoStreamInterface $mapVideoStream = null): VideoStreamInterface;
+    public function addVideoStream(?VideoStreamInterface $mapVideoStream = null): VideoStreamInterface;
 
     /**
      * Add audio stream.
      *
-     * @param AudioStreamInterface $mapAudioStream
+     * @param AudioStreamInterface|null $mapAudioStream
      *
      * @return AudioStreamInterface
      */
-    public function addAudioStream(AudioStreamInterface $mapAudioStream = null): AudioStreamInterface;
+    public function addAudioStream(?AudioStreamInterface $mapAudioStream = null): AudioStreamInterface;
 
     /**
      * Get video stream by number.
@@ -339,18 +339,18 @@ interface FileInterface extends BuilderInterface
      * @param StreamInterface $stream
      * @param integer         $position
      *
-     * @return FileInterface
+     * @return static
      */
-    public function moveStreamToPosition(StreamInterface $stream, int $position): FileInterface;
+    public function moveStreamToPosition(StreamInterface $stream, int $position): static;
 
     /**
      * Remove stream.
      *
      * @param StreamInterface $stream
      *
-     * @return FileInterface
+     * @return static
      */
-    public function removeStream(StreamInterface $stream): FileInterface;
+    public function removeStream(StreamInterface $stream): static;
 
     /**
      * Add filter graph.
@@ -374,9 +374,9 @@ interface FileInterface extends BuilderInterface
      * @param string $name
      * @param string $argument
      *
-     * @return FileInterface
+     * @return static
      */
-    public function addOption(string $name, string $argument = ''): FileInterface;
+    public function addOption(string $name, string $argument = ''): static;
 
     /**
      * Return to command.

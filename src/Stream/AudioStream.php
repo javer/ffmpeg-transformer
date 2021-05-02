@@ -14,16 +14,14 @@ class AudioStream extends Stream implements AudioStreamInterface
     /**
      * AudioStream constructor.
      *
-     * @param FileInterface $file
-     * @param string|null   $name
-     * @param string        $type
-     * @param boolean       $isInput
-     * @param boolean       $isMapped
+     * @param FileInterface   $file
+     * @param string|int|null $name
+     * @param boolean         $isInput
+     * @param boolean         $isMapped
      */
     public function __construct(
         FileInterface $file,
-        $name = null,
-        string $type = '',
+        string|int|null $name = null,
         bool $isInput = false,
         bool $isMapped = true
     )
@@ -37,9 +35,9 @@ class AudioStream extends Stream implements AudioStreamInterface
      * @param string $name
      * @param string $argument
      *
-     * @return AudioStreamInterface
+     * @return static
      */
-    public function addOption(string $name, string $argument = ''): AudioStreamInterface
+    public function addOption(string $name, string $argument = ''): static
     {
         $this->options[] = [$name, $argument, false];
 
@@ -52,9 +50,9 @@ class AudioStream extends Stream implements AudioStreamInterface
      * @param string $name
      * @param string $argument
      *
-     * @return AudioStreamInterface
+     * @return static
      */
-    public function addStreamOption(string $name, string $argument = ''): AudioStreamInterface
+    public function addStreamOption(string $name, string $argument = ''): static
     {
         $this->options[] = [$name, $argument, true];
 
@@ -64,9 +62,9 @@ class AudioStream extends Stream implements AudioStreamInterface
     /**
      * Copy stream "as is".
      *
-     * @return AudioStreamInterface
+     * @return static
      */
-    public function copy(): AudioStreamInterface
+    public function copy(): static
     {
         $this->isCustomCodec = false;
 
@@ -76,9 +74,9 @@ class AudioStream extends Stream implements AudioStreamInterface
     /**
      * Disable audio stream.
      *
-     * @return AudioStreamInterface
+     * @return static
      */
-    public function disable(): AudioStreamInterface
+    public function disable(): static
     {
         $this->isCustomCodec = true;
 
@@ -90,9 +88,9 @@ class AudioStream extends Stream implements AudioStreamInterface
      *
      * @param AudioStreamInterface $stream
      *
-     * @return AudioStreamInterface
+     * @return static
      */
-    public function map(AudioStreamInterface $stream): AudioStreamInterface
+    public function map(AudioStreamInterface $stream): static
     {
         $this->file->removeStream($stream);
 
@@ -108,11 +106,11 @@ class AudioStream extends Stream implements AudioStreamInterface
      *
      * @param integer $number
      *
-     * @return AudioStreamInterface
+     * @return static
      */
-    public function frames(int $number): AudioStreamInterface
+    public function frames(int $number): static
     {
-        return $this->addStreamOption('-frames', $number);
+        return $this->addStreamOption('-frames', (string) $number);
     }
 
     /**
@@ -120,11 +118,11 @@ class AudioStream extends Stream implements AudioStreamInterface
      *
      * @param integer $quality
      *
-     * @return AudioStreamInterface
+     * @return static
      */
-    public function quality(int $quality): AudioStreamInterface
+    public function quality(int $quality): static
     {
-        return $this->addStreamOption('-q', $quality);
+        return $this->addStreamOption('-q', (string) $quality);
     }
 
     /**
@@ -132,11 +130,11 @@ class AudioStream extends Stream implements AudioStreamInterface
      *
      * @param integer $rate
      *
-     * @return AudioStreamInterface
+     * @return static
      */
-    public function rate(int $rate): AudioStreamInterface
+    public function rate(int $rate): static
     {
-        return $this->addStreamOption('-ar', $rate);
+        return $this->addStreamOption('-ar', (string) $rate);
     }
 
     /**
@@ -144,11 +142,11 @@ class AudioStream extends Stream implements AudioStreamInterface
      *
      * @param integer $channels
      *
-     * @return AudioStreamInterface
+     * @return static
      */
-    public function channels(int $channels): AudioStreamInterface
+    public function channels(int $channels): static
     {
-        return $this->addStreamOption('-ac', $channels);
+        return $this->addStreamOption('-ac', (string) $channels);
     }
 
     /**
@@ -156,9 +154,9 @@ class AudioStream extends Stream implements AudioStreamInterface
      *
      * @param string $codec
      *
-     * @return AudioStreamInterface
+     * @return static
      */
-    public function codec(string $codec): AudioStreamInterface
+    public function codec(string $codec): static
     {
         $this->addStreamOption('-c', $codec);
         $this->isCustomCodec = true;
@@ -171,9 +169,9 @@ class AudioStream extends Stream implements AudioStreamInterface
      *
      * @param string $profile
      *
-     * @return AudioStreamInterface
+     * @return static
      */
-    public function profile(string $profile): AudioStreamInterface
+    public function profile(string $profile): static
     {
         return $this->addStreamOption('-profile', $profile);
     }
@@ -183,9 +181,9 @@ class AudioStream extends Stream implements AudioStreamInterface
      *
      * @param string $bitrate
      *
-     * @return AudioStreamInterface
+     * @return static
      */
-    public function bitrate(string $bitrate): AudioStreamInterface
+    public function bitrate(string $bitrate): static
     {
         return $this->addStreamOption('-b', $bitrate);
     }
@@ -195,11 +193,11 @@ class AudioStream extends Stream implements AudioStreamInterface
      *
      * @param integer $volume
      *
-     * @return AudioStreamInterface
+     * @return static
      */
-    public function volume(int $volume): AudioStreamInterface
+    public function volume(int $volume): static
     {
-        return $this->addOption('-vol', $volume);
+        return $this->addOption('-vol', (string) $volume);
     }
 
     /**
@@ -207,9 +205,9 @@ class AudioStream extends Stream implements AudioStreamInterface
      *
      * @param string $filterGraph
      *
-     * @return AudioStreamInterface
+     * @return static
      */
-    public function filter(string $filterGraph): AudioStreamInterface
+    public function filter(string $filterGraph): static
     {
         return $this->addOption('-af', $filterGraph);
     }
@@ -219,9 +217,9 @@ class AudioStream extends Stream implements AudioStreamInterface
      *
      * @param string $format
      *
-     * @return AudioStreamInterface
+     * @return static
      */
-    public function sampleFormat(string $format): AudioStreamInterface
+    public function sampleFormat(string $format): static
     {
         return $this->addStreamOption('-sample_fmt', $format);
     }
@@ -231,9 +229,9 @@ class AudioStream extends Stream implements AudioStreamInterface
      *
      * @param string $layout
      *
-     * @return AudioStreamInterface
+     * @return static
      */
-    public function channelLayout(string $layout): AudioStreamInterface
+    public function channelLayout(string $layout): static
     {
         return $this->addOption('-channel_layout', $layout);
     }

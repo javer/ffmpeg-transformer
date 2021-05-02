@@ -14,16 +14,14 @@ class VideoStream extends Stream implements VideoStreamInterface
     /**
      * VideoStream constructor.
      *
-     * @param FileInterface $file
-     * @param string|null   $name
-     * @param string        $type
-     * @param boolean       $isInput
-     * @param boolean       $isMapped
+     * @param FileInterface   $file
+     * @param string|int|null $name
+     * @param boolean         $isInput
+     * @param boolean         $isMapped
      */
     public function __construct(
         FileInterface $file,
-        $name = null,
-        string $type = '',
+        string|int|null $name = null,
         bool $isInput = false,
         bool $isMapped = true
     )
@@ -37,9 +35,9 @@ class VideoStream extends Stream implements VideoStreamInterface
      * @param string $name
      * @param string $argument
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function addOption(string $name, string $argument = ''): VideoStreamInterface
+    public function addOption(string $name, string $argument = ''): static
     {
         $this->options[] = [$name, $argument, false];
 
@@ -52,9 +50,9 @@ class VideoStream extends Stream implements VideoStreamInterface
      * @param string $name
      * @param string $argument
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function addStreamOption(string $name, string $argument = ''): VideoStreamInterface
+    public function addStreamOption(string $name, string $argument = ''): static
     {
         $this->options[] = [$name, $argument, true];
 
@@ -64,9 +62,9 @@ class VideoStream extends Stream implements VideoStreamInterface
     /**
      * Copy stream "as is".
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function copy(): VideoStreamInterface
+    public function copy(): static
     {
         $this->isCustomCodec = false;
 
@@ -76,9 +74,9 @@ class VideoStream extends Stream implements VideoStreamInterface
     /**
      * Disable video stream.
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function disable(): VideoStreamInterface
+    public function disable(): static
     {
         $this->isCustomCodec = true;
 
@@ -90,9 +88,9 @@ class VideoStream extends Stream implements VideoStreamInterface
      *
      * @param VideoStreamInterface $stream
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function map(VideoStreamInterface $stream): VideoStreamInterface
+    public function map(VideoStreamInterface $stream): static
     {
         $this->file->removeStream($stream);
 
@@ -108,11 +106,11 @@ class VideoStream extends Stream implements VideoStreamInterface
      *
      * @param integer $number
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function frames(int $number): VideoStreamInterface
+    public function frames(int $number): static
     {
-        return $this->addStreamOption('-frames', $number);
+        return $this->addStreamOption('-frames', (string) $number);
     }
 
     /**
@@ -120,11 +118,11 @@ class VideoStream extends Stream implements VideoStreamInterface
      *
      * @param float $rate
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function frameRate(float $rate): VideoStreamInterface
+    public function frameRate(float $rate): static
     {
-        return $this->addStreamOption('-r', $rate);
+        return $this->addStreamOption('-r', (string) $rate);
     }
 
     /**
@@ -132,9 +130,9 @@ class VideoStream extends Stream implements VideoStreamInterface
      *
      * @param string $size
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function frameSize(string $size): VideoStreamInterface
+    public function frameSize(string $size): static
     {
         return $this->addStreamOption('-s', $size);
     }
@@ -144,9 +142,9 @@ class VideoStream extends Stream implements VideoStreamInterface
      *
      * @param string $aspect
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function aspectRatio(string $aspect): VideoStreamInterface
+    public function aspectRatio(string $aspect): static
     {
         return $this->addStreamOption('-aspect', $aspect);
     }
@@ -156,11 +154,11 @@ class VideoStream extends Stream implements VideoStreamInterface
      *
      * @param integer $number
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function bitsPerRawSample(int $number): VideoStreamInterface
+    public function bitsPerRawSample(int $number): static
     {
-        return $this->addOption('-bits_per_raw_sample', $number);
+        return $this->addOption('-bits_per_raw_sample', (string) $number);
     }
 
     /**
@@ -168,9 +166,9 @@ class VideoStream extends Stream implements VideoStreamInterface
      *
      * @param string $codec
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function codec(string $codec): VideoStreamInterface
+    public function codec(string $codec): static
     {
         $this->addStreamOption('-c', $codec);
         $this->isCustomCodec = true;
@@ -183,9 +181,9 @@ class VideoStream extends Stream implements VideoStreamInterface
      *
      * @param string $profile
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function profile(string $profile): VideoStreamInterface
+    public function profile(string $profile): static
     {
         return $this->addStreamOption('-profile', $profile);
     }
@@ -195,9 +193,9 @@ class VideoStream extends Stream implements VideoStreamInterface
      *
      * @param string $preset
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function preset(string $preset): VideoStreamInterface
+    public function preset(string $preset): static
     {
         return $this->addOption('-preset', $preset);
     }
@@ -207,9 +205,9 @@ class VideoStream extends Stream implements VideoStreamInterface
      *
      * @param string $timecode
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function timeCode(string $timecode): VideoStreamInterface
+    public function timeCode(string $timecode): static
     {
         return $this->addOption('-timecode', $timecode);
     }
@@ -219,11 +217,11 @@ class VideoStream extends Stream implements VideoStreamInterface
      *
      * @param integer $number
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function pass(int $number): VideoStreamInterface
+    public function pass(int $number): static
     {
-        return $this->addStreamOption('-pass', $number);
+        return $this->addStreamOption('-pass', (string) $number);
     }
 
     /**
@@ -231,9 +229,9 @@ class VideoStream extends Stream implements VideoStreamInterface
      *
      * @param string $filterGraph
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function filter(string $filterGraph): VideoStreamInterface
+    public function filter(string $filterGraph): static
     {
         return $this->addOption('-vf', $filterGraph);
     }
@@ -243,9 +241,9 @@ class VideoStream extends Stream implements VideoStreamInterface
      *
      * @param string $bitrate
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function bitrate(string $bitrate): VideoStreamInterface
+    public function bitrate(string $bitrate): static
     {
         return $this->addStreamOption('-b', $bitrate);
     }
@@ -255,9 +253,9 @@ class VideoStream extends Stream implements VideoStreamInterface
      *
      * @param string $maxBitrate
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function maxBitrate(string $maxBitrate): VideoStreamInterface
+    public function maxBitrate(string $maxBitrate): static
     {
         return $this->addStreamOption('-maxrate', $maxBitrate);
     }
@@ -267,9 +265,9 @@ class VideoStream extends Stream implements VideoStreamInterface
      *
      * @param string $minBitrate
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function minBitrate(string $minBitrate): VideoStreamInterface
+    public function minBitrate(string $minBitrate): static
     {
         return $this->addStreamOption('-minrate', $minBitrate);
     }
@@ -279,9 +277,9 @@ class VideoStream extends Stream implements VideoStreamInterface
      *
      * @param string $bufferSize
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function bufferSize(string $bufferSize): VideoStreamInterface
+    public function bufferSize(string $bufferSize): static
     {
         return $this->addStreamOption('-bufsize', $bufferSize);
     }
@@ -291,11 +289,11 @@ class VideoStream extends Stream implements VideoStreamInterface
      *
      * @param integer $crf
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function crf(int $crf): VideoStreamInterface
+    public function crf(int $crf): static
     {
-        return $this->addStreamOption('-crf', $crf);
+        return $this->addStreamOption('-crf', (string) $crf);
     }
 
     /**
@@ -303,9 +301,9 @@ class VideoStream extends Stream implements VideoStreamInterface
      *
      * @param string $format
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function pixelFormat(string $format): VideoStreamInterface
+    public function pixelFormat(string $format): static
     {
         return $this->addStreamOption('-pix_fmt', $format);
     }
@@ -315,10 +313,10 @@ class VideoStream extends Stream implements VideoStreamInterface
      *
      * @param integer $interval
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function keyframeInterval(int $interval): VideoStreamInterface
+    public function keyframeInterval(int $interval): static
     {
-        return $this->addOption('-g', $interval);
+        return $this->addOption('-g', (string) $interval);
     }
 }

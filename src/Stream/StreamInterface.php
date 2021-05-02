@@ -41,9 +41,9 @@ interface StreamInterface extends BuilderInterface
      *
      * @param integer $position
      *
-     * @return StreamInterface
+     * @return static
      */
-    public function moveTo(int $position): StreamInterface;
+    public function moveTo(int $position): static;
 
     /**
      * Return to file.

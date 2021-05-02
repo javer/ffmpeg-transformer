@@ -19,50 +19,32 @@ use LogicException;
  */
 class File implements FileInterface
 {
-    /**
-     * @var CommandInterface
-     */
-    protected $command;
+    protected CommandInterface $command;
 
-    /**
-     * @var string
-     */
-    protected $filename;
+    protected string $filename;
 
-    /**
-     * @var string
-     */
-    protected $name;
+    protected string $name;
 
-    /**
-     * @var boolean
-     */
-    protected $isInput;
+    protected bool $isInput;
 
     /**
      * @var string[]
      */
-    protected $options = [];
+    protected array $options = [];
 
     /**
      * @var VideoStreamInterface[]
      */
-    protected $videoStreams = [];
+    protected array $videoStreams = [];
 
     /**
      * @var AudioStreamInterface[]
      */
-    protected $audioStreams = [];
+    protected array $audioStreams = [];
 
-    /**
-     * @var FilterGraphInterface
-     */
-    protected $filterGraph;
+    protected ?FilterGraphInterface $filterGraph = null;
 
-    /**
-     * @var integer
-     */
-    protected $streamsCounter = 0;
+    protected int $streamsCounter = 0;
 
     /**
      * File constructor.
@@ -72,11 +54,11 @@ class File implements FileInterface
      * @param string           $name
      * @param boolean          $isInput
      */
-    public function __construct(CommandInterface $command, $filename, $name = '', $isInput = false)
+    public function __construct(CommandInterface $command, string $filename, string $name = '', bool $isInput = false)
     {
         $this->command = $command;
         $this->filename = $filename;
-        $this->name = (string) $name;
+        $this->name = $name;
         $this->isInput = $isInput;
     }
 
@@ -86,13 +68,13 @@ class File implements FileInterface
      * @param string $name
      * @param string $argument
      *
-     * @return FileInterface
+     * @return static
      */
-    public function addOption(string $name, string $argument = ''): FileInterface
+    public function addOption(string $name, string $argument = ''): static
     {
         $this->options[] = $name;
 
-        if (strlen($argument) > 0) {
+        if ($argument !== '') {
             $this->options[] = $argument;
         }
 
@@ -102,7 +84,7 @@ class File implements FileInterface
     /**
      * Build command.
      *
-     * @return array
+     * @return array<int, string>
      */
     public function build(): array
     {
@@ -155,9 +137,9 @@ class File implements FileInterface
      *
      * @param string $format
      *
-     * @return FileInterface
+     * @return static
      */
-    public function format(string $format): FileInterface
+    public function format(string $format): static
     {
         return $this->addOption('-f', $format);
     }
@@ -167,9 +149,9 @@ class File implements FileInterface
      *
      * @param string $codec
      *
-     * @return FileInterface
+     * @return static
      */
-    public function codec(string $codec): FileInterface
+    public function codec(string $codec): static
     {
         return $this->addOption('-c', $codec);
     }
@@ -179,9 +161,9 @@ class File implements FileInterface
      *
      * @param string $preset
      *
-     * @return FileInterface
+     * @return static
      */
-    public function preset(string $preset): FileInterface
+    public function preset(string $preset): static
     {
         return $this->addOption('-pre', $preset);
     }
@@ -191,11 +173,11 @@ class File implements FileInterface
      *
      * @param float $time
      *
-     * @return FileInterface
+     * @return static
      */
-    public function duration(float $time): FileInterface
+    public function duration(float $time): static
     {
-        return $this->addOption('-t', $time);
+        return $this->addOption('-t', (string) $time);
     }
 
     /**
@@ -203,11 +185,11 @@ class File implements FileInterface
      *
      * @param float $timeStop
      *
-     * @return FileInterface
+     * @return static
      */
-    public function toTime(float $timeStop): FileInterface
+    public function toTime(float $timeStop): static
     {
-        return $this->addOption('-to', $timeStop);
+        return $this->addOption('-to', (string) $timeStop);
     }
 
     /**
@@ -215,11 +197,11 @@ class File implements FileInterface
      *
      * @param integer $size
      *
-     * @return FileInterface
+     * @return static
      */
-    public function filesize(int $size): FileInterface
+    public function filesize(int $size): static
     {
-        return $this->addOption('-fs', $size);
+        return $this->addOption('-fs', (string) $size);
     }
 
     /**
@@ -227,11 +209,11 @@ class File implements FileInterface
      *
      * @param float $time
      *
-     * @return FileInterface
+     * @return static
      */
-    public function startTime(float $time): FileInterface
+    public function startTime(float $time): static
     {
-        return $this->addOption('-ss', $time);
+        return $this->addOption('-ss', (string) $time);
     }
 
     /**
@@ -239,19 +221,19 @@ class File implements FileInterface
      *
      * @param float $time
      *
-     * @return FileInterface
+     * @return static
      */
-    public function startTimeFromEnd(float $time): FileInterface
+    public function startTimeFromEnd(float $time): static
     {
-        return $this->addOption('-sseof', $time);
+        return $this->addOption('-sseof', (string) $time);
     }
 
     /**
      * Seek timestamp.
      *
-     * @return FileInterface
+     * @return static
      */
-    public function seekTimestamp(): FileInterface
+    public function seekTimestamp(): static
     {
         return $this->addOption('-seek_timestamp');
     }
@@ -261,9 +243,9 @@ class File implements FileInterface
      *
      * @param string $time
      *
-     * @return FileInterface
+     * @return static
      */
-    public function timestamp(string $time): FileInterface
+    public function timestamp(string $time): static
     {
         return $this->addOption('-timestamp', $time);
     }
@@ -274,9 +256,9 @@ class File implements FileInterface
      * @param string $name
      * @param string $value
      *
-     * @return FileInterface
+     * @return static
      */
-    public function metadata(string $name, string $value): FileInterface
+    public function metadata(string $name, string $value): static
     {
         return $this->addOption('-metadata', sprintf('%s=%s', $name, $value));
     }
@@ -286,9 +268,9 @@ class File implements FileInterface
      *
      * @param string $type
      *
-     * @return FileInterface
+     * @return static
      */
-    public function target(string $type): FileInterface
+    public function target(string $type): static
     {
         return $this->addOption('-target', $type);
     }
@@ -296,9 +278,9 @@ class File implements FileInterface
     /**
      * Apad.
      *
-     * @return FileInterface
+     * @return static
      */
-    public function apad(): FileInterface
+    public function apad(): static
     {
         return $this->addOption('-apad');
     }
@@ -308,11 +290,11 @@ class File implements FileInterface
      *
      * @param integer $number
      *
-     * @return FileInterface
+     * @return static
      */
-    public function frames(int $number): FileInterface
+    public function frames(int $number): static
     {
-        return $this->addOption('-frames', $number);
+        return $this->addOption('-frames', (string) $number);
     }
 
     /**
@@ -320,9 +302,9 @@ class File implements FileInterface
      *
      * @param string $filename
      *
-     * @return FileInterface
+     * @return static
      */
-    public function filterScript(string $filename): FileInterface
+    public function filterScript(string $filename): static
     {
         return $this->addOption('-filter_script', $filename);
     }
@@ -330,9 +312,9 @@ class File implements FileInterface
     /**
      * Reinitialize filter.
      *
-     * @return FileInterface
+     * @return static
      */
-    public function reinitFilter(): FileInterface
+    public function reinitFilter(): static
     {
         return $this->addOption('-reinit_filter');
     }
@@ -340,9 +322,9 @@ class File implements FileInterface
     /**
      * Discard.
      *
-     * @return FileInterface
+     * @return static
      */
-    public function discard(): FileInterface
+    public function discard(): static
     {
         return $this->addOption('-discard');
     }
@@ -350,9 +332,9 @@ class File implements FileInterface
     /**
      * Disposition.
      *
-     * @return FileInterface
+     * @return static
      */
-    public function disposition(): FileInterface
+    public function disposition(): static
     {
         return $this->addOption('-disposition');
     }
@@ -360,9 +342,9 @@ class File implements FileInterface
     /**
      * Accurate seek.
      *
-     * @return FileInterface
+     * @return static
      */
-    public function accurateSeek(): FileInterface
+    public function accurateSeek(): static
     {
         return $this->addOption('-accurate_seek');
     }
@@ -370,9 +352,9 @@ class File implements FileInterface
     /**
      * Shortest output.
      *
-     * @return FileInterface
+     * @return static
      */
-    public function shortest(): FileInterface
+    public function shortest(): static
     {
         return $this->addOption('-shortest');
     }
@@ -382,9 +364,9 @@ class File implements FileInterface
      *
      * @param string $profile
      *
-     * @return FileInterface
+     * @return static
      */
-    public function profile(string $profile): FileInterface
+    public function profile(string $profile): static
     {
         return $this->addOption('-profile', $profile);
     }
@@ -392,29 +374,29 @@ class File implements FileInterface
     /**
      * Attach file as a stream.
      *
-     * @param string $fiename
+     * @param string $filename
      *
-     * @return FileInterface
+     * @return static
      *
      * @throws LogicException
      */
-    public function attach(string $fiename): FileInterface
+    public function attach(string $filename): static
     {
         if ($this->isInput) {
             throw new LogicException('Attach option can be used only for output files');
         }
 
-        return $this->addOption('-attach', $fiename);
+        return $this->addOption('-attach', $filename);
     }
 
     /**
      * Move header to the start of the file.
      *
-     * @return FileInterface
+     * @return static
      *
      * @throws LogicException
      */
-    public function moveHeaderToStart(): FileInterface
+    public function moveHeaderToStart(): static
     {
         if ($this->isInput) {
             throw new LogicException('Movflags option can be used only for output files');
@@ -430,23 +412,23 @@ class File implements FileInterface
      *
      * @param boolean $flag
      *
-     * @return FileInterface
+     * @return static
      */
-    public function loop(bool $flag = true): FileInterface
+    public function loop(bool $flag = true): static
     {
-        return $this->addOption('-loop', $flag ? 1 : 0);
+        return $this->addOption('-loop', $flag ? '1' : '0');
     }
 
     /**
      * Add video stream.
      *
-     * @param VideoStreamInterface $mapVideoStream
+     * @param VideoStreamInterface|null $mapVideoStream
      *
      * @return VideoStreamInterface
      *
      * @throws LogicException
      */
-    public function addVideoStream(VideoStreamInterface $mapVideoStream = null): VideoStreamInterface
+    public function addVideoStream(?VideoStreamInterface $mapVideoStream = null): VideoStreamInterface
     {
         if ($this->isInput) {
             throw new LogicException('AddVideoStream can be used only for output files, use getVideoStream for input');
@@ -466,13 +448,13 @@ class File implements FileInterface
     /**
      * Add audio stream.
      *
-     * @param AudioStreamInterface $mapAudioStream
+     * @param AudioStreamInterface|null $mapAudioStream
      *
      * @return AudioStreamInterface
      *
      * @throws LogicException
      */
-    public function addAudioStream(AudioStreamInterface $mapAudioStream = null): AudioStreamInterface
+    public function addAudioStream(?AudioStreamInterface $mapAudioStream = null): AudioStreamInterface
     {
         if ($this->isInput) {
             throw new LogicException('AddAudioStream can be used only for output files, use getAudioStream for input');
@@ -499,7 +481,7 @@ class File implements FileInterface
     public function getVideoStream(int $number = 0): VideoStreamInterface
     {
         if (!isset($this->videoStreams[$number])) {
-            $this->videoStreams[$number] = new VideoStream($this, $number, '', $this->isInput);
+            $this->videoStreams[$number] = new VideoStream($this, $number, $this->isInput);
         }
 
         return $this->videoStreams[$number];
@@ -515,7 +497,7 @@ class File implements FileInterface
     public function getAudioStream(int $number = 0): AudioStreamInterface
     {
         if (!isset($this->audioStreams[$number])) {
-            $this->audioStreams[$number] = new AudioStream($this, $number, '', $this->isInput);
+            $this->audioStreams[$number] = new AudioStream($this, $number, $this->isInput);
         }
 
         return $this->audioStreams[$number];
@@ -536,7 +518,7 @@ class File implements FileInterface
 
         $streamName = sprintf('v%s_%d', $this->getName(), $this->streamsCounter++);
 
-        return new VideoStream($this, $streamName, '', false, false);
+        return new VideoStream($this, $streamName, false, false);
     }
 
     /**
@@ -554,7 +536,7 @@ class File implements FileInterface
 
         $streamName = sprintf('a%s_%d', $this->getName(), $this->streamsCounter++);
 
-        return new AudioStream($this, $streamName, '', false, false);
+        return new AudioStream($this, $streamName, false, false);
     }
 
     /**
@@ -568,16 +550,11 @@ class File implements FileInterface
      */
     public function createStream(string $type): StreamInterface
     {
-        switch ($type) {
-            case StreamInterface::TYPE_VIDEO:
-                return $this->createVideoStream();
-
-            case StreamInterface::TYPE_AUDIO:
-                return $this->createAudioStream();
-
-            default:
-                throw new LogicException(sprintf('Unknown stream type: %s', $type));
-        }
+        return match ($type) {
+            StreamInterface::TYPE_VIDEO => $this->createVideoStream(),
+            StreamInterface::TYPE_AUDIO => $this->createAudioStream(),
+            default => throw new LogicException(sprintf('Unknown stream type: %s', $type)),
+        };
     }
 
     /**
@@ -615,11 +592,11 @@ class File implements FileInterface
      * @param StreamInterface $stream
      * @param integer         $position
      *
-     * @return FileInterface
+     * @return static
      *
      * @throws LogicException
      */
-    public function moveStreamToPosition(StreamInterface $stream, int $position): FileInterface
+    public function moveStreamToPosition(StreamInterface $stream, int $position): static
     {
         if ($stream->getInput()) {
             throw new LogicException('You cannot reorder streams in the input file');
@@ -654,9 +631,9 @@ class File implements FileInterface
      *
      * @param StreamInterface $stream
      *
-     * @return FileInterface
+     * @return static
      */
-    public function removeStream(StreamInterface $stream): FileInterface
+    public function removeStream(StreamInterface $stream): static
     {
         foreach ($this->videoStreams as $ndx => $videoStreamElement) {
             if ($videoStreamElement === $stream) {

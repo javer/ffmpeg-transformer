@@ -15,23 +15,23 @@ interface FilterChainInterface
     /**
      * Add filter.
      *
-     * @param string $name
-     * @param array  $arguments
-     * @param array  $inputs
-     * @param array  $outputs
+     * @param string                   $name
+     * @param array<string|int, mixed> $arguments
+     * @param array<int, string>       $inputs
+     * @param array<int, string>       $outputs
      *
-     * @return FilterChainInterface
+     * @return static
      */
-    public function filter(string $name, array $arguments, array $inputs, array $outputs): FilterChainInterface;
+    public function filter(string $name, array $arguments, array $inputs, array $outputs): static;
 
     /**
      * Add input stream.
      *
      * @param StreamInterface $stream
      *
-     * @return FilterChainInterface
+     * @return static
      */
-    public function addInputStream(StreamInterface $stream): FilterChainInterface;
+    public function addInputStream(StreamInterface $stream): static;
 
     /**
      * Get output stream.

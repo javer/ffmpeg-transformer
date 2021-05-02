@@ -17,11 +17,11 @@ class ComplexFilterChain extends FilterChain implements ComplexFilterChainInterf
     /**
      * Concat filter.
      *
-     * @return ComplexFilterChainInterface
+     * @return static
      *
      * @throws LogicException
      */
-    public function concat(): ComplexFilterChainInterface
+    public function concat(): static
     {
         $videoCount = count($this->getOutputs(StreamInterface::TYPE_VIDEO));
         $audioCount = count($this->getOutputs(StreamInterface::TYPE_AUDIO));
@@ -73,7 +73,10 @@ class ComplexFilterChain extends FilterChain implements ComplexFilterChainInterf
      */
     public function getOutputVideoStreams(): array
     {
-        return $this->getOutputStreams(StreamInterface::TYPE_VIDEO);
+        return array_filter(
+            $this->getOutputStreams(StreamInterface::TYPE_VIDEO),
+            static fn(StreamInterface $stream): bool => $stream instanceof VideoStreamInterface
+        );
     }
 
     /**
@@ -95,6 +98,9 @@ class ComplexFilterChain extends FilterChain implements ComplexFilterChainInterf
      */
     public function getOutputAudioStreams(): array
     {
-        return $this->getOutputStreams(StreamInterface::TYPE_AUDIO);
+        return array_filter(
+            $this->getOutputStreams(StreamInterface::TYPE_AUDIO),
+            static fn(StreamInterface $stream): bool => $stream instanceof AudioStreamInterface
+        );
     }
 }

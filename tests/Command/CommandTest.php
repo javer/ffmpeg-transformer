@@ -3,6 +3,8 @@
 namespace Javer\FfmpegTransformer\Tests\Command;
 
 use Javer\FfmpegTransformer\Command\Command;
+use Javer\FfmpegTransformer\Stream\AudioStreamInterface;
+use Javer\FfmpegTransformer\Stream\VideoStreamInterface;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -249,6 +251,9 @@ class CommandTest extends TestCase
             ->concat()
             ->getOutputStreams();
 
+        assert($outputVideoStream instanceof VideoStreamInterface);
+        assert($outputAudioStream instanceof AudioStreamInterface);
+
         $outputFile->addVideoStream($outputVideoStream)
             ->codec('libx264')
             ->preset('veryfast')
@@ -315,6 +320,8 @@ class CommandTest extends TestCase
                 $emptyAudioStream = $command->generateEmptyAudio($duration)->getAudioStream();
                 $streams = array_merge($streams, [$blackVideoStream, $emptyAudioStream]);
             } elseif ($action === 'T') {
+                assert(isset($actionData[2]));
+
                 $trimVideoStream = $filterGraph->video($inputVideoStream)
                     ->trim($actionData[1], $actionData[2])
                     ->resetTimestamp()
@@ -330,6 +337,9 @@ class CommandTest extends TestCase
         [$outputVideoStream, $outputAudioStream] = $filterGraph->complex($streams)
             ->concat()
             ->getOutputStreams();
+
+        assert($outputVideoStream instanceof VideoStreamInterface);
+        assert($outputAudioStream instanceof AudioStreamInterface);
 
         $outputFile->addVideoStream($outputVideoStream)
             ->codec('libx264')
@@ -421,6 +431,9 @@ class CommandTest extends TestCase
                     ->split(2)
                     ->getOutputStreams();
 
+                assert($mixStream instanceof AudioStreamInterface);
+                assert($audioStream instanceof AudioStreamInterface);
+
                 $mixAudioStreams[] = $mixStream;
 
                 $outputFile->addAudioStream($audioStream)
@@ -510,6 +523,9 @@ class CommandTest extends TestCase
                     ->volume(0 - $trackVolume)
                     ->split(2)
                     ->getOutputStreams();
+
+                assert($mixStream instanceof AudioStreamInterface);
+                assert($audioStream instanceof AudioStreamInterface);
 
                 $mixAudioStreams[] = $mixStream;
 

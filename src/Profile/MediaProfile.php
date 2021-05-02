@@ -23,50 +23,36 @@ class MediaProfile
     // Default supposed bitrate for audio track when it cannot be recognized from the input media file
     protected const DEFAULT_AUDIO_BITRATE = 64000;
 
-    /**
-     * @var string|null
-     */
-    private $name;
+    private ?string $name = null;
 
-    /**
-     * @var string|null
-     */
-    private $label;
+    private ?string $label = null;
 
-    /**
-     * @var string|null
-     */
-    private $format;
+    private ?string $format = null;
 
-    /**
-     * @var float|null
-     */
-    private $duration;
+    private ?float $duration = null;
 
-    /**
-     * @var integer|null
-     */
-    private $size;
+    private ?int $size = null;
 
-    /**
-     * @var integer|null
-     */
-    private $bitrate;
+    private ?int $bitrate = null;
 
     /**
      * @var VideoProfile[]
      */
-    private $videoProfiles = [];
+    private array $videoProfiles = [];
 
     /**
      * @var AudioProfile[]
      */
-    private $audioProfiles = [];
+    private array $audioProfiles = [];
+
+    final public function __construct()
+    {
+    }
 
     /**
      * Create a new profile from the given array of values.
      *
-     * @param array $values
+     * @param array<int|string, mixed> $values
      *
      * @return MediaProfile
      */
@@ -116,7 +102,7 @@ class MediaProfile
     /**
      * Returns profile as an array.
      *
-     * @return array
+     * @return array<int|string, string|int|float>
      */
     public function toArray(): array
     {
@@ -137,11 +123,7 @@ class MediaProfile
             $values[static::AUDIO][] = $audioProfile->toArray();
         }
 
-        $values = array_filter($values, static function ($value): bool {
-            return $value !== null;
-        });
-
-        return $values;
+        return array_filter($values, static fn(mixed $value): bool => $value !== null);
     }
 
     /**
@@ -156,7 +138,7 @@ class MediaProfile
         $format = $media->getFormat();
 
         $profile = static::fromArray([
-            static::FORMAT => trim(strrchr($format->get('filename'), '.'), '.'),
+            static::FORMAT => trim((string) strrchr($format->get('filename'), '.'), '.'),
             static::DURATION => $format->get('duration'),
             static::SIZE => $format->get('size'),
             static::BITRATE => $format->get('bit_rate'),
@@ -190,11 +172,11 @@ class MediaProfile
     public function repairProfileForMedia(AbstractStreamableMedia $media): MediaProfile
     {
         if (!$this->getSize() && file_exists($media->getPathfile())) {
-            $this->setSize(filesize($media->getPathfile()));
+            $this->setSize((int) filesize($media->getPathfile()));
         }
 
         if (!$this->getBitrate() && $this->getDuration() > 0) {
-            $this->setBitrate((int) $this->getSize() / $this->getDuration() * 8);
+            $this->setBitrate((int) ($this->getSize() / $this->getDuration() * 8));
         }
 
         $audioBitrate = 0;
@@ -237,7 +219,7 @@ class MediaProfile
      *
      * @return MediaProfile
      */
-    public function setName(string $name = null): MediaProfile
+    public function setName(?string $name): MediaProfile
     {
         $this->name = $name;
 
@@ -261,7 +243,7 @@ class MediaProfile
      *
      * @return MediaProfile
      */
-    public function setLabel(string $label = null): MediaProfile
+    public function setLabel(?string $label): MediaProfile
     {
         $this->label = $label;
 
@@ -285,7 +267,7 @@ class MediaProfile
      *
      * @return MediaProfile
      */
-    public function setFormat(string $format = null): MediaProfile
+    public function setFormat(?string $format): MediaProfile
     {
         $this->format = $format;
 
@@ -309,7 +291,7 @@ class MediaProfile
      *
      * @return MediaProfile
      */
-    public function setDuration(float $duration = null): MediaProfile
+    public function setDuration(?float $duration): MediaProfile
     {
         $this->duration = $duration;
 
@@ -333,7 +315,7 @@ class MediaProfile
      *
      * @return MediaProfile
      */
-    public function setSize(int $size = null): MediaProfile
+    public function setSize(?int $size): MediaProfile
     {
         $this->size = $size;
 
@@ -357,7 +339,7 @@ class MediaProfile
      *
      * @return MediaProfile
      */
-    public function setBitrate($bitrate = null): MediaProfile
+    public function setBitrate(mixed $bitrate): MediaProfile
     {
         $this->bitrate = static::convertMetricValue($bitrate);
 
@@ -367,7 +349,7 @@ class MediaProfile
     /**
      * Returns video profiles.
      *
-     * @return VideoProfile[]|null
+     * @return VideoProfile[]
      */
     public function getVideoProfiles(): array
     {
@@ -437,21 +419,31 @@ class MediaProfile
      *
      * @param string|integer|float|null $value
      *
-     * @return integer|float|null
+     * @return integer|null
      */
-    public static function convertMetricValue($value)
+    public static function convertMetricValue(mixed $value): ?int
     {
-        if (!is_string($value) || strlen($value) <= 1) {
+        if (is_int($value)) {
             return $value;
+        }
+
+        if (is_float($value)) {
+            return (int) $value;
+        }
+
+        if (!is_string($value)) {
+            return null;
         }
 
         $degree = strtoupper(substr($value, -1, 1));
 
         // Supported suffixes are: Kilo, Mega, Giga, Tera, Peta
-        $exp = array_search($degree, ['K', 'M', 'G', 'T', 'P']);
+        $exp = array_search($degree, ['K', 'M', 'G', 'T', 'P'], true);
 
         if ($exp !== false) {
             $value = ((int) substr($value, 0, -1)) * (1000 ** ($exp + 1));
+        } else {
+            $value = (int) $value;
         }
 
         return $value;

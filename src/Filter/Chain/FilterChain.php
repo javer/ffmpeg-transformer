@@ -13,30 +13,27 @@ use LogicException;
  */
 class FilterChain implements FilterChainInterface
 {
-    /**
-     * @var FilterGraphInterface
-     */
-    protected $filterGraph;
+    protected FilterGraphInterface $filterGraph;
 
     /**
      * @var StreamInterface[]
      */
-    protected $inputStreams = [];
+    protected array $inputStreams = [];
 
     /**
      * @var string[]
      */
-    protected $filters = [];
+    protected array $filters = [];
 
     /**
      * @var StreamInterface[]
      */
-    protected $outputStreams = [];
+    protected array $outputStreams = [];
 
     /**
      * @var string[]
      */
-    protected $outputs = [];
+    protected array $outputs = [];
 
     /**
      * FilterChain constructor.
@@ -44,7 +41,7 @@ class FilterChain implements FilterChainInterface
      * @param FilterGraphInterface              $filterGraph
      * @param StreamInterface[]|StreamInterface $inputStreams
      */
-    public function __construct(FilterGraphInterface $filterGraph, $inputStreams)
+    public function __construct(FilterGraphInterface $filterGraph, array|StreamInterface $inputStreams)
     {
         $this->filterGraph = $filterGraph;
 
@@ -105,16 +102,16 @@ class FilterChain implements FilterChainInterface
     /**
      * Add filter.
      *
-     * @param string $name
-     * @param array  $arguments
-     * @param array  $inputs
-     * @param array  $outputs
+     * @param string                   $name
+     * @param array<string|int, mixed> $arguments
+     * @param array<int, string>       $inputs
+     * @param array<int, string>       $outputs
      *
-     * @return FilterChainInterface
+     * @return static
      *
      * @throws LogicException
      */
-    public function filter(string $name, array $arguments, array $inputs, array $outputs): FilterChainInterface
+    public function filter(string $name, array $arguments, array $inputs, array $outputs): static
     {
         if (count($this->outputStreams) > 0) {
             throw new LogicException('You cannot add filter after building chain');
@@ -149,11 +146,11 @@ class FilterChain implements FilterChainInterface
      *
      * @param StreamInterface $stream
      *
-     * @return FilterChainInterface
+     * @return static
      *
      * @throws LogicException
      */
-    public function addInputStream(StreamInterface $stream): FilterChainInterface
+    public function addInputStream(StreamInterface $stream): static
     {
         if (count($this->filters) > 0) {
             throw new LogicException('Input streams can be added only before filters');

@@ -2,10 +2,14 @@
 
 namespace Javer\FfmpegTransformer\Filter\Chain;
 
+use Javer\FfmpegTransformer\Stream\AudioStreamInterface;
+
 /**
  * Interface AudioFilterChainInterface
  *
  * @package Javer\FfmpegTransformer\Filter\Chain
+ *
+ * @method AudioStreamInterface getOutputStream(int $number = 0)
  */
 interface AudioFilterChainInterface extends FilterChainInterface
 {
@@ -14,11 +18,11 @@ interface AudioFilterChainInterface extends FilterChainInterface
      *
      * Example: channelsplit=channel_layout=%dc
      *
-     * @param array $arguments
+     * @param array<string|int, mixed> $arguments
      *
-     * @return AudioFilterChainInterface
+     * @return static
      */
-    public function channelsplit(array $arguments = []): AudioFilterChainInterface;
+    public function channelsplit(array $arguments = []): static;
 
     /**
      * Amplify volume level.
@@ -27,9 +31,9 @@ interface AudioFilterChainInterface extends FilterChainInterface
      *
      * @param float $volume
      *
-     * @return AudioFilterChainInterface
+     * @return static
      */
-    public function volume(float $volume): AudioFilterChainInterface;
+    public function volume(float $volume): static;
 
     /**
      * Split filter.
@@ -38,20 +42,20 @@ interface AudioFilterChainInterface extends FilterChainInterface
      *
      * @param integer $count
      *
-     * @return AudioFilterChainInterface
+     * @return static
      */
-    public function split(int $count): AudioFilterChainInterface;
+    public function split(int $count): static;
 
     /**
      * Mix filter.
      *
      * Example: amix=inputs=%2$d
      *
-     * @param array $arguments
+     * @param array<string|int, mixed> $arguments
      *
-     * @return AudioFilterChainInterface
+     * @return static
      */
-    public function mix(array $arguments = []): AudioFilterChainInterface;
+    public function mix(array $arguments = []): static;
 
     /**
      * Trim filter.
@@ -61,9 +65,9 @@ interface AudioFilterChainInterface extends FilterChainInterface
      * @param float $start
      * @param float $end
      *
-     * @return AudioFilterChainInterface
+     * @return static
      */
-    public function trim(float $start, float $end): AudioFilterChainInterface;
+    public function trim(float $start, float $end): static;
 
     /**
      * Set PTS filter.
@@ -72,18 +76,18 @@ interface AudioFilterChainInterface extends FilterChainInterface
      *
      * @param string $expr
      *
-     * @return AudioFilterChainInterface
+     * @return static
      */
-    public function setpts(string $expr): AudioFilterChainInterface;
+    public function setpts(string $expr): static;
 
     /**
      * Reset stream timestamps.
      *
      * Example: asetpts=PTS-STARTPTS
      *
-     * @return AudioFilterChainInterface
+     * @return static
      */
-    public function resetTimestamp(): AudioFilterChainInterface;
+    public function resetTimestamp(): static;
 
     /**
      * Fade filter.
@@ -94,18 +98,18 @@ interface AudioFilterChainInterface extends FilterChainInterface
      * @param float  $start
      * @param float  $end
      *
-     * @return AudioFilterChainInterface
+     * @return static
      */
-    public function fade(string $type, float $start, float $end): AudioFilterChainInterface;
+    public function fade(string $type, float $start, float $end): static;
 
     /**
      * Dynamic Audio Normalizer filter.
      *
      * Example: dynaudnorm=g=3
      *
-     * @param array $arguments
+     * @param array<string|int, mixed> $arguments
      *
-     * @return AudioFilterChainInterface
+     * @return static
      */
-    public function dynaudnorm(array $arguments = []): AudioFilterChainInterface;
+    public function dynaudnorm(array $arguments = []): static;
 }

@@ -25,7 +25,7 @@ interface FilterGraphInterface extends BuilderInterface
      *
      * @return VideoFilterChainInterface
      */
-    public function video($inputStreams): VideoFilterChainInterface;
+    public function video(array|VideoStreamInterface $inputStreams): VideoFilterChainInterface;
 
     /**
      * Add audio filter chain.
@@ -34,7 +34,7 @@ interface FilterGraphInterface extends BuilderInterface
      *
      * @return AudioFilterChainInterface
      */
-    public function audio($inputStreams): AudioFilterChainInterface;
+    public function audio(array|AudioStreamInterface $inputStreams): AudioFilterChainInterface;
 
     /**
      * Add complex filter chain.
@@ -43,7 +43,7 @@ interface FilterGraphInterface extends BuilderInterface
      *
      * @return ComplexFilterChainInterface
      */
-    public function complex($inputStreams): ComplexFilterChainInterface;
+    public function complex(array|StreamInterface $inputStreams): ComplexFilterChainInterface;
 
     /**
      * Return to file.

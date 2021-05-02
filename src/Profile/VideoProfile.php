@@ -26,80 +26,42 @@ class VideoProfile
     public const KEYFRAME_INTERVAL = 'keyframe_interval';
     public const ROTATE = 'rotate';
 
-    /**
-     * @var integer|null
-     */
-    private $width;
+    private ?int $width = null;
 
-    /**
-     * @var integer|null
-     */
-    private $height;
+    private ?int $height = null;
 
-    /**
-     * @var string|null
-     */
-    private $codec;
+    private ?string $codec = null;
 
-    /**
-     * @var string|null
-     */
-    private $profile;
+    private ?string $profile = null;
 
-    /**
-     * @var string|null
-     */
-    private $preset;
+    private ?string $preset = null;
 
-    /**
-     * @var string|null
-     */
-    private $pixelFormat;
+    private ?string $pixelFormat = null;
 
-    /**
-     * @var integer|null
-     */
-    private $bitrate;
+    private ?int $bitrate = null;
 
-    /**
-     * @var integer|null
-     */
-    private $maxBitrate;
+    private ?int $maxBitrate = null;
 
-    /**
-     * @var integer|null
-     */
-    private $minBitrate;
+    private ?int $minBitrate = null;
 
-    /**
-     * @var integer|null
-     */
-    private $bufferSize;
+    private ?int $bufferSize = null;
 
-    /**
-     * @var integer|null
-     */
-    private $crf;
+    private ?int $crf = null;
 
-    /**
-     * @var float|null
-     */
-    private $frameRate;
+    private ?float $frameRate = null;
 
-    /**
-     * @var integer|null
-     */
-    private $keyframeInterval;
+    private ?int $keyframeInterval = null;
 
-    /**
-     * @var integer|null
-     */
-    private $rotate;
+    private ?int $rotate = null;
+
+    final public function __construct()
+    {
+    }
 
     /**
      * Create a new profile from the given array of values.
      *
-     * @param array $values
+     * @param array<int|string, mixed> $values
      *
      * @return VideoProfile
      */
@@ -173,7 +135,7 @@ class VideoProfile
     /**
      * Returns profile as an array.
      *
-     * @return array
+     * @return array<int|string, string|int|float>
      */
     public function toArray(): array
     {
@@ -194,11 +156,7 @@ class VideoProfile
             static::ROTATE => $this->getRotate(),
         ];
 
-        $values = array_filter($values, static function ($value): bool {
-            return $value !== null;
-        });
-
-        return $values;
+        return array_filter($values, static fn(mixed $value): bool => $value !== null);
     }
 
     /**
@@ -229,22 +187,18 @@ class VideoProfile
      * @param string       $propertyName
      * @param mixed        $defaultValue
      *
-     * @return string|integer|null
+     * @return string|integer|float|null
      */
-    protected static function getMetadataValue(AbstractData $data, string $propertyName, $defaultValue = null)
+    protected static function getMetadataValue(
+        AbstractData $data,
+        string $propertyName,
+        mixed $defaultValue = null
+    ): mixed
     {
         $value = $data->has($propertyName) ? $data->get($propertyName) : $defaultValue;
 
         if ($value === 'unknown') {
             return null;
-        }
-
-        if (is_int($value)) {
-            return (int) $value;
-        }
-
-        if (is_float($value)) {
-            return (float) $value;
         }
 
         return $value;
@@ -269,13 +223,13 @@ class VideoProfile
             $rFrameRate = $avgFrameRate;
         }
 
-        if (strpos($rFrameRate, '/') !== false) {
-            [$numerator, $denominator] = explode('/', $rFrameRate, 2);
+        if (str_contains((string) $rFrameRate, '/')) {
+            [$numerator, $denominator] = explode('/', (string) $rFrameRate, 2);
 
             $rFrameRate = $denominator > 0 ? $numerator / $denominator : 0;
         }
 
-        return (float) round($rFrameRate, 2);
+        return round((float) $rFrameRate, 2);
     }
 
     /**
@@ -326,7 +280,7 @@ class VideoProfile
      *
      * @return VideoProfile
      */
-    public function setWidth(int $width = null): VideoProfile
+    public function setWidth(?int $width): VideoProfile
     {
         $this->width = $width;
 
@@ -350,7 +304,7 @@ class VideoProfile
      *
      * @return VideoProfile
      */
-    public function setHeight(int $height = null): VideoProfile
+    public function setHeight(?int $height): VideoProfile
     {
         $this->height = $height;
 
@@ -374,7 +328,7 @@ class VideoProfile
      *
      * @return VideoProfile
      */
-    public function setCodec(string $codec = null): VideoProfile
+    public function setCodec(?string $codec): VideoProfile
     {
         $this->codec = $codec;
 
@@ -398,7 +352,7 @@ class VideoProfile
      *
      * @return VideoProfile
      */
-    public function setProfile(string $profile = null): VideoProfile
+    public function setProfile(?string $profile): VideoProfile
     {
         $this->profile = $profile;
 
@@ -422,7 +376,7 @@ class VideoProfile
      *
      * @return VideoProfile
      */
-    public function setPreset(string $preset = null): VideoProfile
+    public function setPreset(?string $preset): VideoProfile
     {
         $this->preset = $preset;
 
@@ -446,7 +400,7 @@ class VideoProfile
      *
      * @return VideoProfile
      */
-    public function setPixelFormat(string $pixelFormat = null): VideoProfile
+    public function setPixelFormat(?string $pixelFormat): VideoProfile
     {
         $this->pixelFormat = $pixelFormat;
 
@@ -470,7 +424,7 @@ class VideoProfile
      *
      * @return VideoProfile
      */
-    public function setBitrate($bitrate = null): VideoProfile
+    public function setBitrate(mixed $bitrate): VideoProfile
     {
         $this->bitrate = MediaProfile::convertMetricValue($bitrate);
 
@@ -494,7 +448,7 @@ class VideoProfile
      *
      * @return VideoProfile
      */
-    public function setMaxBitrate($maxBitrate = null): VideoProfile
+    public function setMaxBitrate(mixed $maxBitrate): VideoProfile
     {
         $this->maxBitrate = MediaProfile::convertMetricValue($maxBitrate);
 
@@ -518,7 +472,7 @@ class VideoProfile
      *
      * @return VideoProfile
      */
-    public function setMinBitrate($minBitrate = null): VideoProfile
+    public function setMinBitrate(mixed $minBitrate): VideoProfile
     {
         $this->minBitrate = MediaProfile::convertMetricValue($minBitrate);
 
@@ -542,7 +496,7 @@ class VideoProfile
      *
      * @return VideoProfile
      */
-    public function setBufferSize($bufferSize = null): VideoProfile
+    public function setBufferSize(mixed $bufferSize): VideoProfile
     {
         $this->bufferSize = MediaProfile::convertMetricValue($bufferSize);
 
@@ -566,7 +520,7 @@ class VideoProfile
      *
      * @return VideoProfile
      */
-    public function setCrf(int $crf = null): VideoProfile
+    public function setCrf(?int $crf): VideoProfile
     {
         $this->crf = $crf;
 
@@ -590,7 +544,7 @@ class VideoProfile
      *
      * @return VideoProfile
      */
-    public function setFrameRate(float $frameRate = null): VideoProfile
+    public function setFrameRate(?float $frameRate): VideoProfile
     {
         $this->frameRate = $frameRate;
 
@@ -614,7 +568,7 @@ class VideoProfile
      *
      * @return VideoProfile
      */
-    public function setKeyframeInterval(int $keyframeInterval = null): VideoProfile
+    public function setKeyframeInterval(?int $keyframeInterval): VideoProfile
     {
         $this->keyframeInterval = $keyframeInterval;
 
@@ -638,7 +592,7 @@ class VideoProfile
      *
      * @return VideoProfile
      */
-    public function setRotate(int $rotate = null): VideoProfile
+    public function setRotate(?int $rotate): VideoProfile
     {
         $this->rotate = $rotate;
 

@@ -18,40 +18,26 @@ class AudioProfile
     public const CHANNELS = 'channels';
     public const DURATION = 'duration';
 
-    /**
-     * @var string|null
-     */
-    private $codec;
+    private ?string $codec = null;
 
-    /**
-     * @var string|null
-     */
-    private $profile;
+    private ?string $profile = null;
 
-    /**
-     * @var integer|null
-     */
-    private $bitrate;
+    private ?int $bitrate = null;
 
-    /**
-     * @var integer|null
-     */
-    private $sampleRate;
+    private ?int $sampleRate = null;
 
-    /**
-     * @var integer|null
-     */
-    private $channels;
+    private ?int $channels = null;
 
-    /**
-     * @var float|null
-     */
-    private $duration;
+    private ?float $duration = null;
+
+    final public function __construct()
+    {
+    }
 
     /**
      * Create a new profile from the given array of values.
      *
-     * @param array $values
+     * @param array<int|string, mixed> $values
      *
      * @return AudioProfile
      */
@@ -93,7 +79,7 @@ class AudioProfile
     /**
      * Returns profile as an array.
      *
-     * @return array
+     * @return array<int|string, string|int|float>
      */
     public function toArray(): array
     {
@@ -106,11 +92,7 @@ class AudioProfile
             static::DURATION => $this->getDuration(),
         ];
 
-        $values = array_filter($values, static function ($value): bool {
-            return $value !== null;
-        });
-
-        return $values;
+        return array_filter($values, static fn(mixed $value): bool => $value !== null);
     }
 
     /**
@@ -139,22 +121,18 @@ class AudioProfile
      * @param string       $propertyName
      * @param mixed        $defaultValue
      *
-     * @return string|integer|null
+     * @return string|int|float|null
      */
-    protected static function getMetadataValue(AbstractData $data, string $propertyName, $defaultValue = null)
+    protected static function getMetadataValue(
+        AbstractData $data,
+        string $propertyName,
+        mixed $defaultValue = null
+    ): mixed
     {
         $value = $data->has($propertyName) ? $data->get($propertyName) : $defaultValue;
 
         if ($value === 'unknown') {
             return null;
-        }
-
-        if (is_int($value)) {
-            return (int) $value;
-        }
-
-        if (is_float($value)) {
-            return (float) $value;
         }
 
         return $value;
@@ -177,7 +155,7 @@ class AudioProfile
      *
      * @return AudioProfile
      */
-    public function setCodec(string $codec = null): AudioProfile
+    public function setCodec(?string $codec): AudioProfile
     {
         $this->codec = $codec;
 
@@ -201,7 +179,7 @@ class AudioProfile
      *
      * @return AudioProfile
      */
-    public function setProfile(string $profile = null): AudioProfile
+    public function setProfile(?string $profile): AudioProfile
     {
         $this->profile = $profile;
 
@@ -225,7 +203,7 @@ class AudioProfile
      *
      * @return AudioProfile
      */
-    public function setBitrate($bitrate = null): AudioProfile
+    public function setBitrate(mixed $bitrate): AudioProfile
     {
         $this->bitrate = MediaProfile::convertMetricValue($bitrate);
 
@@ -249,7 +227,7 @@ class AudioProfile
      *
      * @return AudioProfile
      */
-    public function setSampleRate($sampleRate = null): AudioProfile
+    public function setSampleRate(mixed $sampleRate): AudioProfile
     {
         $this->sampleRate = MediaProfile::convertMetricValue($sampleRate);
 
@@ -273,7 +251,7 @@ class AudioProfile
      *
      * @return AudioProfile
      */
-    public function setChannels(int $channels = null): AudioProfile
+    public function setChannels(?int $channels): AudioProfile
     {
         $this->channels = $channels;
 
@@ -297,7 +275,7 @@ class AudioProfile
      *
      * @return AudioProfile
      */
-    public function setDuration(float $duration = null): AudioProfile
+    public function setDuration(?float $duration): AudioProfile
     {
         $this->duration = $duration;
 

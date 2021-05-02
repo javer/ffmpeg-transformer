@@ -16,17 +16,17 @@ class Command implements CommandInterface
     /**
      * @var string[]
      */
-    protected $options = [];
+    protected array $options = [];
 
     /**
      * @var FileInterface[]
      */
-    protected $inputFiles = [];
+    protected array $inputFiles = [];
 
     /**
      * @var FileInterface[]
      */
-    protected $outputFiles = [];
+    protected array $outputFiles = [];
 
     /**
      * Add an option.
@@ -34,9 +34,9 @@ class Command implements CommandInterface
      * @param string $name
      * @param string $argument
      *
-     * @return CommandInterface
+     * @return static
      */
-    public function addOption(string $name, string $argument = ''): CommandInterface
+    public function addOption(string $name, string $argument = ''): static
     {
         $this->options[] = $name;
 
@@ -50,7 +50,7 @@ class Command implements CommandInterface
     /**
      * Build command.
      *
-     * @return array
+     * @return array<int, string>
      *
      * @throws LogicException
      */
@@ -102,9 +102,9 @@ class Command implements CommandInterface
      *
      * @param string $logLevel
      *
-     * @return CommandInterface
+     * @return static
      */
-    public function logLevel(string $logLevel): CommandInterface
+    public function logLevel(string $logLevel): static
     {
         return $this->addOption('-v', $logLevel);
     }
@@ -114,11 +114,11 @@ class Command implements CommandInterface
      *
      * @param boolean $flag
      *
-     * @return CommandInterface
+     * @return static
      */
-    public function overwriteOutputFiles(bool $flag = true): CommandInterface
+    public function overwriteOutputFiles(bool $flag = true): static
     {
-        if (($optIndex = array_search($flag ? '-n' : '-y', $this->options)) !== false) {
+        if (($optIndex = array_search($flag ? '-n' : '-y', $this->options, true)) !== false) {
             unset($this->options[$optIndex]);
         }
 
@@ -128,9 +128,9 @@ class Command implements CommandInterface
     /**
      * Ignore unknown stream types.
      *
-     * @return CommandInterface
+     * @return static
      */
-    public function ignoreUnknownStreamTypes(): CommandInterface
+    public function ignoreUnknownStreamTypes(): static
     {
         return $this->addOption('-ignore_unknown');
     }
@@ -138,9 +138,9 @@ class Command implements CommandInterface
     /**
      * Print progress report.
      *
-     * @return CommandInterface
+     * @return static
      */
-    public function printProgressReport(): CommandInterface
+    public function printProgressReport(): static
     {
         return $this->addOption('-stats');
     }
@@ -150,11 +150,11 @@ class Command implements CommandInterface
      *
      * @param float $ratio
      *
-     * @return CommandInterface
+     * @return static
      */
-    public function maxErrorRate(float $ratio): CommandInterface
+    public function maxErrorRate(float $ratio): static
     {
-        return $this->addOption('-max_error_rate', $ratio);
+        return $this->addOption('-max_error_rate', (string) $ratio);
     }
 
     /**
@@ -162,11 +162,11 @@ class Command implements CommandInterface
      *
      * @param integer $number
      *
-     * @return CommandInterface
+     * @return static
      */
-    public function bitsPerRawSample(int $number): CommandInterface
+    public function bitsPerRawSample(int $number): static
     {
-        return $this->addOption('-bits_per_raw_sample', $number);
+        return $this->addOption('-bits_per_raw_sample', (string) $number);
     }
 
     /**
@@ -174,11 +174,11 @@ class Command implements CommandInterface
      *
      * @param integer $volume
      *
-     * @return CommandInterface
+     * @return static
      */
-    public function volume(int $volume): CommandInterface
+    public function volume(int $volume): static
     {
-        return $this->addOption('-vol', $volume);
+        return $this->addOption('-vol', (string) $volume);
     }
 
     /**
@@ -190,7 +190,7 @@ class Command implements CommandInterface
      */
     public function addInput(string $filename): FileInterface
     {
-        $file = new File($this, $filename, count($this->inputFiles), true);
+        $file = new File($this, $filename, (string) count($this->inputFiles), true);
 
         $this->inputFiles[] = $file;
 

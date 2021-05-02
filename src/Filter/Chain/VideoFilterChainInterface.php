@@ -2,10 +2,14 @@
 
 namespace Javer\FfmpegTransformer\Filter\Chain;
 
+use Javer\FfmpegTransformer\Stream\VideoStreamInterface;
+
 /**
  * Interface VideoFilterChainInterface
  *
  * @package Javer\FfmpegTransformer\Filter\Chain
+ *
+ * @method VideoStreamInterface getOutputStream(int $number = 0)
  */
 interface VideoFilterChainInterface extends FilterChainInterface
 {
@@ -17,9 +21,9 @@ interface VideoFilterChainInterface extends FilterChainInterface
      * @param float $start
      * @param float $end
      *
-     * @return VideoFilterChainInterface
+     * @return static
      */
-    public function trim(float $start, float $end): VideoFilterChainInterface;
+    public function trim(float $start, float $end): static;
 
     /**
      * Set PTS filter.
@@ -28,29 +32,29 @@ interface VideoFilterChainInterface extends FilterChainInterface
      *
      * @param string $expr
      *
-     * @return VideoFilterChainInterface
+     * @return static
      */
-    public function setpts(string $expr): VideoFilterChainInterface;
+    public function setpts(string $expr): static;
 
     /**
      * Reset stream timestamps.
      *
      * Example: setpts=PTS-STARTPTS
      *
-     * @return VideoFilterChainInterface
+     * @return static
      */
-    public function resetTimestamp(): VideoFilterChainInterface;
+    public function resetTimestamp(): static;
 
     /**
      * Scale filter.
      *
-     * @param integer $width
-     * @param integer $height
-     * @param array   $arguments
+     * @param integer                  $width
+     * @param integer                  $height
+     * @param array<string|int, mixed> $arguments
      *
-     * @return VideoFilterChainInterface
+     * @return static
      */
-    public function scale(int $width, int $height, array $arguments = []): VideoFilterChainInterface;
+    public function scale(int $width, int $height, array $arguments = []): static;
 
     /**
      * Setsar filter.
@@ -58,7 +62,7 @@ interface VideoFilterChainInterface extends FilterChainInterface
      * @param integer $num
      * @param integer $den
      *
-     * @return VideoFilterChainInterface
+     * @return static
      */
-    public function setsar(int $num, int $den): VideoFilterChainInterface;
+    public function setsar(int $num, int $den): static;
 }

@@ -15,9 +15,9 @@ interface VideoStreamInterface extends StreamInterface
      * @param string $name
      * @param string $argument
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function addOption(string $name, string $argument = ''): VideoStreamInterface;
+    public function addOption(string $name, string $argument = ''): static;
 
     /**
      * Add per-stream option.
@@ -25,27 +25,27 @@ interface VideoStreamInterface extends StreamInterface
      * @param string $name
      * @param string $argument
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function addStreamOption(string $name, string $argument = ''): VideoStreamInterface;
+    public function addStreamOption(string $name, string $argument = ''): static;
 
     /**
      * Copy stream "as is".
      *
      * Option: -vcodec copy
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function copy(): VideoStreamInterface;
+    public function copy(): static;
 
     /**
      * Disable video stream.
      *
      * Option: -vn
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function disable(): VideoStreamInterface;
+    public function disable(): static;
 
     /**
      * Map video stream.
@@ -54,9 +54,9 @@ interface VideoStreamInterface extends StreamInterface
      *
      * @param VideoStreamInterface $stream
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function map(VideoStreamInterface $stream): VideoStreamInterface;
+    public function map(VideoStreamInterface $stream): static;
 
     /**
      * Set frames number.
@@ -65,9 +65,9 @@ interface VideoStreamInterface extends StreamInterface
      *
      * @param integer $number
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function frames(int $number): VideoStreamInterface;
+    public function frames(int $number): static;
 
     /**
      * Set frame rate.
@@ -76,9 +76,9 @@ interface VideoStreamInterface extends StreamInterface
      *
      * @param float $rate
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function frameRate(float $rate): VideoStreamInterface;
+    public function frameRate(float $rate): static;
 
     /**
      * Set frame size.
@@ -87,9 +87,9 @@ interface VideoStreamInterface extends StreamInterface
      *
      * @param string $size
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function frameSize(string $size): VideoStreamInterface;
+    public function frameSize(string $size): static;
 
     /**
      * Set aspect ratio.
@@ -98,9 +98,9 @@ interface VideoStreamInterface extends StreamInterface
      *
      * @param string $aspect
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function aspectRatio(string $aspect): VideoStreamInterface;
+    public function aspectRatio(string $aspect): static;
 
     /**
      * Set bits per raw sample.
@@ -109,9 +109,9 @@ interface VideoStreamInterface extends StreamInterface
      *
      * @param integer $number
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function bitsPerRawSample(int $number): VideoStreamInterface;
+    public function bitsPerRawSample(int $number): static;
 
     /**
      * Set codec.
@@ -120,9 +120,9 @@ interface VideoStreamInterface extends StreamInterface
      *
      * @param string $codec
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function codec(string $codec): VideoStreamInterface;
+    public function codec(string $codec): static;
 
     /**
      * Set profile.
@@ -131,9 +131,9 @@ interface VideoStreamInterface extends StreamInterface
      *
      * @param string $profile
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function profile(string $profile): VideoStreamInterface;
+    public function profile(string $profile): static;
 
     /**
      * Set preset.
@@ -142,9 +142,9 @@ interface VideoStreamInterface extends StreamInterface
      *
      * @param string $preset
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function preset(string $preset): VideoStreamInterface;
+    public function preset(string $preset): static;
 
     /**
      * Set time code.
@@ -153,9 +153,9 @@ interface VideoStreamInterface extends StreamInterface
      *
      * @param string $timecode
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function timeCode(string $timecode): VideoStreamInterface;
+    public function timeCode(string $timecode): static;
 
     /**
      * Set pass.
@@ -164,9 +164,9 @@ interface VideoStreamInterface extends StreamInterface
      *
      * @param integer $number
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function pass(int $number): VideoStreamInterface;
+    public function pass(int $number): static;
 
     /**
      * Set filter graph as a string.
@@ -175,9 +175,9 @@ interface VideoStreamInterface extends StreamInterface
      *
      * @param string $filterGraph
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function filter(string $filterGraph): VideoStreamInterface;
+    public function filter(string $filterGraph): static;
 
     /**
      * Set bitrate.
@@ -186,9 +186,9 @@ interface VideoStreamInterface extends StreamInterface
      *
      * @param string $bitrate
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function bitrate(string $bitrate): VideoStreamInterface;
+    public function bitrate(string $bitrate): static;
 
     /**
      * Set maxBitrate.
@@ -197,9 +197,9 @@ interface VideoStreamInterface extends StreamInterface
      *
      * @param string $maxBitrate
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function maxBitrate(string $maxBitrate): VideoStreamInterface;
+    public function maxBitrate(string $maxBitrate): static;
 
     /**
      * Set minBitrate.
@@ -208,9 +208,9 @@ interface VideoStreamInterface extends StreamInterface
      *
      * @param string $minBitrate
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function minBitrate(string $minBitrate): VideoStreamInterface;
+    public function minBitrate(string $minBitrate): static;
 
     /**
      * Set buffer size.
@@ -219,9 +219,9 @@ interface VideoStreamInterface extends StreamInterface
      *
      * @param string $bufferSize
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function bufferSize(string $bufferSize): VideoStreamInterface;
+    public function bufferSize(string $bufferSize): static;
 
     /**
      * Set crf.
@@ -230,9 +230,9 @@ interface VideoStreamInterface extends StreamInterface
      *
      * @param integer $crf
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function crf(int $crf): VideoStreamInterface;
+    public function crf(int $crf): static;
 
     /**
      * Set pixel format.
@@ -241,9 +241,9 @@ interface VideoStreamInterface extends StreamInterface
      *
      * @param string $format
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function pixelFormat(string $format): VideoStreamInterface;
+    public function pixelFormat(string $format): static;
 
     /**
      * Set keyframe interval.
@@ -252,7 +252,7 @@ interface VideoStreamInterface extends StreamInterface
      *
      * @param integer $interval
      *
-     * @return VideoStreamInterface
+     * @return static
      */
-    public function keyframeInterval(int $interval): VideoStreamInterface;
+    public function keyframeInterval(int $interval): static;
 }

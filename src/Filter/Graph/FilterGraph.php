@@ -21,15 +21,12 @@ use Javer\FfmpegTransformer\Stream\VideoStreamInterface;
  */
 class FilterGraph implements FilterGraphInterface
 {
-    /**
-     * @var FileInterface
-     */
-    protected $file;
+    protected FileInterface $file;
 
     /**
      * @var FilterChainInterface[]
      */
-    protected $filterChains = [];
+    protected array $filterChains = [];
 
     /**
      * FilterGraph constructor.
@@ -44,7 +41,7 @@ class FilterGraph implements FilterGraphInterface
     /**
      * Build command.
      *
-     * @return array
+     * @return array<int, string>
      */
     public function build(): array
     {
@@ -82,7 +79,7 @@ class FilterGraph implements FilterGraphInterface
      *
      * @return VideoFilterChainInterface
      */
-    public function video($inputStreams): VideoFilterChainInterface
+    public function video(array|VideoStreamInterface $inputStreams): VideoFilterChainInterface
     {
         $videoFilterChain = new VideoFilterChain($this, $inputStreams);
 
@@ -98,7 +95,7 @@ class FilterGraph implements FilterGraphInterface
      *
      * @return AudioFilterChainInterface
      */
-    public function audio($inputStreams): AudioFilterChainInterface
+    public function audio(array|AudioStreamInterface $inputStreams): AudioFilterChainInterface
     {
         $audioFilterChain = new AudioFilterChain($this, $inputStreams);
 
@@ -114,7 +111,7 @@ class FilterGraph implements FilterGraphInterface
      *
      * @return ComplexFilterChainInterface
      */
-    public function complex($inputStreams): ComplexFilterChainInterface
+    public function complex(array|StreamInterface $inputStreams): ComplexFilterChainInterface
     {
         $complexFilterChain = new ComplexFilterChain($this, $inputStreams);
 

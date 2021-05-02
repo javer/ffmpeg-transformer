@@ -12,7 +12,7 @@ interface BuilderInterface
     /**
      * Build command.
      *
-     * @return array
+     * @return array<int, string>
      */
     public function build(): array;
 

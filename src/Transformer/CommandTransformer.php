@@ -97,16 +97,20 @@ class CommandTransformer
         FileInterface $outputFile
     ): void
     {
-        foreach ($complexFilterChain->getOutputVideoStreams() as $videoStream) {
-            $outputVideoStream = $outputFile->addVideoStream($videoStream);
+        if ($videoTransformation = $transformation->getVideoProfile()) {
+            foreach ($complexFilterChain->getOutputVideoStreams() as $videoStream) {
+                $outputVideoStream = $outputFile->addVideoStream($videoStream);
 
-            $this->applyVideoTransformation($outputVideoStream, $transformation->getVideoProfile());
+                $this->applyVideoTransformation($outputVideoStream, $videoTransformation);
+            }
         }
 
-        foreach ($complexFilterChain->getOutputAudioStreams() as $audioStream) {
-            $outputAudioStream = $outputFile->addAudioStream($audioStream);
+        if ($audioTransformation = $transformation->getAudioProfile()) {
+            foreach ($complexFilterChain->getOutputAudioStreams() as $audioStream) {
+                $outputAudioStream = $outputFile->addAudioStream($audioStream);
 
-            $this->applyAudioTransformation($outputAudioStream, $transformation->getAudioProfile());
+                $this->applyAudioTransformation($outputAudioStream, $audioTransformation);
+            }
         }
     }
 
@@ -122,47 +126,47 @@ class CommandTransformer
             $videoStream->frameSize(sprintf('%dx%d', $videoProfile->getWidth(), $videoProfile->getHeight()));
         }
 
-        if (!is_null($codec = $videoProfile->getCodec())) {
+        if (($codec = $videoProfile->getCodec()) !== null) {
             $videoStream->codec($this->getMappedCodec($codec));
         }
 
-        if (!is_null($profile = $videoProfile->getProfile())) {
+        if (($profile = $videoProfile->getProfile()) !== null) {
             $videoStream->profile($profile);
         }
 
-        if (!is_null($preset = $videoProfile->getPreset())) {
+        if (($preset = $videoProfile->getPreset()) !== null) {
             $videoStream->preset($preset);
         }
 
-        if (!is_null($pixelFormat = $videoProfile->getPixelFormat())) {
+        if (($pixelFormat = $videoProfile->getPixelFormat()) !== null) {
             $videoStream->pixelFormat($pixelFormat);
         }
 
-        if (!is_null($bitrate = $videoProfile->getBitrate())) {
-            $videoStream->bitrate($bitrate);
+        if (($bitrate = $videoProfile->getBitrate()) !== null) {
+            $videoStream->bitrate((string) $bitrate);
         }
 
-        if (!is_null($maxBitrate = $videoProfile->getMaxBitrate())) {
-            $videoStream->maxBitrate($maxBitrate);
+        if (($maxBitrate = $videoProfile->getMaxBitrate()) !== null) {
+            $videoStream->maxBitrate((string) $maxBitrate);
         }
 
-        if (!is_null($minBitrate = $videoProfile->getMinBitrate())) {
-            $videoStream->minBitrate($minBitrate);
+        if (($minBitrate = $videoProfile->getMinBitrate()) !== null) {
+            $videoStream->minBitrate((string) $minBitrate);
         }
 
-        if (!is_null($bufferSize = $videoProfile->getBufferSize())) {
-            $videoStream->bufferSize($bufferSize);
+        if (($bufferSize = $videoProfile->getBufferSize()) !== null) {
+            $videoStream->bufferSize((string) $bufferSize);
         }
 
-        if (!is_null($crf = $videoProfile->getCrf())) {
+        if (($crf = $videoProfile->getCrf()) !== null) {
             $videoStream->crf($crf);
         }
 
-        if (!is_null($frameRate = $videoProfile->getFrameRate())) {
+        if (($frameRate = $videoProfile->getFrameRate()) !== null) {
             $videoStream->frameRate($frameRate);
         }
 
-        if (!is_null($keyframeInterval = $videoProfile->getKeyframeInterval())) {
+        if (($keyframeInterval = $videoProfile->getKeyframeInterval()) !== null) {
             $videoStream->keyframeInterval($keyframeInterval);
         }
     }
@@ -175,23 +179,23 @@ class CommandTransformer
      */
     public function applyAudioTransformation(AudioStreamInterface $outputAudioStream, AudioProfile $audioProfile): void
     {
-        if (!is_null($codec = $audioProfile->getCodec())) {
+        if (($codec = $audioProfile->getCodec()) !== null) {
             $outputAudioStream->codec($this->getMappedCodec($codec));
         }
 
-        if (!is_null($profile = $audioProfile->getProfile())) {
+        if (($profile = $audioProfile->getProfile()) !== null) {
             $outputAudioStream->profile($profile);
         }
 
-        if (!is_null($bitrate = $audioProfile->getBitrate())) {
-            $outputAudioStream->bitrate($bitrate);
+        if (($bitrate = $audioProfile->getBitrate()) !== null) {
+            $outputAudioStream->bitrate((string) $bitrate);
         }
 
-        if (!is_null($sampleRate = $audioProfile->getSampleRate())) {
+        if (($sampleRate = $audioProfile->getSampleRate()) !== null) {
             $outputAudioStream->rate($sampleRate);
         }
 
-        if (!is_null($channels = $audioProfile->getChannels())) {
+        if (($channels = $audioProfile->getChannels()) !== null) {
             $outputAudioStream->channels($channels);
         }
     }
