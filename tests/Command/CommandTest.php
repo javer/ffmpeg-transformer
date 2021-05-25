@@ -427,9 +427,6 @@ class CommandTest extends TestCase
                     ->split(2)
                     ->getOutputStreams();
 
-                assert($mixStream instanceof AudioStreamInterface);
-                assert($audioStream instanceof AudioStreamInterface);
-
                 $mixAudioStreams[] = $mixStream;
 
                 $outputFile->addAudioStream($audioStream)
@@ -519,9 +516,6 @@ class CommandTest extends TestCase
                     ->volume(0 - $trackVolume)
                     ->split(2)
                     ->getOutputStreams();
-
-                assert($mixStream instanceof AudioStreamInterface);
-                assert($audioStream instanceof AudioStreamInterface);
 
                 $mixAudioStreams[] = $mixStream;
 

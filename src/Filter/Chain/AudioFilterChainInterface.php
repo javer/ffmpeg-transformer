@@ -6,6 +6,7 @@ use Javer\FfmpegTransformer\Stream\AudioStreamInterface;
 
 /**
  * @method AudioStreamInterface getOutputStream(int $number = 0)
+ * @method AudioStreamInterface[] getOutputStreams()
  */
 interface AudioFilterChainInterface extends FilterChainInterface
 {

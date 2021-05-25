@@ -6,6 +6,7 @@ use Javer\FfmpegTransformer\Stream\VideoStreamInterface;
 
 /**
  * @method VideoStreamInterface getOutputStream(int $number = 0)
+ * @method VideoStreamInterface[] getOutputStreams()
  */
 interface VideoFilterChainInterface extends FilterChainInterface
 {
